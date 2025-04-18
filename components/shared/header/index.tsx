@@ -7,7 +7,7 @@ import React from "react";
 
 const Header = async () => {
   return (
-    <header className="w-full">
+    <header className="w-full border-b-1 border-b-slate-100">
       <div className="wrapper flex-between">
         <div className="flex-start">
           <Link href="/" className="flex-start">
