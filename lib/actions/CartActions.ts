@@ -30,7 +30,7 @@ export const addToCart = async (item: Microgreen) => {
         //Update cart
         const updatedCart: Cart = {
           ...cart,
-          ...calculatePrice(cart.cartItems),
+          ...calculatePrice([...cart.cartItems]),
         };
 
         const response = await fetch(`/api/cart/update-cart`, {
@@ -54,7 +54,7 @@ export const addToCart = async (item: Microgreen) => {
         const updatedCart: Cart = {
           ...cart,
           cartItems: [...cart.cartItems, newCartItem],
-          ...calculatePrice(cart.cartItems),
+          ...calculatePrice([...cart.cartItems, newCartItem]),
         };
 
         const response = await fetch(`/api/cart/update-cart`, {
@@ -95,13 +95,38 @@ export const addToCart = async (item: Microgreen) => {
       success: true,
       message: `Added ${item.name} to your cart`,
     };
-
-    //if user cart is existing...
-    //Check if product is existing
-    //Add 1 quantity to the product
-    //if user's cart does not exist, add a new cart entry and 1 item to cart
   } catch (error) {
-    console.log(error);
+    return {
+      success: false,
+      message: `${error}`,
+    };
+  }
+};
+
+export const removeItemToCart = async (cartItem: CartItem) => {
+  try {
+    const cart = await getUserCart();
+
+    const updatedCartItems: CartItem[] = cart.cartItems.filter(
+      (item) => item.productId !== cartItem.productId
+    );
+
+    const updatedCart: Cart = {
+      ...cart,
+      cartItems: updatedCartItems,
+      ...calculatePrice([...updatedCartItems]),
+    };
+
+    const response = await fetch(`/api/cart/update-cart`, {
+      method: "PATCH",
+      body: JSON.stringify(updatedCart),
+    });
+
+    return {
+      success: true,
+      message: `${cartItem.name} has been removed to cart`,
+    };
+  } catch (error) {
     return {
       success: false,
       message: `${error}`,

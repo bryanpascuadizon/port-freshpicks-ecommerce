@@ -1,12 +1,24 @@
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
+import { removeItemToCart } from "@/lib/actions/CartActions";
 import { CartItem } from "@/types";
 import Image from "next/image";
 
-const CartItemDetail = ({ cartItem }: { cartItem: CartItem }) => {
+const CartItemDetail = ({
+  cartItem,
+  refetch,
+}: {
+  cartItem: CartItem;
+  refetch: () => void;
+}) => {
+  const handleRemoveItemFromCart = async () => {
+    const response = await removeItemToCart(cartItem);
+
+    refetch();
+  };
   return (
     <TableRow className="border-0">
-      <TableCell>
+      <TableCell className="flex justify-center">
         <Image
           src={cartItem.images[0]}
           alt={cartItem.slug}
@@ -24,8 +36,13 @@ const CartItemDetail = ({ cartItem }: { cartItem: CartItem }) => {
       <TableCell className="text-center">{cartItem.quantity}</TableCell>
       <TableCell className="text-center">{cartItem.price}</TableCell>
 
-      <TableCell className="flex justify-center">
-        <Button className="bg-green-700">Remove</Button>
+      <TableCell className="text-center">
+        <Button
+          className="bg-green-700 cursor-pointer"
+          onClick={handleRemoveItemFromCart}
+        >
+          Remove
+        </Button>
       </TableCell>
     </TableRow>
   );

@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Table, TableCell, TableRow } from "@/components/ui/table";
 import { Cart } from "@/types";
 
 const CartSummary = ({ cart }: { cart: Cart }) => {
@@ -16,7 +15,7 @@ const CartSummary = ({ cart }: { cart: Cart }) => {
         <p className="self-center mr-10 text-lg text-green-700">
           {cart.subtotalPrice}
         </p>
-        <Button className="bg-green-700">Place Order</Button>
+        <Button className="bg-green-700">PLACE ORDER</Button>
       </div>
     </div>
   );

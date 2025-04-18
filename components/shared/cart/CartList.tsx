@@ -13,9 +13,10 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { getUserCart } from "@/lib/actions/CartActions";
 import CartSummary from "./CartSummary";
+import Link from "next/link";
 
 const CartList = () => {
-  const { data: cart } = useQuery({
+  const { data: cart, refetch } = useQuery({
     queryKey: ["cart-list"],
     queryFn: getUserCart,
   });
@@ -51,10 +52,22 @@ const CartList = () => {
           </TableHeader>
           <TableBody>
             {cart.cartItems.map((microgreenItem) => (
-              <CartItem key={microgreenItem.slug} cartItem={microgreenItem} />
+              <CartItem
+                key={microgreenItem.slug}
+                cartItem={microgreenItem}
+                refetch={refetch}
+              />
             ))}
           </TableBody>
         </Table>
+        {cart.cartItems.length === 0 && (
+          <p className="w-full text-center my-10">
+            No items in cart. Go purchase{" "}
+            <Link href="/" className="text-green-700">
+              here
+            </Link>
+          </p>
+        )}
         <CartSummary cart={cart} />
       </div>
     )
