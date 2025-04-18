@@ -67,7 +67,9 @@ const CartItemDetail = ({
         productId={cartItem.productId}
         refetch={refetch}
       />
-      <TableCell className="text-center">₱ {cartItem.price}</TableCell>
+      <TableCell className="text-center">
+        ₱ {(cartItem.price * cartItem.quantity).toFixed(2)}
+      </TableCell>
 
       <TableCell className="text-center">
         <Button
