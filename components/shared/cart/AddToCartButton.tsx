@@ -4,6 +4,7 @@ import { Microgreen } from "@/types";
 import { useTransition } from "react";
 import ButtonLoader from "../ButtonLoader";
 import { toast } from "sonner";
+import Link from "next/link";
 
 const AddToCartButton = ({ item }: { item: Microgreen }) => {
   const [isPending, startTransition] = useTransition();
@@ -15,10 +16,15 @@ const AddToCartButton = ({ item }: { item: Microgreen }) => {
       //Add Toast
       if (response.success) {
         toast(
-          <p>
-            <span className="text-green-700">{item.name}</span> has been added
-            to your cart
-          </p>
+          <div className="toast-text">
+            <p>
+              <span className="text-green-700">{item.name}</span> has been added
+              to your cart.{" "}
+            </p>
+            <Link href="/cart" className="text-green-700">
+              View Cart
+            </Link>
+          </div>
         );
       }
     });

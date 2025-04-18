@@ -26,9 +26,6 @@ const MicrogreensDetails = ({ slug }: { slug: string }) => {
           <p className="text-md mb-5">{microgreen.description[1]}</p>
           <p className="text-2xl font-bold mb-5">₱ {microgreen.price}</p>
           <div>
-            <div className="flex gap-5 my-5 items-center">
-              <p>Quantity</p>
-            </div>
             <div className="flex gap-4 w-full">
               <AddToCartButton item={microgreen} />
             </div>

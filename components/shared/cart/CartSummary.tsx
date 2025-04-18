@@ -1,11 +1,21 @@
 import { Button } from "@/components/ui/button";
 import { Cart } from "@/types";
+import { toast } from "sonner";
 
 const CartSummary = ({ cart }: { cart: Cart }) => {
   const totalQuantity = cart.cartItems.reduce(
     (acc, item) => acc + item.quantity,
     0
   );
+
+  const handlePlaceOrder = () => {
+    toast(
+      <p className="toast-text text-red-700">
+        Placing orders is not available yet.
+      </p>
+    );
+  };
+
   return (
     <div className="w-full rounded-lg bg-slate-100 p-5 mt-5">
       <div className="flex justify-end">
@@ -15,7 +25,12 @@ const CartSummary = ({ cart }: { cart: Cart }) => {
         <p className="self-center mr-10 text-lg text-green-700">
           {cart.subtotalPrice}
         </p>
-        <Button className="bg-green-700">PLACE ORDER</Button>
+        <Button
+          className="bg-green-700 cursor-pointer"
+          onClick={handlePlaceOrder}
+        >
+          PLACE ORDER
+        </Button>
       </div>
     </div>
   );

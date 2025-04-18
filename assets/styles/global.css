@@ -30,6 +30,10 @@
   .h3-bold {
     @apply font-bold text-xl lg:text-2xl;
   }
+
+  .toast-text {
+    @apply text-base;
+  }
 }
 
 @layer base {

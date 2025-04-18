@@ -22,7 +22,7 @@ const CartItemDetail = ({
 
       if (response.success) {
         toast(
-          <div>
+          <div className="toast-text">
             <p>
               {cartItem.quantity > 1 ? "Items" : "An item"} have been removed
               from your cart:
