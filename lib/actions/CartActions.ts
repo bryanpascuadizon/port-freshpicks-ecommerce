@@ -14,7 +14,7 @@ export const addToCart = async (item: Microgreen) => {
     //Check user's cart
     const cart = await getUserCart();
 
-    if (cart.cartItems) {
+    if (cart) {
       //Add a new user cart along with item
     }
 
@@ -29,6 +29,7 @@ export const addToCart = async (item: Microgreen) => {
           images: item.images,
           description: item.description,
           price: item.price,
+          quantity: 1,
         },
       ],
       ...calculateInitialPrice(item),

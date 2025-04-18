@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import CartList from "@/components/shared/cart/CartList";
-import sampleData from "@/db/sample-seed-data";
+import { getUserCart } from "@/lib/actions/CartActions";
 import { redirect } from "next/navigation";
 
 const CartPage = async () => {
@@ -10,8 +10,7 @@ const CartPage = async () => {
     return redirect("/sign-in");
   }
 
-  const cart = sampleData.cart;
-  return <CartList cart={cart} />;
+  return <CartList />;
 };
 
 export default CartPage;

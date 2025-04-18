@@ -1,4 +1,4 @@
-//import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 import sampleData from "@/db/sample-seed-data";
 
@@ -8,12 +8,10 @@ import sampleData from "@/db/sample-seed-data";
 */
 export const GET = async () => {
   try {
-    // const prisma = new PrismaClient();
-    // const data = await prisma.product.findMany({
-    //   where: { category: "microgreens" },
-    // });
-
-    const data = sampleData.products.microgreens;
+    const prisma = new PrismaClient();
+    const data = await prisma.product.findMany({
+      where: { category: "microgreens" },
+    });
 
     return new Response(JSON.stringify(data), {
       status: 200,

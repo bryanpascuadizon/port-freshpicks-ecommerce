@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
   Description: Get User Cart
   Handler directory: CartActions > getUserCart
 */
-export const GET = async (req: NextRequest) => {
+export const GET = async () => {
   try {
     const session = await auth();
     const userId = session?.user?.id;
@@ -19,7 +19,7 @@ export const GET = async (req: NextRequest) => {
       return new NextResponse(JSON.stringify(userCart), { status: 200 });
     }
 
-    return new NextResponse(JSON.stringify({}), {
+    return new NextResponse(JSON.stringify(userCart), {
       status: 404,
     });
   } catch (error) {

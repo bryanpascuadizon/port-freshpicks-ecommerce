@@ -2,13 +2,13 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 interface CartSummaryProps {
-  subtotal: number;
+  subtotalPrice: number;
   shippingPrice: number;
   totalPrice: number;
 }
 
 const CartSummary = ({
-  subtotal,
+  subtotalPrice,
   shippingPrice,
   totalPrice,
 }: CartSummaryProps) => {
@@ -16,7 +16,7 @@ const CartSummary = ({
     <div className="rounded-lg bg-slate-100 p-5">
       <div className="grid grid-cols-2 mb-5">
         <p>Subtotal</p>
-        <p className="text-right font-bold">{subtotal}</p>
+        <p className="text-right font-bold">{subtotalPrice}</p>
       </div>
       <div className="grid grid-cols-2 mb-5">
         <p>Shipping Price</p>

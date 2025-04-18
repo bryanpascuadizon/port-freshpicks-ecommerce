@@ -18,6 +18,8 @@ export const POST = async (request: NextRequest, response: NextRequest) => {
 
     return new NextResponse(JSON.stringify(cart), { status: 200 });
   } catch (error) {
-    return new NextResponse("Cannot add item into cart", { status: 500 });
+    return new NextResponse(`Cannot add item into cart - ${error}`, {
+      status: 500,
+    });
   }
 };
