@@ -114,24 +114,6 @@ export const config = {
         return false;
       }
 
-      // Ensure you *always* return either `true` or a `NextResponse`
-      const sessionCartIdCookie = request.cookies.get("sessionCartId");
-
-      if (!sessionCartIdCookie) {
-        const sessionCartId = crypto.randomUUID();
-        const newRequestHeaders = new Headers(request.headers);
-
-        const response = NextResponse.next({
-          request: {
-            headers: newRequestHeaders,
-          },
-        });
-
-        response.cookies.set("sessionCartId", sessionCartId);
-
-        return response;
-      }
-
       return true; // ✅ always return something
     },
   },
