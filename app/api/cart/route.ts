@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import prisma from "@/db/prisma";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 /*
   Description: Get User Cart

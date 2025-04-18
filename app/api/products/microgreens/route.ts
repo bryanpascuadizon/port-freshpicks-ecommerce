@@ -1,6 +1,5 @@
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
-import sampleData from "@/db/sample-seed-data";
 
 /*
   Description: Get all Microgreen Products

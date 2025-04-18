@@ -20,6 +20,8 @@ export const addToCart = async (item: Microgreen) => {
         (cartItem) => cartItem.productId === item.id
       );
 
+      let updatedCart: Cart | null = null;
+
       //If product exist in cart
       if (isProductExist) {
         //Increase Item quantity by 1
@@ -28,15 +30,10 @@ export const addToCart = async (item: Microgreen) => {
         )!.quantity = isProductExist.quantity + 1;
 
         //Update cart
-        const updatedCart: Cart = {
+        updatedCart = {
           ...cart,
           ...calculatePrice([...cart.cartItems]),
         };
-
-        const response = await fetch(`/api/cart/update-cart`, {
-          method: "PATCH",
-          body: JSON.stringify(updatedCart),
-        });
       } else {
         //If product does not exist
         const newCartItem: CartItem = {
@@ -51,22 +48,24 @@ export const addToCart = async (item: Microgreen) => {
         };
 
         //Update cart
-        const updatedCart: Cart = {
+        updatedCart = {
           ...cart,
           cartItems: [...cart.cartItems, newCartItem],
           ...calculatePrice([...cart.cartItems, newCartItem]),
         };
-
-        const response = await fetch(`/api/cart/update-cart`, {
-          method: "PATCH",
-          body: JSON.stringify(updatedCart),
-        });
       }
 
-      return {
-        success: true,
-        message: `Added ${item.name} to your cart`,
-      };
+      const response = await fetch(`/api/cart/update-cart`, {
+        method: "PATCH",
+        body: JSON.stringify(updatedCart),
+      });
+
+      if (response) {
+        return {
+          success: true,
+          message: `Added ${item.name} to your cart`,
+        };
+      }
     }
 
     //if cart does not exist, add new exisiting cart
@@ -91,9 +90,16 @@ export const addToCart = async (item: Microgreen) => {
       body: JSON.stringify(newUserCart),
     });
 
+    if (response) {
+      return {
+        success: true,
+        message: `Added ${item.name} to your cart`,
+      };
+    }
+
     return {
-      success: true,
-      message: `Added ${item.name} to your cart`,
+      success: false,
+      message: `Something went wrong`,
     };
   } catch (error) {
     return {
@@ -122,9 +128,16 @@ export const removeItemToCart = async (cartItem: CartItem) => {
       body: JSON.stringify(updatedCart),
     });
 
+    if (response) {
+      return {
+        success: true,
+        message: `${cartItem.name}`,
+      };
+    }
+
     return {
-      success: true,
-      message: `${cartItem.name}`,
+      success: false,
+      message: `Something went wrong`,
     };
   } catch (error) {
     return {

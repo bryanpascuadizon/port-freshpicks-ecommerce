@@ -1,6 +1,5 @@
 import { auth } from "@/auth";
 import CartList from "@/components/shared/cart/CartList";
-import { getUserCart } from "@/lib/actions/CartActions";
 import { redirect } from "next/navigation";
 
 const CartPage = async () => {

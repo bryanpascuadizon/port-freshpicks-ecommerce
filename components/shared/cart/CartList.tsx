@@ -5,7 +5,6 @@ import CartItem from "./CartItem";
 import {
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,

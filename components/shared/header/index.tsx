@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { SignOut } from "@/lib/actions/UserActions";
 import { APP_NAME } from "@/lib/constants";
 import { LogOut, ShoppingCart } from "lucide-react";

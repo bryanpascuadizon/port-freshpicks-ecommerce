@@ -9,7 +9,7 @@ const prisma = new PrismaClient();
 */
 export const GET = async (
   req: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) => {
   try {
     const { slug } = await params;

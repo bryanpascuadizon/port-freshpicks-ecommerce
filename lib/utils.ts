@@ -1,4 +1,4 @@
-import { CartItem, Microgreen } from "@/types";
+import { CartItem } from "@/types";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { defaultShippingPrice } from "./constants";
