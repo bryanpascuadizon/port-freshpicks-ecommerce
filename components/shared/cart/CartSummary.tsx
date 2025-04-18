@@ -20,10 +20,11 @@ const CartSummary = ({ cart }: { cart: Cart }) => {
     <div className="w-full rounded-lg bg-slate-100 p-5 mt-5">
       <div className="flex justify-end">
         <p className="self-center mr-10">
-          Total ({totalQuantity} {totalQuantity > 1 ? "items" : "item"})
+          Total ({totalQuantity}{" "}
+          {totalQuantity > 1 || totalQuantity === 0 ? "items" : "item"})
         </p>
         <p className="self-center mr-10 text-lg text-green-700">
-          {cart.subtotalPrice}
+          ₱ {Number(cart.subtotalPrice).toFixed(2)}
         </p>
         <Button
           className="bg-green-700 cursor-pointer"

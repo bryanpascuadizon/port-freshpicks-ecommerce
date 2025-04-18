@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useTransition } from "react";
 import ButtonLoader from "../ButtonLoader";
 import { toast } from "sonner";
+import Link from "next/link";
 
 const CartItemDetail = ({
   cartItem,
@@ -50,13 +51,18 @@ const CartItemDetail = ({
         />
       </TableCell>
       <TableCell>
-        <p className="font-bold">{cartItem.name}</p>
-        <p className="text-green-700">{cartItem.description[0]}</p>
+        <Link
+          href={`/products/microgreens/${cartItem.slug}`}
+          className="w-full"
+        >
+          <p className="font-bold">{cartItem.name}</p>
+          <p className="text-green-700">{cartItem.description[0]}</p>
+        </Link>
       </TableCell>
 
       <TableCell className="text-center">{cartItem.category}</TableCell>
       <TableCell className="text-center">{cartItem.quantity}</TableCell>
-      <TableCell className="text-center">{cartItem.price}</TableCell>
+      <TableCell className="text-center">₱ {cartItem.price}</TableCell>
 
       <TableCell className="text-center">
         <Button
