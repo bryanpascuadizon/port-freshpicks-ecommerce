@@ -146,3 +146,71 @@ export const removeItemToCart = async (cartItem: CartItem) => {
     };
   }
 };
+
+export const updateCartItemQuantity = async (
+  type: string,
+  productId: string
+) => {
+  try {
+    const cart = await getUserCart();
+
+    if (cart) {
+      const cartItem = cart.cartItems.find(
+        (item) => item.productId === productId
+      );
+
+      let updatedCart: Cart | null = null;
+
+      if (cartItem) {
+        if (type === "decrease") {
+          if (cartItem?.quantity === 1) {
+            //Remove item from cart
+
+            const newCartItems: CartItem[] = cart.cartItems.filter(
+              (item) => item.productId !== productId
+            );
+
+            updatedCart = {
+              ...cart,
+              cartItems: [...newCartItems],
+              ...calculatePrice([...newCartItems]),
+            };
+          } else {
+            //Decrease item quantity by 1
+            cart.cartItems.find(
+              (item) => item.productId === productId
+            )!.quantity = cartItem.quantity - 1;
+
+            updatedCart = {
+              ...cart,
+              ...calculatePrice([...cart.cartItems]),
+            };
+          }
+        } else {
+          //Increase item quantity by 1
+          cart.cartItems.find(
+            (item) => item.productId === productId
+          )!.quantity = cartItem.quantity + 1;
+
+          updatedCart = {
+            ...cart,
+            ...calculatePrice([...cart.cartItems]),
+          };
+        }
+
+        //Update database
+        const response = await fetch("api/cart/update-cart", {
+          method: "PATCH",
+          body: JSON.stringify(updatedCart),
+        });
+
+        if (response) {
+          return {
+            success: true,
+            message: "Your cart has been updated",
+          };
+        }
+      }
+    }
+  } catch (error) {}
+};

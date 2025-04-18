@@ -34,6 +34,10 @@
   .toast-text {
     @apply text-base;
   }
+
+  .green-button {
+    @apply hover:bg-green-700 bg-green-700;
+  }
 }
 
 @layer base {

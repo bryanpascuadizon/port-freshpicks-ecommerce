@@ -7,6 +7,7 @@ import { useTransition } from "react";
 import ButtonLoader from "../ButtonLoader";
 import { toast } from "sonner";
 import Link from "next/link";
+import CartQuantity from "./CartQuantity";
 
 const CartItemDetail = ({
   cartItem,
@@ -34,9 +35,9 @@ const CartItemDetail = ({
             </p>
           </div>
         );
-      }
 
-      await refetch();
+        await refetch();
+      }
     });
   };
   return (
@@ -61,13 +62,17 @@ const CartItemDetail = ({
       </TableCell>
 
       <TableCell className="text-center">{cartItem.category}</TableCell>
-      <TableCell className="text-center">{cartItem.quantity}</TableCell>
+      <CartQuantity
+        quantity={cartItem.quantity}
+        productId={cartItem.productId}
+        refetch={refetch}
+      />
       <TableCell className="text-center">₱ {cartItem.price}</TableCell>
 
       <TableCell className="text-center">
         <Button
           disabled={isPending}
-          className="bg-green-700 cursor-pointer"
+          className="green-button cursor-pointer"
           onClick={handleRemoveItemFromCart}
         >
           {isPending ? <ButtonLoader /> : "Remove"}

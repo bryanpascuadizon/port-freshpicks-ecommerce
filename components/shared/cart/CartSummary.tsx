@@ -27,7 +27,7 @@ const CartSummary = ({ cart }: { cart: Cart }) => {
           ₱ {Number(cart.subtotalPrice).toFixed(2)}
         </p>
         <Button
-          className="bg-green-700 cursor-pointer"
+          className="green-button cursor-pointer"
           onClick={handlePlaceOrder}
         >
           PLACE ORDER

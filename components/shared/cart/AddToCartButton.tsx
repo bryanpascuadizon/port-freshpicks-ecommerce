@@ -33,7 +33,7 @@ const AddToCartButton = ({ item }: { item: Microgreen }) => {
   return (
     <Button
       disabled={isPending}
-      className="bg-green-700 p-5 cursor-pointer"
+      className="green-button p-5 cursor-pointer"
       onClick={handleAddToCart}
     >
       {isPending ? <ButtonLoader /> : "Add to Cart"}
