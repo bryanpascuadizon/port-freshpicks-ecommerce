@@ -157,68 +157,6 @@ const microgreensData = {
       },
     ],
   },
-  cart: {
-    id: "1",
-    userId: "1",
-    cartItems: [
-      {
-        productId: "1",
-        name: "Broccoli",
-        slug: "broccoli-microgreens",
-        category: "microgreens",
-        description: [
-          "Mild, slightly bitter taste",
-          "Broccoli microgreens have a mild, slightly earthy taste. They are packed with sulforaphane, a powerful antioxidant. Great for smoothies, salads, and soups, they boost health benefits. Growing in 8–12 days, they are easy to cultivate. A top choice for health-conscious consumers and wellness diets.",
-        ],
-        images: [
-          "/images/microgreens/broccoli/b-1.jpg",
-          "/images/microgreens/broccoli/b-2.jpg",
-          "/images/microgreens/broccoli/b-3.jpg",
-        ],
-        price: 99.99,
-        quantity: 1,
-      },
-      {
-        productId: "2",
-        name: "Arugula",
-        slug: "arugula-microgreens",
-        category: "microgreens",
-        description: [
-          "Peppery, slightly nutty",
-          "Arugula microgreens have a peppery, nutty flavor with a mild spice. They are rich in vitamins A, C, and K, supporting overall health. Used in salads, pasta, and gourmet dishes, they add a zesty kick. Fast-growing, they are ready in 7–10 days. Popular among chefs and health-conscious eaters.",
-        ],
-        images: [
-          "/images/microgreens/arugula/a-1.jpg",
-          "/images/microgreens/arugula/a-2.jpg",
-          "/images/microgreens/arugula/a-3.jpg",
-        ],
-        price: 99.99,
-        quantity: 1,
-      },
-      {
-        productId: "3",
-        name: "Cilantro",
-        slug: "cilantro-microgreens",
-        category: "microgreens",
-        description: [
-          "Citrusy, fresh taste",
-          "Cilantro microgreens have a fresh, citrusy flavor, perfect for Mexican and Asian dishes. They are rich in vitamins and antioxidants, aiding digestion and immunity. Commonly used in soups, tacos, and garnishes, they enhance flavor. Harvestable in 10–14 days, they grow easily indoors. Their distinct taste makes them a favorite in many cuisines.",
-        ],
-        images: [
-          "/images/microgreens/cilantro/c-1.jpg",
-          "/images/microgreens/cilantro/c-2.jpg",
-          "/images/microgreens/cilantro/c-3.jpg",
-        ],
-        price: 99.99,
-        quantity: 1,
-      },
-    ],
-    createdAt: "",
-    updatedAt: "",
-    subtotalPrice: 100,
-    shippingPrice: 200,
-    totalPrice: 300,
-  },
 };
 
 export default microgreensData;
