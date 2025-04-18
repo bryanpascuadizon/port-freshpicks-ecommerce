@@ -68,7 +68,7 @@ const CartList = () => {
             </Link>
           </p>
         )}
-        <CartSummary cart={cart} />
+        <CartSummary cart={cart} refetch={refetch} />
       </div>
     )
   );

@@ -279,3 +279,44 @@ export const includeItemFromCart = async (productId: string) => {
     };
   }
 };
+
+export const selectAllCartItems = async () => {
+  try {
+    const cart = await getUserCart();
+
+    if (cart) {
+      const updateAllCart: CartItem[] = cart.cartItems.map((item) => ({
+        ...item,
+        isSelected: !item.isSelected,
+      }));
+
+      const selectedCartItems: CartItem[] = updateAllCart.filter(
+        (item) => item.isSelected
+      );
+
+      const updatedCart = {
+        ...cart,
+        cartItems: updateAllCart,
+        ...calculatePrice([...selectedCartItems]),
+      };
+
+      //Update database
+      const response = await fetch("api/cart/update-cart", {
+        method: "PATCH",
+        body: JSON.stringify(updatedCart),
+      });
+
+      if (response) {
+        return {
+          success: true,
+          message: "Your cart has been updated",
+        };
+      }
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: `${error}`,
+    };
+  }
+};
