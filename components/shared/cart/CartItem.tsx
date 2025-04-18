@@ -3,6 +3,9 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { removeItemToCart } from "@/lib/actions/CartActions";
 import { CartItem } from "@/types";
 import Image from "next/image";
+import { useTransition } from "react";
+import ButtonLoader from "../ButtonLoader";
+import { toast } from "sonner";
 
 const CartItemDetail = ({
   cartItem,
@@ -11,10 +14,29 @@ const CartItemDetail = ({
   cartItem: CartItem;
   refetch: () => void;
 }) => {
-  const handleRemoveItemFromCart = async () => {
-    const response = await removeItemToCart(cartItem);
+  const [isPending, startTransition] = useTransition();
 
-    refetch();
+  const handleRemoveItemFromCart = async () => {
+    startTransition(async () => {
+      const response = await removeItemToCart(cartItem);
+
+      if (response.success) {
+        toast(
+          <div>
+            <p>
+              {cartItem.quantity > 1 ? "Items" : "An item"} have been removed
+              from your cart:
+            </p>
+            <p>
+              <span className="text-green-700">{cartItem.name}</span> x
+              {cartItem.quantity}
+            </p>
+          </div>
+        );
+      }
+
+      await refetch();
+    });
   };
   return (
     <TableRow className="border-0">
@@ -38,10 +60,11 @@ const CartItemDetail = ({
 
       <TableCell className="text-center">
         <Button
+          disabled={isPending}
           className="bg-green-700 cursor-pointer"
           onClick={handleRemoveItemFromCart}
         >
-          Remove
+          {isPending ? <ButtonLoader /> : "Remove"}
         </Button>
       </TableCell>
     </TableRow>

@@ -124,7 +124,7 @@ export const removeItemToCart = async (cartItem: CartItem) => {
 
     return {
       success: true,
-      message: `${cartItem.name} has been removed to cart`,
+      message: `${cartItem.name}`,
     };
   } catch (error) {
     return {

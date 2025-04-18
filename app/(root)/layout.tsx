@@ -1,6 +1,7 @@
 import Footer from "@/components/shared/footer";
 import Header from "@/components/shared/header";
 import { Metadata } from "next";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "FRESHPICKS",
@@ -15,6 +16,7 @@ export default function RootLayout({
       <Header />
       <main className="flex-1 wrapper">{children}</main>
       <Footer />
+      <Toaster />
     </div>
   );
 }
