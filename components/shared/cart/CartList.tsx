@@ -5,14 +5,14 @@ import CartItem from "./CartItem";
 import {
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import CartSummary from "./CartSummary";
 import { useQuery } from "@tanstack/react-query";
 import { getUserCart } from "@/lib/actions/CartActions";
-import { Button } from "@/components/ui/button";
+import CartSummary from "./CartSummary";
 
 const CartList = () => {
   const { data: cart } = useQuery({
@@ -30,32 +30,34 @@ const CartList = () => {
   ];
 
   return (
-    <div className="my-10">
-      <div className="text-xl font-bold mb-5">Shopping Cart</div>
-      <Table>
-        <TableHeader>
-          <TableRow className="border-">
-            {tableHeaders.map((header) => (
-              <TableHead
-                key={header}
-                className={`text-lg text-black font-bold border-0 ${
-                  header !== "Product" && "text-center"
-                }`}
-              >
-                {header}
-              </TableHead>
-            ))}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {cart &&
-            cart.cartItems &&
-            cart.cartItems.map((microgreenItem) => (
+    cart &&
+    cart.cartItems && (
+      <div className="my-10">
+        <div className="text-xl font-bold mb-5">Shopping Cart</div>
+        <Table>
+          <TableHeader>
+            <TableRow className="border-">
+              {tableHeaders.map((header) => (
+                <TableHead
+                  key={header}
+                  className={`text-lg text-black font-bold border-0 ${
+                    header !== "Product" && "text-center"
+                  }`}
+                >
+                  {header}
+                </TableHead>
+              ))}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {cart.cartItems.map((microgreenItem) => (
               <CartItem key={microgreenItem.slug} cartItem={microgreenItem} />
             ))}
-        </TableBody>
-      </Table>
-    </div>
+          </TableBody>
+        </Table>
+        <CartSummary cart={cart} />
+      </div>
+    )
   );
 };
 

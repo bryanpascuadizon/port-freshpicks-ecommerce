@@ -1,33 +1,23 @@
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { Table, TableCell, TableRow } from "@/components/ui/table";
+import { Cart } from "@/types";
 
-interface CartSummaryProps {
-  subtotalPrice: number;
-  shippingPrice: number;
-  totalPrice: number;
-}
-
-const CartSummary = ({
-  subtotalPrice,
-  shippingPrice,
-  totalPrice,
-}: CartSummaryProps) => {
+const CartSummary = ({ cart }: { cart: Cart }) => {
+  const totalQuantity = cart.cartItems.reduce(
+    (acc, item) => acc + item.quantity,
+    0
+  );
   return (
-    <div className="rounded-lg bg-slate-100 p-5">
-      <div className="grid grid-cols-2 mb-5">
-        <p>Subtotal</p>
-        <p className="text-right font-bold">{subtotalPrice}</p>
+    <div className="w-full rounded-lg bg-slate-100 p-5 mt-5">
+      <div className="flex justify-end">
+        <p className="self-center mr-10">
+          Total ({totalQuantity} {totalQuantity > 1 ? "items" : "item"})
+        </p>
+        <p className="self-center mr-10 text-lg text-green-700">
+          {cart.subtotalPrice}
+        </p>
+        <Button className="bg-green-700">Place Order</Button>
       </div>
-      <div className="grid grid-cols-2 mb-5">
-        <p>Shipping Price</p>
-        <p className="text-right font-bold">{shippingPrice}</p>
-      </div>
-      <Separator className="bg-black mb-5" />
-      <div className="grid grid-cols-2">
-        <p>Total Price</p>
-        <p className="text-right font-bold mb-5">{totalPrice}</p>
-      </div>
-      <Button className="text-center w-full bg-green-700">Place Order</Button>
     </div>
   );
 };

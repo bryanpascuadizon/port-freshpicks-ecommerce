@@ -19,9 +19,11 @@ const CartItemDetail = ({ cartItem }: { cartItem: CartItem }) => {
         <p className="font-bold">{cartItem.name}</p>
         <p className="text-green-700">{cartItem.description[0]}</p>
       </TableCell>
+
       <TableCell className="text-center">{cartItem.category}</TableCell>
       <TableCell className="text-center">{cartItem.quantity}</TableCell>
       <TableCell className="text-center">{cartItem.price}</TableCell>
+
       <TableCell className="flex justify-center">
         <Button className="bg-green-700">Remove</Button>
       </TableCell>
