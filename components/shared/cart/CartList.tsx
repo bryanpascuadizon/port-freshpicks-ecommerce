@@ -21,6 +21,7 @@ const CartList = () => {
   });
 
   const tableHeaders = [
+    "Include",
     "",
     "Product",
     "Category",

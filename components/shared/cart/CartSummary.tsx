@@ -3,10 +3,9 @@ import { Cart } from "@/types";
 import { toast } from "sonner";
 
 const CartSummary = ({ cart }: { cart: Cart }) => {
-  const totalQuantity = cart.cartItems.reduce(
-    (acc, item) => acc + item.quantity,
-    0
-  );
+  const totalQuantity = cart.cartItems
+    .filter((item) => item.isSelected)
+    .reduce((acc, item) => acc + item.quantity, 0);
 
   const handlePlaceOrder = () => {
     toast(

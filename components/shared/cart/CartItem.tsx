@@ -8,6 +8,7 @@ import ButtonLoader from "../ButtonLoader";
 import { toast } from "sonner";
 import Link from "next/link";
 import CartQuantity from "./CartQuantity";
+import CartSelection from "./CartSelection";
 
 const CartItemDetail = ({
   cartItem,
@@ -18,7 +19,7 @@ const CartItemDetail = ({
 }) => {
   const [isPending, startTransition] = useTransition();
 
-  const handleRemoveItemFromCart = async () => {
+  const handleRemoveItemFromCart = () => {
     startTransition(async () => {
       const response = await removeItemToCart(cartItem);
 
@@ -40,8 +41,10 @@ const CartItemDetail = ({
       }
     });
   };
+
   return (
     <TableRow className="border-0">
+      <CartSelection cartItem={cartItem} refetch={refetch} />
       <TableCell className="flex justify-center">
         <Image
           src={cartItem.images[0]}
@@ -60,7 +63,6 @@ const CartItemDetail = ({
           <p className="text-green-700">{cartItem.description[0]}</p>
         </Link>
       </TableCell>
-
       <TableCell className="text-center">{cartItem.category}</TableCell>
       <CartQuantity
         quantity={cartItem.quantity}
@@ -70,7 +72,6 @@ const CartItemDetail = ({
       <TableCell className="text-center">
         ₱ {(cartItem.price * cartItem.quantity).toFixed(2)}
       </TableCell>
-
       <TableCell className="text-center">
         <Button
           disabled={isPending}

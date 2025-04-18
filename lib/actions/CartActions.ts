@@ -13,14 +13,14 @@ export const addToCart = async (item: Microgreen) => {
   try {
     //Check user's cart
     const cart = await getUserCart();
+    let updatedCart: Cart | null = null;
+    let selectedCartItems: CartItem[] | null = null;
 
     if (cart) {
       //Find productId in cart
       const isProductExist = cart.cartItems.find(
         (cartItem) => cartItem.productId === item.id
       );
-
-      let updatedCart: Cart | null = null;
 
       //If product exist in cart
       if (isProductExist) {
@@ -29,10 +29,12 @@ export const addToCart = async (item: Microgreen) => {
           (cartItem) => cartItem.productId === item.id
         )!.quantity = isProductExist.quantity + 1;
 
+        selectedCartItems = cart.cartItems.filter((item) => item.isSelected);
+
         //Update cart
         updatedCart = {
           ...cart,
-          ...calculatePrice([...cart.cartItems]),
+          ...calculatePrice([...selectedCartItems]),
         };
       } else {
         //If product does not exist
@@ -44,14 +46,19 @@ export const addToCart = async (item: Microgreen) => {
           images: item.images,
           description: item.description,
           price: item.price,
+          isSelected: false,
           quantity: 1,
         };
+
+        selectedCartItems = [...cart.cartItems, newCartItem].filter(
+          (item) => item.isSelected
+        );
 
         //Update cart
         updatedCart = {
           ...cart,
           cartItems: [...cart.cartItems, newCartItem],
-          ...calculatePrice([...cart.cartItems, newCartItem]),
+          ...calculatePrice([...selectedCartItems]),
         };
       }
 
@@ -77,12 +84,15 @@ export const addToCart = async (item: Microgreen) => {
       images: item.images,
       description: item.description,
       price: item.price,
+      isSelected: false,
       quantity: 1,
     };
 
+    selectedCartItems = [newCartItem].filter((item) => item.isSelected);
+
     const newUserCart = {
       cartItems: [newCartItem],
-      ...calculatePrice([newCartItem]),
+      ...calculatePrice([...selectedCartItems]),
     };
 
     const response = await fetch(`/api/cart/update-cart`, {
@@ -112,15 +122,18 @@ export const addToCart = async (item: Microgreen) => {
 export const removeItemToCart = async (cartItem: CartItem) => {
   try {
     const cart = await getUserCart();
+    let selectedCartItems: CartItem[] | null = null;
 
     const updatedCartItems: CartItem[] = cart.cartItems.filter(
       (item) => item.productId !== cartItem.productId
     );
 
+    selectedCartItems = updatedCartItems.filter((item) => item.isSelected);
+
     const updatedCart: Cart = {
       ...cart,
       cartItems: updatedCartItems,
-      ...calculatePrice([...updatedCartItems]),
+      ...calculatePrice([...selectedCartItems]),
     };
 
     const response = await fetch(`/api/cart/update-cart`, {
@@ -153,6 +166,7 @@ export const updateCartItemQuantity = async (
 ) => {
   try {
     const cart = await getUserCart();
+    let selectedCartItems: CartItem[] | null = null;
 
     if (cart) {
       const cartItem = cart.cartItems.find(
@@ -165,15 +179,16 @@ export const updateCartItemQuantity = async (
         if (type === "decrease") {
           if (cartItem?.quantity === 1) {
             //Remove item from cart
-
             const newCartItems: CartItem[] = cart.cartItems.filter(
               (item) => item.productId !== productId
             );
 
+            selectedCartItems = newCartItems.filter((item) => item.isSelected);
+
             updatedCart = {
               ...cart,
               cartItems: [...newCartItems],
-              ...calculatePrice([...newCartItems]),
+              ...calculatePrice([...selectedCartItems]),
             };
           } else {
             //Decrease item quantity by 1
@@ -181,9 +196,13 @@ export const updateCartItemQuantity = async (
               (item) => item.productId === productId
             )!.quantity = cartItem.quantity - 1;
 
+            selectedCartItems = cart.cartItems.filter(
+              (item) => item.isSelected
+            );
+
             updatedCart = {
               ...cart,
-              ...calculatePrice([...cart.cartItems]),
+              ...calculatePrice([...selectedCartItems]),
             };
           }
         } else {
@@ -192,9 +211,11 @@ export const updateCartItemQuantity = async (
             (item) => item.productId === productId
           )!.quantity = cartItem.quantity + 1;
 
+          selectedCartItems = cart.cartItems.filter((item) => item.isSelected);
+
           updatedCart = {
             ...cart,
-            ...calculatePrice([...cart.cartItems]),
+            ...calculatePrice([...selectedCartItems]),
           };
         }
 
@@ -212,5 +233,49 @@ export const updateCartItemQuantity = async (
         }
       }
     }
-  } catch (error) {}
+  } catch (error) {
+    return {
+      success: false,
+      message: `${error}`,
+    };
+  }
+};
+
+export const includeItemFromCart = async (productId: string) => {
+  try {
+    const cart = await getUserCart();
+    let selectedCartItems: CartItem[] | null = null;
+
+    const cartItem = cart.cartItems.find(
+      (item) => item.productId === productId
+    );
+
+    cart.cartItems.find((item) => item.productId === productId)!.isSelected =
+      !cartItem?.isSelected;
+
+    selectedCartItems = cart.cartItems.filter((item) => item.isSelected);
+
+    const updatedCart: Cart = {
+      ...cart,
+      ...calculatePrice([...selectedCartItems]),
+    };
+
+    //Update database
+    const response = await fetch("api/cart/update-cart", {
+      method: "PATCH",
+      body: JSON.stringify(updatedCart),
+    });
+
+    if (response) {
+      return {
+        success: true,
+        message: "Your cart has been updated",
+      };
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: `${error}`,
+    };
+  }
 };

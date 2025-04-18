@@ -19,6 +19,7 @@ export type CartItem = {
   images: string[];
   description: string[];
   price: number;
+  isSelected: boolean;
   quantity: number;
 };
 
