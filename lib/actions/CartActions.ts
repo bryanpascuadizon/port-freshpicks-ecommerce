@@ -1,5 +1,5 @@
-import { Cart, Microgreen } from "@/types";
-import { calculateInitialPrice } from "../utils";
+import { Cart, CartItem, Microgreen } from "@/types";
+import { calculatePrice } from "../utils";
 
 export const getUserCart = async (): Promise<Cart> => {
   const response: Promise<Cart> = await fetch("/api/cart").then((res) =>
@@ -15,14 +15,32 @@ export const addToCart = async (item: Microgreen) => {
     const cart = await getUserCart();
 
     if (cart) {
-      //Add a new user cart along with item
-    }
+      //Find productId in cart
+      const isProductExist = cart.cartItems.find(
+        (cartItem) => cartItem.productId === item.id
+      );
 
-    //if cart does not exist, add new exisiting cart
-    const newUserCart = {
-      cartItems: [
-        {
-          id: item.id,
+      //If product exist in cart
+      if (isProductExist) {
+        //Increase Item quantity by 1
+        cart.cartItems.find(
+          (cartItem) => cartItem.productId === item.id
+        )!.quantity = isProductExist.quantity + 1;
+
+        //Update cart
+        const updatedCart: Cart = {
+          ...cart,
+          ...calculatePrice(cart.cartItems),
+        };
+
+        const response = await fetch(`/api/cart/update-cart`, {
+          method: "PATCH",
+          body: JSON.stringify(updatedCart),
+        });
+      } else {
+        //If product does not exist
+        const newCartItem: CartItem = {
+          productId: item.id,
           name: item.name,
           slug: item.slug,
           category: item.category,
@@ -30,12 +48,45 @@ export const addToCart = async (item: Microgreen) => {
           description: item.description,
           price: item.price,
           quantity: 1,
-        },
-      ],
-      ...calculateInitialPrice(item),
+        };
+
+        //Update cart
+        const updatedCart: Cart = {
+          ...cart,
+          cartItems: [...cart.cartItems, newCartItem],
+          ...calculatePrice(cart.cartItems),
+        };
+
+        const response = await fetch(`/api/cart/update-cart`, {
+          method: "PATCH",
+          body: JSON.stringify(updatedCart),
+        });
+      }
+
+      return {
+        success: true,
+        message: `Added ${item.name} to your cart`,
+      };
+    }
+
+    //if cart does not exist, add new exisiting cart
+    const newCartItem: CartItem = {
+      productId: item.id,
+      name: item.name,
+      slug: item.slug,
+      category: item.category,
+      images: item.images,
+      description: item.description,
+      price: item.price,
+      quantity: 1,
     };
 
-    const response = await fetch(`/api/cart/new-cart`, {
+    const newUserCart = {
+      cartItems: [newCartItem],
+      ...calculatePrice([newCartItem]),
+    };
+
+    const response = await fetch(`/api/cart/update-cart`, {
       method: "POST",
       body: JSON.stringify(newUserCart),
     });

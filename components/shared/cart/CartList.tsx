@@ -12,6 +12,7 @@ import {
 import CartSummary from "./CartSummary";
 import { useQuery } from "@tanstack/react-query";
 import { getUserCart } from "@/lib/actions/CartActions";
+import { Button } from "@/components/ui/button";
 
 const CartList = () => {
   const { data: cart } = useQuery({
@@ -19,7 +20,14 @@ const CartList = () => {
     queryFn: getUserCart,
   });
 
-  const tableHeaders = ["", "Product", "Category", "Qty.", "Price"];
+  const tableHeaders = [
+    "",
+    "Product",
+    "Category",
+    "Qty.",
+    "Total Price",
+    "Actions",
+  ];
 
   return (
     <div className="my-10">

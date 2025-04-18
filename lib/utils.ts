@@ -1,4 +1,4 @@
-import { Microgreen } from "@/types";
+import { CartItem, Microgreen } from "@/types";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { defaultShippingPrice } from "./constants";
@@ -11,12 +11,15 @@ export const formatNumberToCurrency = (value: number) => {
   return value.toFixed(2);
 };
 
-export const calculateInitialPrice = (item: Microgreen) => {
-  const subtotalPrice: number = Number(item.price);
-  const shippingPrice: number = defaultShippingPrice;
-  const totalPrice: string = formatNumberToCurrency(
-    subtotalPrice + shippingPrice
-  );
+export const roundDecimal = (value: number) => {
+  return Math.round((value + Number.EPSILON) * 100) / 100;
+};
 
+export const calculatePrice = (item: CartItem[]) => {
+  const subtotalPrice = roundDecimal(
+    item.reduce((acc, item) => acc + item.price * item.quantity, 0)
+  );
+  const shippingPrice = roundDecimal(defaultShippingPrice);
+  const totalPrice = roundDecimal(subtotalPrice + shippingPrice);
   return { subtotalPrice, shippingPrice, totalPrice };
 };

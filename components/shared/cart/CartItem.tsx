@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { CartItem } from "@/types";
 import Image from "next/image";
@@ -21,6 +22,9 @@ const CartItemDetail = ({ cartItem }: { cartItem: CartItem }) => {
       <TableCell className="text-center">{cartItem.category}</TableCell>
       <TableCell className="text-center">{cartItem.quantity}</TableCell>
       <TableCell className="text-center">{cartItem.price}</TableCell>
+      <TableCell className="flex justify-center">
+        <Button className="bg-green-700">Remove</Button>
+      </TableCell>
     </TableRow>
   );
 };
