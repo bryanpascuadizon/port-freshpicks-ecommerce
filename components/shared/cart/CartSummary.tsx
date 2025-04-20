@@ -70,11 +70,13 @@ const CartSummary = ({
         <p className="self-center mr-10 text-lg text-green-700 font-bold">
           ₱ {Number(cart.subtotalPrice).toFixed(2)}
         </p>
-        <Link href="/checkout">
-          <Button className="green-button cursor-pointer text-lg">
-            Check out
-          </Button>
-        </Link>
+
+        <Button
+          disabled={totalSelectedQuantity <= 0}
+          className="green-button cursor-pointer text-lg"
+        >
+          <Link href="/checkout">Check out</Link>
+        </Button>
       </div>
     </div>
   );
