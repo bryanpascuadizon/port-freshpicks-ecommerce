@@ -3,8 +3,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { includeAllCartItems } from "@/lib/actions/CartActions";
 import { Cart } from "@/types";
 import { useTransition } from "react";
-import { toast } from "sonner";
-import DeleteToCartButton from "./RemoveToCartButton";
+import RemoveToCartButton from "./RemoveToCartButton";
 import Link from "next/link";
 
 const CartSummary = ({
@@ -14,7 +13,7 @@ const CartSummary = ({
   cart: Cart;
   refetch: () => void;
 }) => {
-  const [isPending, startTransistion] = useTransition();
+  const [isPending, startTransition] = useTransition();
 
   const totalSelectedQuantity = cart.cartItems
     .filter((item) => item.isSelected)
@@ -26,7 +25,7 @@ const CartSummary = ({
   );
 
   const handleIncludeAllItems = () => {
-    startTransistion(async () => {
+    startTransition(async () => {
       const response = await includeAllCartItems(
         totalAllQuantity === totalSelectedQuantity
       );
@@ -53,7 +52,9 @@ const CartSummary = ({
         <span className="self-center mr-5">
           Include All ({cart.cartItems.length})
         </span>
-        <DeleteToCartButton
+        <RemoveToCartButton
+          isPending={isPending}
+          startTransition={startTransition}
           totalSelectedQuantity={totalSelectedQuantity}
           refetch={refetch}
         />
@@ -70,7 +71,9 @@ const CartSummary = ({
           ₱ {Number(cart.subtotalPrice).toFixed(2)}
         </p>
         <Link href="/checkout">
-          <Button className="green-button cursor-pointer">PLACE ORDER</Button>
+          <Button className="green-button cursor-pointer text-lg">
+            Check out
+          </Button>
         </Link>
       </div>
     </div>

@@ -1,0 +1,31 @@
+const CheckoutPriceBreakdown = ({
+  subtotalPrice,
+  shippingPrice,
+  totalPrice,
+}: {
+  subtotalPrice: number;
+  shippingPrice: number;
+  totalPrice: number;
+}) => {
+  return (
+    <div className="p-5 bg-slate-100 rounded-sm">
+      <p className="font-bold mb-5">Price Breakdown</p>
+      <div className="grid grid-cols-2 text-sm mb-3">
+        <div>Subtotal Price</div>
+        <div className="text-right">₱ {subtotalPrice}</div>
+      </div>
+      <div className="grid grid-cols-2 text-sm mb-3">
+        <div>Shipping Price</div>
+        <div className="text-right">₱ {shippingPrice.toFixed(2)}</div>
+      </div>
+      <div className="grid grid-cols-2 text-sm">
+        <div>Total Price</div>
+        <div className="text-right text-lg text-green-700 font-bold">
+          ₱ {totalPrice}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CheckoutPriceBreakdown;

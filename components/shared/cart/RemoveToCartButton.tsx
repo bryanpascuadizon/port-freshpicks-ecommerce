@@ -2,20 +2,23 @@ import { Button } from "@/components/ui/button";
 import { removeCartItems } from "@/lib/actions/CartActions";
 import { useCartItemCount } from "@/lib/hooks/CartItemCount";
 import { Loader } from "lucide-react";
-import { useTransition } from "react";
+import { TransitionStartFunction } from "react";
 
 const RemoveToCartButton = ({
+  isPending,
+  startTransition,
   totalSelectedQuantity,
   refetch,
 }: {
+  isPending: boolean;
+  startTransition: TransitionStartFunction;
   totalSelectedQuantity: number;
   refetch: () => void;
 }) => {
-  const [isPending, startTransistion] = useTransition();
   const { refetchCartItemCount } = useCartItemCount();
 
   const handleRemoveCartItems = () => {
-    startTransistion(async () => {
+    startTransition(async () => {
       const response = await removeCartItems();
 
       if (response) {

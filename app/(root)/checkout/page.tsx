@@ -1,15 +1,21 @@
+import { auth } from "@/auth";
+import CheckoutList from "@/components/shared/checkout/CheckoutList";
+import { APP_NAME } from "@/lib/constants";
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: "Checkout",
+  title: `${APP_NAME} | Checkout`,
 };
 
-const CheckoutPage = () => {
-  return (
-    <div className="my-10">
-      <div className="text-xl font-bold mb-5">Checkout</div>
-    </div>
-  );
+const CheckoutPage = async () => {
+  const session = await auth();
+
+  if (!session) {
+    return redirect("/sign-in");
+  }
+
+  return <CheckoutList />;
 };
 
 export default CheckoutPage;

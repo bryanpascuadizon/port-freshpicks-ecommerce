@@ -389,3 +389,28 @@ export const countCartItems = async () => {
     throw new Error(`Something went wrong - ${error}`);
   }
 };
+
+//Get cart list for checkout
+export const getCartListForCheckout = async () => {
+  try {
+    const cart = await getUserCart();
+
+    if (cart) {
+      const selectedCartItems = cart.cartItems.filter(
+        (item) => item.isSelected
+      );
+
+      const newCart: Cart = {
+        ...cart,
+        cartItems: selectedCartItems,
+        ...calculatePrice([...selectedCartItems]),
+      };
+
+      return newCart;
+    }
+
+    throw new Error("Something went wrong");
+  } catch (error) {
+    throw new Error(`Something went wrong - ${error}`);
+  }
+};
