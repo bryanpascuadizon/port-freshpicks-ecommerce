@@ -4,6 +4,7 @@ import { selectAllCartItems } from "@/lib/actions/CartActions";
 import { Cart } from "@/types";
 import { useTransition } from "react";
 import { toast } from "sonner";
+import DeleteToCartButton from "./DeleteToCartButton";
 
 const CartSummary = ({
   cart,
@@ -33,7 +34,9 @@ const CartSummary = ({
 
   const handleSelectAllItems = () => {
     startTransistion(async () => {
-      const response = await selectAllCartItems();
+      const response = await selectAllCartItems(
+        totalAllQuantity === totalSelectedQuantity
+      );
 
       if (response) {
         await refetch();
@@ -43,14 +46,23 @@ const CartSummary = ({
 
   return (
     <div className="grid grid-cols-2 w-full rounded-lg bg-slate-100 p-5 mt-5">
-      <div className="flex justify-start">
+      <div className="flex">
         <Checkbox
-          checked={totalAllQuantity === totalSelectedQuantity ? true : false}
-          disabled={isPending}
+          checked={
+            totalAllQuantity === 0
+              ? false
+              : totalAllQuantity === totalSelectedQuantity
+          }
           className="self-center mr-5 cursor-pointer"
           onClick={handleSelectAllItems}
-        />{" "}
-        <span className="self-center">Select All ({totalAllQuantity})</span>
+        />
+        <span className="self-center mr-5">
+          Select All ({totalAllQuantity})
+        </span>
+        <DeleteToCartButton
+          totalSelectedQuantity={totalSelectedQuantity}
+          refetch={refetch}
+        />
       </div>
       <div className="flex justify-end ">
         <p className="self-center mr-10">

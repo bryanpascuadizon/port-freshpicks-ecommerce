@@ -24,11 +24,11 @@ export type CartItem = {
 };
 
 export type Cart = {
-  id: string;
-  userId: string;
+  id?: string;
+  userId?: string;
   cartItems: CartItem[];
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
   subtotalPrice: number;
   totalPrice: number;
   shippingPrice: number;

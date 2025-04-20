@@ -9,6 +9,15 @@ export const getUserCart = async (): Promise<Cart> => {
   return response;
 };
 
+export const updateUserCart = async (updatedCart: Cart) => {
+  const response = await fetch(`/api/cart/update-cart`, {
+    method: "PATCH",
+    body: JSON.stringify(updatedCart),
+  });
+
+  return response;
+};
+
 export const addToCart = async (item: Microgreen) => {
   try {
     //Check user's cart
@@ -62,10 +71,7 @@ export const addToCart = async (item: Microgreen) => {
         };
       }
 
-      const response = await fetch(`/api/cart/update-cart`, {
-        method: "PATCH",
-        body: JSON.stringify(updatedCart),
-      });
+      const response = await updateUserCart(updatedCart);
 
       if (response) {
         return {
@@ -95,10 +101,7 @@ export const addToCart = async (item: Microgreen) => {
       ...calculatePrice([...selectedCartItems]),
     };
 
-    const response = await fetch(`/api/cart/update-cart`, {
-      method: "POST",
-      body: JSON.stringify(newUserCart),
-    });
+    const response = await updateUserCart(newUserCart);
 
     if (response) {
       return {
@@ -136,10 +139,7 @@ export const removeItemToCart = async (cartItem: CartItem) => {
       ...calculatePrice([...selectedCartItems]),
     };
 
-    const response = await fetch(`/api/cart/update-cart`, {
-      method: "PATCH",
-      body: JSON.stringify(updatedCart),
-    });
+    const response = await updateUserCart(updatedCart);
 
     if (response) {
       return {
@@ -219,11 +219,7 @@ export const updateCartItemQuantity = async (
           };
         }
 
-        //Update database
-        const response = await fetch("api/cart/update-cart", {
-          method: "PATCH",
-          body: JSON.stringify(updatedCart),
-        });
+        const response = await updateUserCart(updatedCart);
 
         if (response) {
           return {
@@ -233,6 +229,11 @@ export const updateCartItemQuantity = async (
         }
       }
     }
+
+    return {
+      success: false,
+      message: `Something went wrong`,
+    };
   } catch (error) {
     return {
       success: false,
@@ -241,6 +242,7 @@ export const updateCartItemQuantity = async (
   }
 };
 
+//Selects an item
 export const includeItemFromCart = async (productId: string) => {
   try {
     const cart = await getUserCart();
@@ -261,10 +263,7 @@ export const includeItemFromCart = async (productId: string) => {
     };
 
     //Update database
-    const response = await fetch("api/cart/update-cart", {
-      method: "PATCH",
-      body: JSON.stringify(updatedCart),
-    });
+    const response = await updateUserCart(updatedCart);
 
     if (response) {
       return {
@@ -272,6 +271,11 @@ export const includeItemFromCart = async (productId: string) => {
         message: "Your cart has been updated",
       };
     }
+
+    return {
+      success: false,
+      message: `Something went wrong`,
+    };
   } catch (error) {
     return {
       success: false,
@@ -280,14 +284,15 @@ export const includeItemFromCart = async (productId: string) => {
   }
 };
 
-export const selectAllCartItems = async () => {
+//Selects all cart items to be placed as order
+export const selectAllCartItems = async (isSelectedAll: boolean) => {
   try {
     const cart = await getUserCart();
 
     if (cart) {
       const updateAllCart: CartItem[] = cart.cartItems.map((item) => ({
         ...item,
-        isSelected: !item.isSelected,
+        isSelected: isSelectedAll ? false : true,
       }));
 
       const selectedCartItems: CartItem[] = updateAllCart.filter(
@@ -301,10 +306,7 @@ export const selectAllCartItems = async () => {
       };
 
       //Update database
-      const response = await fetch("api/cart/update-cart", {
-        method: "PATCH",
-        body: JSON.stringify(updatedCart),
-      });
+      const response = await updateUserCart(updatedCart);
 
       if (response) {
         return {
@@ -313,6 +315,50 @@ export const selectAllCartItems = async () => {
         };
       }
     }
+
+    return {
+      success: false,
+      message: `Something went wrong`,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: `${error}`,
+    };
+  }
+};
+
+//Deletes all selected cart items
+export const deleteCartItems = async () => {
+  try {
+    const cart = await getUserCart();
+
+    if (cart) {
+      const unSelectedCartItems = cart.cartItems.filter(
+        (item) => !item.isSelected
+      );
+
+      const updatedCart: Cart = {
+        ...cart,
+        cartItems: [...unSelectedCartItems],
+        ...calculatePrice([...unSelectedCartItems]),
+      };
+
+      //Update database
+      const response = await updateUserCart(updatedCart);
+
+      if (response) {
+        return {
+          success: true,
+          message: "Cart items have been deleted",
+        };
+      }
+    }
+
+    return {
+      success: false,
+      message: `Something went wrong`,
+    };
   } catch (error) {
     return {
       success: false,
