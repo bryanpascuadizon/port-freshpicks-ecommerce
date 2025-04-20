@@ -1,6 +1,5 @@
 "use client";
 
-import { countCartItems, getUserCart } from "@/lib/actions/CartActions";
 import { useCartItemCount } from "@/lib/hooks/CartItemCount";
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
