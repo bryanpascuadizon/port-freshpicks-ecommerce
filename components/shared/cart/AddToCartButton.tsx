@@ -18,14 +18,20 @@ const AddToCartButton = ({ item }: { item: Microgreen }) => {
       //Add Toast
       if (response.success) {
         toast(
-          <div className="toast-text">
-            <p>
-              <span className="text-green-700">{item.name}</span> has been added
-              to your cart.{" "}
-            </p>
-            <Link href="/cart" className="text-green-700">
-              View Cart
-            </Link>
+          <div className="toast-text grid grid-cols-3 gap-5">
+            <div className="col-span-2">
+              <p>
+                <span className="text-green-700">{item.name}</span> has been
+                added to your cart
+              </p>
+            </div>
+            <div className="col-span-1 text-center self-center">
+              <Button className="green-button">
+                <Link href="/cart" className="text-white">
+                  View Cart
+                </Link>
+              </Button>
+            </div>
           </div>
         );
 
