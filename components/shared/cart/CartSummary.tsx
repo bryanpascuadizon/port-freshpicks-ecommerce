@@ -57,7 +57,7 @@ const CartSummary = ({
           onClick={handleIncludeAllItems}
         />
         <span className="self-center mr-5">
-          Select All ({totalAllQuantity})
+          Select All ({cart.cartItems.length})
         </span>
         <DeleteToCartButton
           totalSelectedQuantity={totalSelectedQuantity}
