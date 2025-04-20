@@ -25,7 +25,7 @@ const SignInForm = () => {
       <Button
         disabled={pending}
         variant="default"
-        className="w-full bg-green-700 mb-5"
+        className="w-full bg-green-700 mb-5 cursor-pointer"
       >
         {pending ? "Signing In..." : "Sign In"}
       </Button>
@@ -45,7 +45,7 @@ const SignInForm = () => {
         name="email"
         type="email"
         autoComplete="email"
-        className="block mb-5 w-full p-2 rounded-lg bg-white"
+        className="block mb-5 w-full p-2 rounded-sm bg-white"
       />
       <p className="mb-2">Password</p>
       <Input
@@ -53,7 +53,7 @@ const SignInForm = () => {
         name="password"
         type="password"
         autoComplete="password"
-        className="block mb-5 w-full p-2 rounded-lg bg-white"
+        className="block mb-5 w-full p-2 rounded-sm bg-white"
       />
       {data && !data.success && (
         <p className="text-center mb-5 text-destructive">{data.message}</p>

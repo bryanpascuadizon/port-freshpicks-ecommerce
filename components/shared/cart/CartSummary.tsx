@@ -5,6 +5,7 @@ import { Cart } from "@/types";
 import { useTransition } from "react";
 import { toast } from "sonner";
 import DeleteToCartButton from "./RemoveToCartButton";
+import Link from "next/link";
 
 const CartSummary = ({
   cart,
@@ -24,14 +25,6 @@ const CartSummary = ({
     0
   );
 
-  const handlePlaceOrder = () => {
-    toast(
-      <p className="toast-text text-red-700">
-        Placing orders is not available yet.
-      </p>
-    );
-  };
-
   const handleIncludeAllItems = () => {
     startTransistion(async () => {
       const response = await includeAllCartItems(
@@ -45,9 +38,10 @@ const CartSummary = ({
   };
 
   return (
-    <div className="grid grid-cols-2 w-full rounded-lg bg-slate-100 p-5 mt-5">
-      <div className="flex">
+    <div className="grid md:grid-cols-3 w-full rounded-sm bg-slate-100 p-5 mt-5 gap-5">
+      <div className="flex col-span-1">
         <Checkbox
+          disabled={cart.cartItems.length === 0}
           checked={
             totalAllQuantity === 0
               ? false
@@ -57,30 +51,27 @@ const CartSummary = ({
           onClick={handleIncludeAllItems}
         />
         <span className="self-center mr-5">
-          Select All ({cart.cartItems.length})
+          Include All ({cart.cartItems.length})
         </span>
         <DeleteToCartButton
           totalSelectedQuantity={totalSelectedQuantity}
           refetch={refetch}
         />
       </div>
-      <div className="flex justify-end ">
+      <div className="flex justify-end col-span-2">
         <p className="self-center mr-10">
           Total ({totalSelectedQuantity}{" "}
           {totalSelectedQuantity > 1 || totalSelectedQuantity === 0
-            ? "items"
-            : "item"}
+            ? "items included"
+            : "item included"}
           )
         </p>
-        <p className="self-center mr-10 text-lg text-green-700">
+        <p className="self-center mr-10 text-lg text-green-700 font-bold">
           ₱ {Number(cart.subtotalPrice).toFixed(2)}
         </p>
-        <Button
-          className="green-button cursor-pointer"
-          onClick={handlePlaceOrder}
-        >
-          PLACE ORDER
-        </Button>
+        <Link href="/checkout">
+          <Button className="green-button cursor-pointer">PLACE ORDER</Button>
+        </Link>
       </div>
     </div>
   );

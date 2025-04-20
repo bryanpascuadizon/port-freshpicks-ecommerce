@@ -14,7 +14,7 @@ const SignInPage = async (props: {
 
   return (
     <div className="w-full max-w-md mx-auto">
-      <div className="rounded-lg bg-slate-100 p-5">
+      <div className="rounded-sm bg-slate-100 p-5">
         <SignInForm />
       </div>
     </div>
