@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { deleteCartItems } from "@/lib/actions/CartActions";
+import { removeCartItems } from "@/lib/actions/CartActions";
+import { useCartItemCount } from "@/lib/hooks/CartItemCount";
 import { Loader } from "lucide-react";
 import { useTransition } from "react";
 
-const DeleteToCartButton = ({
+const RemoveToCartButton = ({
   totalSelectedQuantity,
   refetch,
 }: {
@@ -11,24 +12,28 @@ const DeleteToCartButton = ({
   refetch: () => void;
 }) => {
   const [isPending, startTransistion] = useTransition();
-  const handleDeleteCartItems = () => {
+  const { refetchCartItemCount } = useCartItemCount();
+
+  const handleRemoveCartItems = () => {
     startTransistion(async () => {
-      const response = await deleteCartItems();
+      const response = await removeCartItems();
 
       if (response) {
         await refetch();
+        await refetchCartItemCount();
       }
     });
   };
+
   return (
     <Button
       disabled={totalSelectedQuantity === 0}
       className="green-button cursor-pointer"
-      onClick={handleDeleteCartItems}
+      onClick={handleRemoveCartItems}
     >
-      {isPending ? <Loader className="w-4 h-4 animate-spin" /> : "Delete"}
+      {isPending ? <Loader className="w-4 h-4 animate-spin" /> : "Remove"}
     </Button>
   );
 };
 
-export default DeleteToCartButton;
+export default RemoveToCartButton;

@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { selectAllCartItems } from "@/lib/actions/CartActions";
+import { includeAllCartItems } from "@/lib/actions/CartActions";
 import { Cart } from "@/types";
 import { useTransition } from "react";
 import { toast } from "sonner";
-import DeleteToCartButton from "./DeleteToCartButton";
+import DeleteToCartButton from "./RemoveToCartButton";
 
 const CartSummary = ({
   cart,
@@ -32,9 +32,9 @@ const CartSummary = ({
     );
   };
 
-  const handleSelectAllItems = () => {
+  const handleIncludeAllItems = () => {
     startTransistion(async () => {
-      const response = await selectAllCartItems(
+      const response = await includeAllCartItems(
         totalAllQuantity === totalSelectedQuantity
       );
 
@@ -54,7 +54,7 @@ const CartSummary = ({
               : totalAllQuantity === totalSelectedQuantity
           }
           className="self-center mr-5 cursor-pointer"
-          onClick={handleSelectAllItems}
+          onClick={handleIncludeAllItems}
         />
         <span className="self-center mr-5">
           Select All ({totalAllQuantity})

@@ -5,9 +5,11 @@ import { useTransition } from "react";
 import ButtonLoader from "../ButtonLoader";
 import { toast } from "sonner";
 import Link from "next/link";
+import { useCartItemCount } from "@/lib/hooks/CartItemCount";
 
 const AddToCartButton = ({ item }: { item: Microgreen }) => {
   const [isPending, startTransition] = useTransition();
+  const { refetchCartItemCount } = useCartItemCount();
 
   const handleAddToCart = () => {
     startTransition(async () => {
@@ -26,6 +28,8 @@ const AddToCartButton = ({ item }: { item: Microgreen }) => {
             </Link>
           </div>
         );
+
+        await refetchCartItemCount();
       }
     });
   };

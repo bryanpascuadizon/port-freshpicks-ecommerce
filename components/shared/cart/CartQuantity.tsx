@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { TableCell } from "@/components/ui/table";
 import { updateCartItemQuantity } from "@/lib/actions/CartActions";
+import { useCartItemCount } from "@/lib/hooks/CartItemCount";
 import { Loader, Minus, Plus } from "lucide-react";
 import { useTransition } from "react";
 
@@ -14,6 +15,7 @@ const CartQuantity = ({
   refetch: () => void;
 }) => {
   const [isPending, startTransistion] = useTransition();
+  const { refetchCartItemCount } = useCartItemCount();
 
   const handleUpdateQuantity = (type: string) => {
     startTransistion(async () => {
@@ -21,6 +23,7 @@ const CartQuantity = ({
 
       if (response) {
         await refetch();
+        await refetchCartItemCount();
       }
     });
   };

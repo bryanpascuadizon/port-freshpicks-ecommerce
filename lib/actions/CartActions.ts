@@ -18,6 +18,7 @@ export const updateUserCart = async (updatedCart: Cart) => {
   return response;
 };
 
+//Add items to user cart
 export const addToCart = async (item: Microgreen) => {
   try {
     //Check user's cart
@@ -122,44 +123,7 @@ export const addToCart = async (item: Microgreen) => {
   }
 };
 
-export const removeItemToCart = async (cartItem: CartItem) => {
-  try {
-    const cart = await getUserCart();
-    let selectedCartItems: CartItem[] | null = null;
-
-    const updatedCartItems: CartItem[] = cart.cartItems.filter(
-      (item) => item.productId !== cartItem.productId
-    );
-
-    selectedCartItems = updatedCartItems.filter((item) => item.isSelected);
-
-    const updatedCart: Cart = {
-      ...cart,
-      cartItems: updatedCartItems,
-      ...calculatePrice([...selectedCartItems]),
-    };
-
-    const response = await updateUserCart(updatedCart);
-
-    if (response) {
-      return {
-        success: true,
-        message: `${cartItem.name}`,
-      };
-    }
-
-    return {
-      success: false,
-      message: `Something went wrong`,
-    };
-  } catch (error) {
-    return {
-      success: false,
-      message: `${error}`,
-    };
-  }
-};
-
+//Updates the user cart
 export const updateCartItemQuantity = async (
   type: string,
   productId: string
@@ -242,7 +206,85 @@ export const updateCartItemQuantity = async (
   }
 };
 
-//Selects an item
+//Select an item from the cart to remove
+export const removeItemToCart = async (cartItem: CartItem) => {
+  try {
+    const cart = await getUserCart();
+    let selectedCartItems: CartItem[] | null = null;
+
+    const updatedCartItems: CartItem[] = cart.cartItems.filter(
+      (item) => item.productId !== cartItem.productId
+    );
+
+    selectedCartItems = updatedCartItems.filter((item) => item.isSelected);
+
+    const updatedCart: Cart = {
+      ...cart,
+      cartItems: updatedCartItems,
+      ...calculatePrice([...selectedCartItems]),
+    };
+
+    const response = await updateUserCart(updatedCart);
+
+    if (response) {
+      return {
+        success: true,
+        message: `${cartItem.name}`,
+      };
+    }
+
+    return {
+      success: false,
+      message: `Something went wrong`,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: `${error}`,
+    };
+  }
+};
+
+//Deletes all selected cart items
+export const removeCartItems = async () => {
+  try {
+    const cart = await getUserCart();
+
+    if (cart) {
+      const unSelectedCartItems = cart.cartItems.filter(
+        (item) => !item.isSelected
+      );
+
+      const updatedCart: Cart = {
+        ...cart,
+        cartItems: [...unSelectedCartItems],
+        ...calculatePrice([...unSelectedCartItems]),
+      };
+
+      //Update database
+      const response = await updateUserCart(updatedCart);
+
+      if (response) {
+        return {
+          success: true,
+          message: "Cart items have been deleted",
+        };
+      }
+    }
+
+    return {
+      success: false,
+      message: `Something went wrong`,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: `${error}`,
+    };
+  }
+};
+
+//Selects a cart item to be placed as order
 export const includeItemFromCart = async (productId: string) => {
   try {
     const cart = await getUserCart();
@@ -285,7 +327,7 @@ export const includeItemFromCart = async (productId: string) => {
 };
 
 //Selects all cart items to be placed as order
-export const selectAllCartItems = async (isSelectedAll: boolean) => {
+export const includeAllCartItems = async (isSelectedAll: boolean) => {
   try {
     const cart = await getUserCart();
 
@@ -328,41 +370,22 @@ export const selectAllCartItems = async (isSelectedAll: boolean) => {
   }
 };
 
-//Deletes all selected cart items
-export const deleteCartItems = async () => {
+//Count the items from the user cart
+export const countCartItems = async () => {
   try {
     const cart = await getUserCart();
 
     if (cart) {
-      const unSelectedCartItems = cart.cartItems.filter(
-        (item) => !item.isSelected
+      const cartItemCount = cart.cartItems.reduce(
+        (acc, item) => acc + item.quantity,
+        0
       );
 
-      const updatedCart: Cart = {
-        ...cart,
-        cartItems: [...unSelectedCartItems],
-        ...calculatePrice([...unSelectedCartItems]),
-      };
-
-      //Update database
-      const response = await updateUserCart(updatedCart);
-
-      if (response) {
-        return {
-          success: true,
-          message: "Cart items have been deleted",
-        };
-      }
+      return cartItemCount;
     }
 
-    return {
-      success: false,
-      message: `Something went wrong`,
-    };
+    throw new Error("Something went wrong");
   } catch (error) {
-    return {
-      success: false,
-      message: `${error}`,
-    };
+    throw new Error(`Something went wrong - ${error}`);
   }
 };

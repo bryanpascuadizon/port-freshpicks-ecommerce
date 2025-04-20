@@ -1,11 +1,11 @@
 import { SignOut } from "@/lib/actions/UserActions";
 import { APP_NAME } from "@/lib/constants";
-import { LogOut, ShoppingCart } from "lucide-react";
-
+import { LogOut } from "lucide-react";
 import Link from "next/link";
 import React from "react";
+import ShoppingCartHeader from "./ShoppingCart";
 
-const Header = async () => {
+const Header = () => {
   return (
     <header className="w-full border-b-1 border-b-slate-100">
       <div className="wrapper flex-between">
@@ -17,9 +17,7 @@ const Header = async () => {
           </Link>
         </div>
         <div className="flex justify-end gap-3">
-          <Link href="/cart" className="">
-            <ShoppingCart />
-          </Link>
+          <ShoppingCartHeader />
           <LogOut className="ml-5 cursor-pointer" onClick={SignOut} />
         </div>
       </div>

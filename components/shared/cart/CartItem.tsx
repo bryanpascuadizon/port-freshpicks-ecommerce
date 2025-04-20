@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import Link from "next/link";
 import CartQuantity from "./CartQuantity";
 import CartSelection from "./CartSelection";
+import { useCartItemCount } from "@/lib/hooks/CartItemCount";
 
 const CartItemDetail = ({
   cartItem,
@@ -18,6 +19,7 @@ const CartItemDetail = ({
   refetch: () => void;
 }) => {
   const [isPending, startTransition] = useTransition();
+  const { refetchCartItemCount } = useCartItemCount();
 
   const handleRemoveItemFromCart = () => {
     startTransition(async () => {
@@ -38,6 +40,7 @@ const CartItemDetail = ({
         );
 
         await refetch();
+        await refetchCartItemCount();
       }
     });
   };
