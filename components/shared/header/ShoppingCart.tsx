@@ -10,8 +10,8 @@ const ShoppingCartHeader = () => {
   return (
     <Link href="/cart" className="relative cursor-pointer">
       <ShoppingCart />
-      <div className="top-[-10px] left-4 absolute p-1 rounded-full bg-green-700 text-white text-xs w-6 h-6 text-center">
-        {cartItemCount}
+      <div className="top-[-10px] left-4 absolute rounded-full bg-green-700 text-white text-xs w-7 h-7">
+        <p className="text-center mt-[6px]">{cartItemCount}</p>
       </div>
     </Link>
   );

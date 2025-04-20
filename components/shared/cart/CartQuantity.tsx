@@ -21,7 +21,7 @@ const CartQuantity = ({
     startTransistion(async () => {
       const response = await updateCartItemQuantity(type, productId);
 
-      if (response) {
+      if (response.success) {
         await refetch();
         await refetchCartItemCount();
       }
