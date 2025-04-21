@@ -3,6 +3,10 @@ import prisma from "@/db/prisma";
 import { Cart } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 
+/*
+  Description: Add cart 
+  Handler directory: CartActions > addToCart
+*/
 export const POST = async (request: NextRequest) => {
   try {
     const session = await auth();

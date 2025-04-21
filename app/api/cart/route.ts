@@ -30,6 +30,10 @@ export const GET = async () => {
   }
 };
 
+/*
+  Description: Add new cart for new user
+  Handler directory: CartActions > getUserCart
+*/
 export const POST = async () => {
   try {
     const session = await auth();

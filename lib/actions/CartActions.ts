@@ -70,33 +70,6 @@ export const addToCart = async (item: Microgreen, quantity: number) => {
       }
     }
 
-    //if cart does not exist, add new exisiting cart
-    const newCartItem: CartItem = {
-      productId: item.id,
-      name: item.name,
-      slug: item.slug,
-      category: item.category,
-      images: item.images,
-      description: item.description,
-      price: item.price,
-      isSelected: false,
-      quantity: quantity,
-    };
-
-    const newUserCart = {
-      cartItems: [newCartItem],
-      ...calculatePrice([]),
-    };
-
-    const response = await addUserCart(newUserCart);
-
-    if (response) {
-      return {
-        success: true,
-        message: `Added ${item.name} to your cart`,
-      };
-    }
-
     return {
       success: false,
       message: `Something went wrong`,
@@ -163,33 +136,6 @@ export const buyNowToCart = async (item: Microgreen, quantity: number) => {
           message: `Added ${item.name} (x${quantity}) to your cart`,
         };
       }
-    }
-
-    //if cart does not exist
-    const newCartItem: CartItem = {
-      productId: item.id,
-      name: item.name,
-      slug: item.slug,
-      category: item.category,
-      images: item.images,
-      description: item.description,
-      price: item.price,
-      isSelected: true,
-      quantity: quantity,
-    };
-
-    const newUserCart = {
-      cartItems: [newCartItem],
-      ...calculatePrice([newCartItem]),
-    };
-
-    const response = await addUserCart(newUserCart);
-
-    if (response) {
-      return {
-        success: true,
-        message: `Added ${item.name} to your cart`,
-      };
     }
 
     return {
