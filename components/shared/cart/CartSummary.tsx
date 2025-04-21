@@ -4,7 +4,8 @@ import { includeAllCartItems } from "@/lib/actions/CartActions";
 import { Cart } from "@/types";
 import { useTransition } from "react";
 import RemoveToCartButton from "./RemoveToCartButton";
-import Link from "next/link";
+import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
 const CartSummary = ({
   cart,
@@ -13,7 +14,7 @@ const CartSummary = ({
   cart: Cart;
   refetch: () => void;
 }) => {
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
 
   const totalSelectedQuantity = cart.cartItems
     .filter((item) => item.isSelected)
@@ -36,6 +37,20 @@ const CartSummary = ({
     });
   };
 
+  const handleDisabledCheckout = () => {
+    if (totalSelectedQuantity <= 0) {
+      toast(
+        <p className="toast-text text-destructive">
+          Include items in your cart before checking out
+        </p>
+      );
+
+      return;
+    }
+
+    redirect("/checkout");
+  };
+
   return (
     <div className="grid md:grid-cols-3 w-full rounded-sm bg-slate-100 p-5 mt-5 gap-5">
       <div className="flex col-span-1">
@@ -53,8 +68,6 @@ const CartSummary = ({
           Include All ({cart.cartItems.length})
         </span>
         <RemoveToCartButton
-          isPending={isPending}
-          startTransition={startTransition}
           totalSelectedQuantity={totalSelectedQuantity}
           refetch={refetch}
         />
@@ -72,10 +85,10 @@ const CartSummary = ({
         </p>
 
         <Button
-          disabled={totalSelectedQuantity <= 0}
           className="green-button cursor-pointer text-lg"
+          onClick={handleDisabledCheckout}
         >
-          <Link href="/checkout">Check out</Link>
+          Check out
         </Button>
       </div>
     </div>
