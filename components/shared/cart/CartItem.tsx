@@ -10,6 +10,7 @@ import Link from "next/link";
 import CartQuantity from "./CartQuantity";
 import CartSelection from "./CartSelection";
 import { useCartItemCount } from "@/lib/hooks/CartItemCount";
+import { currencyFormatter } from "@/lib/utils";
 
 const CartItemDetail = ({
   cartItem,
@@ -73,7 +74,7 @@ const CartItemDetail = ({
         refetch={refetch}
       />
       <TableCell className="text-center">
-        ₱ {(cartItem.price * cartItem.quantity).toFixed(2)}
+        {currencyFormatter.format(cartItem.price * cartItem.quantity)}
       </TableCell>
       <TableCell className="text-center">
         <Button

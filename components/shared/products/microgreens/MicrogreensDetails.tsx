@@ -8,6 +8,7 @@ import AddToCartButton from "../../cart/AddToCartButton";
 import Image from "next/image";
 import MicrogreenQuantity from "./MicrogreenQuantity";
 import BuyNowButton from "../../cart/BuyNowButton";
+import { currencyFormatter } from "@/lib/utils";
 
 const MicrogreensDetails = ({ slug }: { slug: string }) => {
   const { data: microgreen } = useQuery({
@@ -48,7 +49,7 @@ const MicrogreensDetails = ({ slug }: { slug: string }) => {
           </p>
           <p className="text-base mb-5">{microgreen.description[1]}</p>
           <p className="text-3xl font-bold mb-5 text-green-700">
-            ₱ {microgreen.price}
+            {currencyFormatter.format(microgreen.price)}
           </p>
           <div className="flex gap-4 w-full mb-5">
             <MicrogreenQuantity

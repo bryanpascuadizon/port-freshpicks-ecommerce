@@ -6,6 +6,7 @@ import { useTransition } from "react";
 import RemoveToCartButton from "./RemoveToCartButton";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
+import { currencyFormatter } from "@/lib/utils";
 
 const CartSummary = ({
   cart,
@@ -81,7 +82,7 @@ const CartSummary = ({
           )
         </p>
         <p className="self-center mr-10 text-lg text-green-700 font-bold">
-          ₱ {Number(cart.subtotalPrice).toFixed(2)}
+          {currencyFormatter.format(cart.subtotalPrice)}
         </p>
 
         <Button

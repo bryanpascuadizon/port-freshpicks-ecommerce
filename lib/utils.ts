@@ -23,3 +23,9 @@ export const calculatePrice = (item: CartItem[]) => {
   const totalPrice = roundDecimal(subtotalPrice + shippingPrice);
   return { subtotalPrice, shippingPrice, totalPrice };
 };
+
+export const currencyFormatter = new Intl.NumberFormat("en-PH", {
+  currency: "PHP",
+  style: "currency",
+  minimumFractionDigits: 2,
+});

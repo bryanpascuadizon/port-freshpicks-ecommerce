@@ -6,6 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { currencyFormatter } from "@/lib/utils";
 import { Cart } from "@/types";
 import Image from "next/image";
 
@@ -57,13 +58,13 @@ const CheckoutCartList = ({ cart }: { cart: Cart }) => {
                   {cartItem.category}
                 </TableCell>
                 <TableCell className="text-right">
-                  ₱ {Number(cartItem.price).toFixed(2)}
+                  {currencyFormatter.format(cartItem.price)}
                 </TableCell>
                 <TableCell className="text-right">
                   {cartItem.quantity}
                 </TableCell>
                 <TableCell className="font-bold text-green-700 text-right">
-                  ₱ {(cartItem.price * cartItem.quantity).toFixed(2)}
+                  {currencyFormatter.format(cartItem.price * cartItem.quantity)}
                 </TableCell>
               </TableRow>
             ))}

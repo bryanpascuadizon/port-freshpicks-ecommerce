@@ -3,6 +3,7 @@ import React from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import Link from "next/link";
 import Image from "next/image";
+import { currencyFormatter } from "@/lib/utils";
 
 const MicrogreensCard = ({ microgreen }: { microgreen: Microgreen }) => {
   return (
@@ -23,7 +24,9 @@ const MicrogreensCard = ({ microgreen }: { microgreen: Microgreen }) => {
           <p className="text-md text-center my-3 text-green-700">
             {microgreen.description[0]}
           </p>
-          <p className="text-center text-md font-bold">₱ {microgreen.price}</p>
+          <p className="text-center text-md font-bold">
+            {currencyFormatter.format(microgreen.price)}
+          </p>
         </CardContent>
       </Card>
     </Link>
