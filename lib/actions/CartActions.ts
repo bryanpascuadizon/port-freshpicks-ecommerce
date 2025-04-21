@@ -19,7 +19,7 @@ export const updateUserCart = async (updatedCart: Cart) => {
 };
 
 //Add items to user cart
-export const addToCart = async (item: Microgreen) => {
+export const addToCart = async (item: Microgreen, quantity: number) => {
   try {
     //Check user's cart
     const cart = await getUserCart();
@@ -37,7 +37,7 @@ export const addToCart = async (item: Microgreen) => {
         //Increase Item quantity by 1
         cart.cartItems.find(
           (cartItem) => cartItem.productId === item.id
-        )!.quantity = isProductExist.quantity + 1;
+        )!.quantity = isProductExist.quantity + quantity;
 
         selectedCartItems = cart.cartItems.filter((item) => item.isSelected);
 
@@ -57,7 +57,7 @@ export const addToCart = async (item: Microgreen) => {
           description: item.description,
           price: item.price,
           isSelected: false,
-          quantity: 1,
+          quantity: quantity,
         };
 
         selectedCartItems = [...cart.cartItems, newCartItem].filter(
@@ -92,7 +92,7 @@ export const addToCart = async (item: Microgreen) => {
       description: item.description,
       price: item.price,
       isSelected: false,
-      quantity: 1,
+      quantity: quantity,
     };
 
     selectedCartItems = [newCartItem].filter((item) => item.isSelected);

@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import MicrogreensImage from "./MicrogreensImage";
 import AddToCartButton from "../../cart/AddToCartButton";
 import Image from "next/image";
+import MicrogreenQuantity from "./MicrogreenQuantity";
 
 const MicrogreensDetails = ({ slug }: { slug: string }) => {
   const { data: microgreen } = useQuery({
@@ -15,11 +16,24 @@ const MicrogreensDetails = ({ slug }: { slug: string }) => {
 
   const [isMainImageHovered, setIsMainImageHovered] = useState(false);
   const [currentMainImageIndex, setCurrentMainImageIndex] = useState(0);
+  const [quantity, setQuantity] = useState(1);
+
+  const handleMicrogreenQuantity = (type: string) => {
+    if (type === "increase") {
+      setQuantity(quantity + 1);
+    }
+
+    if (type === "decrease") {
+      if (quantity >= 2) {
+        setQuantity(quantity - 1);
+      }
+    }
+  };
 
   return (
     microgreen && (
       <div className="grid grid-cols-1 md:grid-cols-9 gap-5 relative">
-        <div className="col-span-3 p-5 mb-5 ">
+        <div className="col-span-3 p-5 mb-5">
           <MicrogreensImage
             microgreenImages={microgreen.images}
             setIsMainImageHovered={setIsMainImageHovered}
@@ -32,12 +46,20 @@ const MicrogreensDetails = ({ slug }: { slug: string }) => {
             {microgreen?.description[0]}
           </p>
           <p className="text-base mb-5">{microgreen.description[1]}</p>
-          <p className="text-2xl font-bold mb-5">₱ {microgreen.price}</p>
-          <div>
-            <div className="flex gap-4 w-full">
-              <AddToCartButton item={microgreen} />
-            </div>
+          <p className="text-3xl font-bold mb-5 text-green-700">
+            ₱ {microgreen.price}
+          </p>
+          <div className="flex gap-4 w-full mb-5">
+            <MicrogreenQuantity
+              quantity={quantity}
+              handleMicrogreenQuantity={handleMicrogreenQuantity}
+            />
           </div>
+
+          <div className="flex gap-4 w-full">
+            <AddToCartButton item={microgreen} quantity={quantity} />
+          </div>
+
           {/* Zoomed Image */}
           <div
             className={`absolute top-0 left-1 h-full w-full flex justify-center bg-slate-50/70 rounded-sm ${

@@ -7,13 +7,19 @@ import { toast } from "sonner";
 import Link from "next/link";
 import { useCartItemCount } from "@/lib/hooks/CartItemCount";
 
-const AddToCartButton = ({ item }: { item: Microgreen }) => {
+const AddToCartButton = ({
+  item,
+  quantity,
+}: {
+  item: Microgreen;
+  quantity: number;
+}) => {
   const [isPending, startTransition] = useTransition();
   const { refetchCartItemCount } = useCartItemCount();
 
   const handleAddToCart = () => {
     startTransition(async () => {
-      const response = await addToCart(item);
+      const response = await addToCart(item, quantity);
 
       //Add Toast
       if (response.success) {
@@ -21,8 +27,8 @@ const AddToCartButton = ({ item }: { item: Microgreen }) => {
           <div className="toast-text grid grid-cols-3 gap-5">
             <div className="col-span-2">
               <p>
-                <span className="text-green-700">{item.name}</span> has been
-                added to your cart
+                <span className="text-green-700">{item.name}</span> (x{quantity}
+                ) has been added to your cart
               </p>
             </div>
             <div className="col-span-1 text-center self-center">

@@ -32,7 +32,7 @@ const CartQuantity = ({
     return (
       <Button
         disabled={isPending}
-        className="green-button h-7 w-5 self-center bg-green-700  cursor-pointer"
+        className="green-button h-7 w-5 self-center cursor-pointer"
         onClick={() => handleUpdateQuantity(type)}
       >
         {isPending ? (
@@ -49,7 +49,7 @@ const CartQuantity = ({
     <TableCell className="text-center">
       <div className="flex justify-center">
         <ButtonQuantity type="decrease" />
-        <p className="mx-2 self-center">{quantity}</p>
+        <p className="mx-2 self-center ml-3 mr-3">{quantity}</p>
         <ButtonQuantity type="increase" />
       </div>
     </TableCell>
