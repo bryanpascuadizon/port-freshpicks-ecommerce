@@ -38,6 +38,14 @@
   .green-button {
     @apply hover:bg-green-700 bg-green-700;
   }
+
+  .button {
+    @apply w-[130px];
+  }
+
+  .loader {
+    @apply w-[130px];
+  }
 }
 
 @layer base {

@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useQuery } from "@tanstack/react-query";
-import { getUserCart } from "@/lib/actions/CartActions";
+import { getUserCart } from "@/lib/handlers/cartHandlers";
 import CartSummary from "./CartSummary";
 import Link from "next/link";
 
@@ -29,6 +29,8 @@ const CartList = () => {
     "Total Price",
     "Actions",
   ];
+
+  console.log(cart);
 
   return (
     cart &&

@@ -26,6 +26,9 @@ const CartItemDetail = ({
       const response = await removeItemToCart(cartItem);
 
       if (response.success) {
+        await refetch();
+        await refetchCartItemCount();
+
         toast(
           <div className="toast-text">
             <p>
@@ -38,9 +41,6 @@ const CartItemDetail = ({
             </p>
           </div>
         );
-
-        await refetch();
-        await refetchCartItemCount();
       }
     });
   };
@@ -78,7 +78,7 @@ const CartItemDetail = ({
       <TableCell className="text-center">
         <Button
           disabled={isPending}
-          className="green-button cursor-pointer"
+          className="button green-button cursor-pointer"
           onClick={handleRemoveItemFromCart}
         >
           {isPending ? <ButtonLoader /> : "Remove"}

@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import MicrogreensDetails from "@/components/shared/products/microgreens/MicrogreensDetails";
-import { getMetadataProductBySlug } from "@/lib/actions/ProductActions";
+import { getMetadataProductBySlug } from "@/lib/handlers/productHandlers";
 import { APP_NAME } from "@/lib/constants";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";

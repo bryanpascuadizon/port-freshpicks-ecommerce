@@ -1,22 +1,10 @@
 import { Cart, CartItem, Microgreen } from "@/types";
 import { calculatePrice } from "../utils";
-
-export const getUserCart = async (): Promise<Cart> => {
-  const response: Promise<Cart> = await fetch("/api/cart").then((res) =>
-    res.json()
-  );
-
-  return response;
-};
-
-export const updateUserCart = async (updatedCart: Cart) => {
-  const response = await fetch(`/api/cart/update-cart`, {
-    method: "PATCH",
-    body: JSON.stringify(updatedCart),
-  });
-
-  return response;
-};
+import {
+  addUserCart,
+  getUserCart,
+  updateUserCart,
+} from "../handlers/cartHandlers";
 
 //Add items to user cart
 export const addToCart = async (item: Microgreen, quantity: number) => {
@@ -60,14 +48,14 @@ export const addToCart = async (item: Microgreen, quantity: number) => {
           quantity: quantity,
         };
 
-        selectedCartItems = [...cart.cartItems, newCartItem].filter(
+        selectedCartItems = [newCartItem, ...cart.cartItems].filter(
           (item) => item.isSelected
         );
 
         //Update cart
         updatedCart = {
           ...cart,
-          cartItems: [...cart.cartItems, newCartItem],
+          cartItems: [newCartItem, ...cart.cartItems],
           ...calculatePrice([...selectedCartItems]),
         };
       }
@@ -95,14 +83,107 @@ export const addToCart = async (item: Microgreen, quantity: number) => {
       quantity: quantity,
     };
 
-    selectedCartItems = [newCartItem].filter((item) => item.isSelected);
+    const newUserCart = {
+      cartItems: [newCartItem],
+      ...calculatePrice([]),
+    };
+
+    const response = await addUserCart(newUserCart);
+
+    if (response) {
+      return {
+        success: true,
+        message: `Added ${item.name} to your cart`,
+      };
+    }
+
+    return {
+      success: false,
+      message: `Something went wrong`,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: `${error}`,
+    };
+  }
+};
+
+//Buy now and put current item directly to cart
+export const buyNowToCart = async (item: Microgreen, quantity: number) => {
+  try {
+    //Check user cart
+    const cart = await getUserCart();
+    let updatedCart: Cart | null = null;
+    let selectedCartItems: CartItem[] | null = null;
+
+    if (cart) {
+      // if product is existing, get the cart item and just add the quantity
+      const existingCartItem = cart.cartItems.find(
+        (cartItem) => cartItem.productId === item.id
+      );
+
+      if (existingCartItem) {
+        existingCartItem!.quantity = existingCartItem.quantity + quantity;
+        existingCartItem!.isSelected = true;
+
+        selectedCartItems = cart.cartItems.filter((item) => item.isSelected);
+
+        updatedCart = {
+          ...cart,
+          ...calculatePrice([...selectedCartItems]),
+        };
+      } else {
+        const newCartItem: CartItem = {
+          productId: item.id,
+          name: item.name,
+          slug: item.slug,
+          category: item.category,
+          images: item.images,
+          description: item.description,
+          price: item.price,
+          isSelected: true,
+          quantity: quantity,
+        };
+
+        selectedCartItems = cart.cartItems.filter((item) => item.isSelected);
+
+        updatedCart = {
+          ...cart,
+          cartItems: [newCartItem, ...cart.cartItems],
+          ...calculatePrice([...selectedCartItems, newCartItem]),
+        };
+      }
+
+      const response = await updateUserCart(updatedCart);
+
+      if (response) {
+        return {
+          success: true,
+          message: `Added ${item.name} (x${quantity}) to your cart`,
+        };
+      }
+    }
+
+    //if cart does not exist
+    const newCartItem: CartItem = {
+      productId: item.id,
+      name: item.name,
+      slug: item.slug,
+      category: item.category,
+      images: item.images,
+      description: item.description,
+      price: item.price,
+      isSelected: true,
+      quantity: quantity,
+    };
 
     const newUserCart = {
       cartItems: [newCartItem],
-      ...calculatePrice([...selectedCartItems]),
+      ...calculatePrice([newCartItem]),
     };
 
-    const response = await updateUserCart(newUserCart);
+    const response = await addUserCart(newUserCart);
 
     if (response) {
       return {
@@ -382,9 +463,9 @@ export const countCartItems = async () => {
       );
 
       return cartItemCount;
+    } else {
+      return 0;
     }
-
-    throw new Error("Something went wrong");
   } catch (error) {
     throw new Error(`Something went wrong - ${error}`);
   }

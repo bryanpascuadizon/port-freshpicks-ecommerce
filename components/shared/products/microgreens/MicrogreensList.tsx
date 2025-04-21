@@ -1,6 +1,6 @@
 "use client";
 
-import { getMicrogreenProducts } from "@/lib/actions/ProductActions";
+import { getMicrogreenProducts } from "@/lib/handlers/productHandlers";
 import { Microgreen } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";

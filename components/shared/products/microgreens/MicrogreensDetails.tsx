@@ -1,12 +1,13 @@
 "use client";
 
-import { getMicrogreenProductBySlug } from "@/lib/actions/ProductActions";
+import { getMicrogreenProductBySlug } from "@/lib/handlers/productHandlers";
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import MicrogreensImage from "./MicrogreensImage";
 import AddToCartButton from "../../cart/AddToCartButton";
 import Image from "next/image";
 import MicrogreenQuantity from "./MicrogreenQuantity";
+import BuyNowButton from "../../cart/BuyNowButton";
 
 const MicrogreensDetails = ({ slug }: { slug: string }) => {
   const { data: microgreen } = useQuery({
@@ -58,6 +59,7 @@ const MicrogreensDetails = ({ slug }: { slug: string }) => {
 
           <div className="flex gap-4 w-full">
             <AddToCartButton item={microgreen} quantity={quantity} />
+            <BuyNowButton item={microgreen} quantity={quantity} />
           </div>
 
           {/* Zoomed Image */}

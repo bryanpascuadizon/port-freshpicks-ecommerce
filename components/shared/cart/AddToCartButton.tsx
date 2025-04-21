@@ -23,6 +23,8 @@ const AddToCartButton = ({
 
       //Add Toast
       if (response.success) {
+        await refetchCartItemCount();
+
         toast(
           <div className="toast-text grid grid-cols-3 gap-5">
             <div className="col-span-2">
@@ -40,8 +42,6 @@ const AddToCartButton = ({
             </div>
           </div>
         );
-
-        await refetchCartItemCount();
       }
     });
   };
@@ -49,7 +49,7 @@ const AddToCartButton = ({
   return (
     <Button
       disabled={isPending}
-      className="green-button p-5 cursor-pointer"
+      className="button border-3 border-green-700 bg-white text-black hover:bg-white p-5 cursor-pointer"
       onClick={handleAddToCart}
     >
       {isPending ? <ButtonLoader /> : "Add to Cart"}
