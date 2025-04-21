@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import prisma from "@/db/prisma";
+import { calculatePrice } from "@/lib/utils";
 import { NextResponse } from "next/server";
 
 /*
@@ -20,10 +21,31 @@ export const GET = async () => {
     }
 
     return new NextResponse(JSON.stringify(userCart), {
-      status: 404,
+      status: 200,
     });
   } catch (error) {
     return new NextResponse(`Error fetching user cart - ${error}`, {
+      status: 500,
+    });
+  }
+};
+
+export const POST = async () => {
+  try {
+    const session = await auth();
+    const userId = session?.user?.id;
+
+    const newUserCart = await prisma.cart.create({
+      data: {
+        userId: userId,
+        cartItems: [],
+        ...calculatePrice([]),
+      },
+    });
+
+    return new NextResponse(JSON.stringify(newUserCart), { status: 200 });
+  } catch (error) {
+    return new NextResponse(`Error creating a user cart  - ${error}`, {
       status: 500,
     });
   }

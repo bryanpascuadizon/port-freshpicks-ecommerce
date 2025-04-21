@@ -5,6 +5,16 @@ export const getUserCart = async (): Promise<Cart> => {
     res.json()
   );
 
+  if (!response) {
+    const newUserCartResponse = await fetch("/api/cart", {
+      method: "POST",
+    }).then((res) => res.json());
+
+    if (newUserCartResponse) {
+      return newUserCartResponse;
+    }
+  }
+
   return response;
 };
 
