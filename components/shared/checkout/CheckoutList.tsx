@@ -23,10 +23,11 @@ const CheckoutList = () => {
     );
   };
   return (
-    <div className="my-10">
-      <div className="text-xl font-bold mb-5">Checkout</div>
-      <CheckoutAddress />
-      {cart && (
+    cart && (
+      <div className="my-10">
+        <div className="text-xl font-bold mb-5">Checkout</div>
+        <CheckoutAddress />
+
         <div>
           <CheckoutCartList cart={cart} />
           <div className="grid grid-cols-2 gap-5 mt-5">
@@ -46,8 +47,8 @@ const CheckoutList = () => {
             </Button>
           </div>
         </div>
-      )}
-    </div>
+      </div>
+    )
   );
 };
 

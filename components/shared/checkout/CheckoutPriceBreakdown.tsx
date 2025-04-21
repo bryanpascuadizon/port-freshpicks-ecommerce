@@ -26,7 +26,7 @@ const CheckoutPriceBreakdown = ({
       </div>
       <div className="grid grid-cols-2 text-sm">
         <div>Total Price</div>
-        <div className="text-right text-lg text-green-700 font-bold">
+        <div className="text-right text-2xl text-green-700 font-bold">
           {currencyFormatter.format(totalPrice)}
         </div>
       </div>

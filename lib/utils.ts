@@ -19,7 +19,7 @@ export const calculatePrice = (item: CartItem[]) => {
   const subtotalPrice = roundDecimal(
     item.reduce((acc, item) => acc + item.price * item.quantity, 0)
   );
-  const shippingPrice = roundDecimal(defaultShippingPrice);
+  const shippingPrice = subtotalPrice * roundDecimal(defaultShippingPrice);
   const totalPrice = roundDecimal(subtotalPrice + shippingPrice);
   return { subtotalPrice, shippingPrice, totalPrice };
 };
