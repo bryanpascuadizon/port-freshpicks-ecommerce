@@ -1,10 +1,6 @@
 import { Cart, CartItem, Microgreen } from "@/types";
 import { calculatePrice } from "../utils";
-import {
-  addUserCart,
-  getUserCart,
-  updateUserCart,
-} from "../handlers/cartHandlers";
+import { getUserCart, updateUserCart } from "../handlers/cartHandlers";
 
 //Add items to user cart
 export const addToCart = async (item: Microgreen, quantity: number) => {

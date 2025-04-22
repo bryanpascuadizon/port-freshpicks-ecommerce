@@ -20,7 +20,7 @@ const CheckoutPriceBreakdown = ({
       </div>
       <div className="grid grid-cols-2 text-sm mb-3">
         <div>
-          Shipping Price{" "}
+          Delivery Fee{" "}
           <span className="text-green-700 text-xs">
             (20% of subtotal price)
           </span>

@@ -3,7 +3,6 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "./db/prisma";
 import { compareSync } from "bcrypt-ts-edge";
-import { NextResponse } from "next/server";
 
 export const config = {
   pages: {
@@ -40,12 +39,12 @@ export const config = {
 
           //return user data
           if (isMatch) {
-            console.log(user);
             return {
               id: user.id,
               name: user.name,
               email: user.email,
               role: user.role,
+              phone_number: user.phone_number,
             };
           }
         }
