@@ -21,7 +21,7 @@ const CheckoutCartList = ({ cart }: { cart: Cart }) => {
   ];
 
   return (
-    <div className="p-5">
+    <div className="p-5 md:col-span-3">
       <div className="font-bold">Products Ordered</div>
       <Table>
         <TableHeader>
