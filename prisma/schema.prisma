@@ -4,11 +4,11 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-/*
-1. npx prisma generate
-2. npx prisma migrate dev --name [migration_name]
-3. npx prisma db seed
-*/
+/**
+ * 1. npx prisma generate
+ * 2. npx prisma migrate dev --name [migration_name]
+ * 3. npx prisma db seed
+ */
 
 generator client {
   provider        = "prisma-client-js"
@@ -27,6 +27,7 @@ model User {
   password      String?
   emailVerified DateTime?
   image         String?
+  address       Json?     @db.Json
   role          String    @default("user")
   createdAt     DateTime  @default(now()) @db.Timestamp(6)
   updatedAt     DateTime  @updatedAt
