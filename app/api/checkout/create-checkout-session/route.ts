@@ -30,8 +30,6 @@ export const POST = async (request: NextRequest) => {
     const session = await auth();
     const user = session?.user;
 
-    console.log(user);
-
     const response = await fetch(
       `https://api.paymongo.com/v1/checkout_sessions`,
       {
@@ -54,7 +52,7 @@ export const POST = async (request: NextRequest) => {
               send_email_receipt: true,
               show_description: false,
               show_line_items: true,
-              success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}`,
+              success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/orders`,
               cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/checkout`,
               line_items: [...lineItems],
               payment_method_types: ["card", "gcash", "paymaya"],
