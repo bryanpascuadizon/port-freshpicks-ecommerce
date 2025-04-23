@@ -54,7 +54,7 @@ const CartSummary = ({
 
   return (
     <div className="grid md:grid-cols-3 w-full rounded-sm bg-slate-100 p-5 mt-5 gap-5">
-      <div className="flex col-span-1">
+      <div className="col-span-1 hidden md:flex">
         <Checkbox
           disabled={cart.cartItems.length === 0}
           checked={
@@ -65,7 +65,7 @@ const CartSummary = ({
           className="self-center mr-5 cursor-pointer"
           onClick={handleIncludeAllItems}
         />
-        <span className="self-center mr-5">
+        <span className="self-center mr-5 hidden md:block">
           Include All ({cart.cartItems.length})
         </span>
         <RemoveToCartButton
@@ -73,18 +73,33 @@ const CartSummary = ({
           refetch={refetch}
         />
       </div>
-      <div className="flex justify-end col-span-2">
-        <p className="self-center mr-10">
+      <div className="flex justify-between md:justify-end col-span-2">
+        <div className="flex md:hidden">
+          <Checkbox
+            disabled={cart.cartItems.length === 0}
+            checked={
+              totalAllQuantity === 0
+                ? false
+                : totalAllQuantity === totalSelectedQuantity
+            }
+            className="self-center mr-5 cursor-pointer"
+            onClick={handleIncludeAllItems}
+          />
+          <RemoveToCartButton
+            totalSelectedQuantity={totalSelectedQuantity}
+            refetch={refetch}
+          />
+        </div>
+        <p className="self-center mr-10 hidden md:block">
           Total ({totalSelectedQuantity}{" "}
           {totalSelectedQuantity > 1 || totalSelectedQuantity === 0
             ? "items included"
             : "item included"}
           )
         </p>
-        <p className="self-center mr-10 text-lg text-green-700 font-bold">
+        <p className="self-center mr-5 md:text-lg text-2xl text-green-700 font-bold">
           {currencyFormatter.format(cart.subtotalPrice)}
         </p>
-
         <Button
           className="green-button cursor-pointer text-lg"
           onClick={handleDisabledCheckout}

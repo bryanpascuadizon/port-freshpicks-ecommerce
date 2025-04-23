@@ -1,16 +1,15 @@
-import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { removeItemToCart } from "@/lib/actions/CartActions";
 import { CartItem } from "@/types";
 import Image from "next/image";
 import { useTransition } from "react";
-import ButtonLoader from "../ButtonLoader";
 import { toast } from "sonner";
 import Link from "next/link";
 import CartQuantity from "./CartQuantity";
 import CartSelection from "./CartSelection";
 import { useCartItemCount } from "@/lib/hooks/CartItemCount";
 import { currencyFormatter } from "@/lib/utils";
+import { Loader, Trash2 } from "lucide-react";
 
 const CartItemDetail = ({
   cartItem,
@@ -47,45 +46,93 @@ const CartItemDetail = ({
   };
 
   return (
-    <TableRow className="border-0 text-base">
-      <CartSelection cartItem={cartItem} refetch={refetch} />
-      <TableCell className="flex justify-center">
-        <Image
-          src={cartItem.images[0]}
-          alt={cartItem.slug}
-          width={50}
-          height={50}
-          className="rounded-full"
-        />
-      </TableCell>
-      <TableCell>
-        <Link
-          href={`/products/microgreens/${cartItem.slug}`}
-          className="w-full"
-        >
-          <p className="font-bold">{cartItem.name}</p>
-          <p className="text-green-700">{cartItem.description[0]}</p>
-        </Link>
-      </TableCell>
-      <TableCell className="text-center">{cartItem.category}</TableCell>
-      <CartQuantity
-        quantity={cartItem.quantity}
-        productId={cartItem.productId}
-        refetch={refetch}
-      />
-      <TableCell className="text-center">
-        {currencyFormatter.format(cartItem.price * cartItem.quantity)}
-      </TableCell>
-      <TableCell className="text-center">
-        <Button
-          disabled={isPending}
-          className="button green-button cursor-pointer"
-          onClick={handleRemoveItemFromCart}
-        >
-          {isPending ? <ButtonLoader /> : "Remove"}
-        </Button>
-      </TableCell>
-    </TableRow>
+    <>
+      <TableRow className="border-0 text-base hidden md:table-row">
+        <CartSelection cartItem={cartItem} refetch={refetch} />
+        <TableCell className="flex justify-center">
+          <Image
+            src={cartItem.images[0]}
+            alt={cartItem.slug}
+            width={50}
+            height={50}
+            className="rounded-full"
+          />
+        </TableCell>
+        <TableCell>
+          <Link
+            href={`/products/microgreens/${cartItem.slug}`}
+            className="w-full"
+          >
+            <p className="font-bold">{cartItem.name}</p>
+            <p className="text-green-700">{cartItem.description[0]}</p>
+          </Link>
+        </TableCell>
+        <TableCell className="text-center">{cartItem.category}</TableCell>
+        <TableCell className="text-center">
+          <CartQuantity
+            quantity={cartItem.quantity}
+            productId={cartItem.productId}
+            refetch={refetch}
+          />
+        </TableCell>
+        <TableCell className="text-center">
+          {currencyFormatter.format(cartItem.price * cartItem.quantity)}
+        </TableCell>
+        <TableCell className="text-center">
+          {isPending ? (
+            <Loader className="self-center animate-spin" />
+          ) : (
+            <Trash2
+              className="text-red-700 self-center"
+              onClick={handleRemoveItemFromCart}
+            />
+          )}
+        </TableCell>
+      </TableRow>
+
+      <TableRow className="border-0 text-base table-row md:hidden">
+        <CartSelection cartItem={cartItem} refetch={refetch} />
+        <TableCell className="">
+          <Image
+            src={cartItem.images[0]}
+            alt={cartItem.slug}
+            width={50}
+            height={50}
+            className="rounded-full self-center"
+          />
+        </TableCell>
+        <TableCell>
+          <Link
+            href={`/products/microgreens/${cartItem.slug}`}
+            className="w-full"
+          >
+            <p className="font-bold">{cartItem.name}</p>
+            <p className="">{cartItem.category}</p>
+            <p className="text-green-700 mb-5">{cartItem.description[0]}</p>
+          </Link>
+          <div className="grid grid-cols-3 gap-5">
+            <p className="text-green-700 font-bold">
+              {currencyFormatter.format(cartItem.price * cartItem.quantity)}
+            </p>
+            <CartQuantity
+              quantity={cartItem.quantity}
+              productId={cartItem.productId}
+              refetch={refetch}
+            />
+            <p className="flex justify-center">
+              {isPending ? (
+                <Loader className="animate-spin" />
+              ) : (
+                <Trash2
+                  className="text-red-700 cursor-pointer"
+                  onClick={handleRemoveItemFromCart}
+                />
+              )}
+            </p>
+          </div>
+        </TableCell>
+      </TableRow>
+    </>
   );
 };
 

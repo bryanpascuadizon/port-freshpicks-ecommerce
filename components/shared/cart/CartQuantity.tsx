@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { TableCell } from "@/components/ui/table";
 import { updateCartItemQuantity } from "@/lib/actions/CartActions";
 import { useCartItemCount } from "@/lib/hooks/CartItemCount";
 import { Loader, Minus, Plus } from "lucide-react";
@@ -46,13 +45,11 @@ const CartQuantity = ({
     );
   };
   return (
-    <TableCell className="text-center">
-      <div className="flex justify-center">
-        <ButtonQuantity type="decrease" />
-        <p className="mx-2 self-center ml-3 mr-3">{quantity}</p>
-        <ButtonQuantity type="increase" />
-      </div>
-    </TableCell>
+    <div className="flex justify-center">
+      <ButtonQuantity type="decrease" />
+      <p className="mx-2 self-center ml-3 mr-3">{quantity}</p>
+      <ButtonQuantity type="increase" />
+    </div>
   );
 };
 

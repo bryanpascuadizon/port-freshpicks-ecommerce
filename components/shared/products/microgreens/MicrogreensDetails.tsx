@@ -34,15 +34,15 @@ const MicrogreensDetails = ({ slug }: { slug: string }) => {
 
   return (
     microgreen && (
-      <div className="grid grid-cols-1 md:grid-cols-9 gap-5 relative">
-        <div className="col-span-3 p-5 mb-5">
+      <div className="grid md:grid-cols-9 gap-5 relative">
+        <div className="md:col-span-3 p-5 mb-5 flex justify-center">
           <MicrogreensImage
             microgreenImages={microgreen.images}
             setIsMainImageHovered={setIsMainImageHovered}
             setCurrentMainImageIndex={setCurrentMainImageIndex}
           />
         </div>
-        <div className="col-span-6 p-5 mb-5 relative">
+        <div className="md:col-span-6 p-5 mb-5 relative">
           <p className="text-2xl font-bold mb-5">{microgreen.name}</p>
           <p className="text-base mb-5 text-green-700">
             {microgreen?.description[0]}

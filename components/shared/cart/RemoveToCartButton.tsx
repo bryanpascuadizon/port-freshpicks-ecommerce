@@ -1,9 +1,8 @@
-import { Button } from "@/components/ui/button";
 import { removeCartItems } from "@/lib/actions/CartActions";
 import { useCartItemCount } from "@/lib/hooks/CartItemCount";
 import { useTransition } from "react";
 import { toast } from "sonner";
-import ButtonLoader from "../ButtonLoader";
+import { Loader, Trash2 } from "lucide-react";
 
 const RemoveToCartButton = ({
   totalSelectedQuantity,
@@ -37,13 +36,25 @@ const RemoveToCartButton = ({
   };
 
   return (
-    <Button
-      disabled={isPending}
-      className="button green-button cursor-pointer"
-      onClick={handleRemoveCartItems}
-    >
-      {isPending ? <ButtonLoader /> : "Remove"}
-    </Button>
+    <div className="flex">
+      {" "}
+      {isPending ? (
+        <Loader className="self-center animate-spin" />
+      ) : (
+        <Trash2
+          className="hidden md:block text-red-700 self-center cursor-pointer"
+          onClick={handleRemoveCartItems}
+        />
+      )}
+      {isPending ? (
+        <Loader className="self-center animate-spin block md:hidden" />
+      ) : (
+        <Trash2
+          className="block md:hidden text-red-700 self-center cursor-pointer"
+          onClick={handleRemoveCartItems}
+        />
+      )}
+    </div>
   );
 };
 
