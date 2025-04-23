@@ -10,7 +10,7 @@ export const POST = async (req: NextRequest) => {
   console.log("Payload", payload);
 
   if (payload.data.attributes.type === "checkout_session.payment.paid") {
-    const sessionId = payload.data.id;
+    //const sessionId = payload.data.id;
     const billing = payload.data.attributes.billing;
 
     console.log("✅ Payment Success for:", billing.email);
