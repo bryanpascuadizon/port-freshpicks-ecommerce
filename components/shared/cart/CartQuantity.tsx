@@ -45,7 +45,7 @@ const CartQuantity = ({
     );
   };
   return (
-    <div className="flex justify-center">
+    <div className="flex md:justify-center">
       <ButtonQuantity type="decrease" />
       <p className="mx-2 self-center ml-3 mr-3">{quantity}</p>
       <ButtonQuantity type="increase" />

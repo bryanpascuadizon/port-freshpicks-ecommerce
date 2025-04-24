@@ -67,7 +67,7 @@ const CartItemDetail = ({
             <p className="text-green-700">{cartItem.description[0]}</p>
           </Link>
         </TableCell>
-        <TableCell className="text-center">{cartItem.category}</TableCell>
+        <TableCell className="">{cartItem.category}</TableCell>
         <TableCell className="text-center">
           <CartQuantity
             quantity={cartItem.quantity}
@@ -75,7 +75,7 @@ const CartItemDetail = ({
             refetch={refetch}
           />
         </TableCell>
-        <TableCell className="text-center">
+        <TableCell className="text-center text-green-700 font-bold">
           {currencyFormatter.format(cartItem.price * cartItem.quantity)}
         </TableCell>
         <TableCell className="text-center">
@@ -111,14 +111,14 @@ const CartItemDetail = ({
             <p className="text-green-700 mb-5">{cartItem.description[0]}</p>
           </Link>
           <div className="grid grid-cols-3 gap-5">
-            <p className="text-green-700 font-bold">
-              {currencyFormatter.format(cartItem.price * cartItem.quantity)}
-            </p>
             <CartQuantity
               quantity={cartItem.quantity}
               productId={cartItem.productId}
               refetch={refetch}
             />
+            <p className="text-green-700 font-bold text-center">
+              {currencyFormatter.format(cartItem.price * cartItem.quantity)}
+            </p>
             <p className="flex justify-center">
               {isPending ? (
                 <Loader className="animate-spin" />
