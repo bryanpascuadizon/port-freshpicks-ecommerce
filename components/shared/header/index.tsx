@@ -36,12 +36,12 @@ const Header = async () => {
               <PopoverContent className="">
                 <div className="flex flex-col rounded-sm bg-white border-1 border-slate-200 mt-3">
                   <div className="p-3 flex flex-col">
-                    <Link href="/profile" className="mb-1 flex">
+                    <Link href="/user/account/profile" className="mb-1 flex">
                       <User className="mr-4" />
                       Profile
                     </Link>
 
-                    <Link href="/" className="mb-1 flex">
+                    <Link href="/user/orders" className="mb-1 flex">
                       <ListOrdered className="mr-4" />
                       My Orders
                     </Link>

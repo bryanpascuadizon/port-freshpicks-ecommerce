@@ -33,3 +33,14 @@ export type Cart = {
   totalPrice: number;
   shippingPrice: number;
 };
+
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  phone_number: string;
+  emailVerified: string;
+  image: string;
+  address: string[];
+  role: string;
+};
