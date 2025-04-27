@@ -8,13 +8,9 @@ import ShoppingCartHeader from "./ShoppingCart";
 import siteImage from "@/assets/site-icon.png";
 import { Popover, PopoverContent } from "@radix-ui/react-popover";
 import { PopoverTrigger } from "@/components/ui/popover";
-import { auth } from "@/auth";
 import { Separator } from "@/components/ui/separator";
 
 const Header = async () => {
-  const session = await auth();
-  const user = session?.user;
-
   return (
     <header className="w-full border-b-1 border-b-slate-100">
       <div className="wrapper flex-between">

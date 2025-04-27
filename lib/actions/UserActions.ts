@@ -3,6 +3,7 @@
 import { signIn, signOut } from "@/auth";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { getAccountProfile } from "../handlers/userHandlers";
+import { User } from "@/types";
 
 export const SignIn = async (prevState: unknown, formData: FormData) => {
   try {
@@ -33,7 +34,7 @@ export const SignOut = async () => {
   await signOut();
 };
 
-export const getUserProfile = async () => {
+export const getUserProfile = async (): Promise<User> => {
   try {
     const response = await getAccountProfile();
 
@@ -41,14 +42,8 @@ export const getUserProfile = async () => {
       return response;
     }
 
-    return {
-      success: false,
-      message: `Something went wrong`,
-    };
+    return response;
   } catch (error) {
-    return {
-      success: false,
-      message: `Something went wrong - ${error}`,
-    };
+    throw new Error(`Something went wrong - ${error}`);
   }
 };

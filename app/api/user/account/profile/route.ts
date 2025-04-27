@@ -7,15 +7,11 @@ export const GET = async () => {
     const session = await auth();
     const userSession = session?.user;
 
-    console.log("test", userSession);
-
     const user = await prisma.user.findFirst({
       where: {
         id: userSession?.id,
       },
     });
-
-    console.log(user);
 
     if (user) {
       return new NextResponse(JSON.stringify(user), { status: 200 });
@@ -23,6 +19,8 @@ export const GET = async () => {
 
     return new NextResponse("Cannot get user profile", { status: 500 });
   } catch (error) {
-    return new NextResponse("Cannot get user profile", { status: 500 });
+    return new NextResponse(`Cannot get user profile - ${error}`, {
+      status: 500,
+    });
   }
 };
