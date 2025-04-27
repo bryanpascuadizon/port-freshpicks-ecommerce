@@ -10,6 +10,12 @@
  * 3. npx prisma db seed
  */
 
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["driverAdapters"]
@@ -30,6 +36,7 @@ model User {
   image         String?
   address       Json?     @db.Json
   role          String    @default("user")
+  gender        Gender    @default(OTHER)
   createdAt     DateTime  @default(now()) @db.Timestamp(6)
   updatedAt     DateTime  @updatedAt
   Account       Account[]
