@@ -1,39 +1,196 @@
 "use client";
 
-import { getUserProfile } from "@/lib/actions/UserActions";
+import { getUserProfile, updateUserProfile } from "@/lib/actions/UserActions";
 import { useQuery } from "@tanstack/react-query";
 import UserSidebar from "./UserSidebar";
-import { userSidebarMenu } from "@/lib/constants";
+import { GENDER, userSidebarMenu } from "@/lib/constants";
+import { useActionState, useEffect, useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import ButtonLoader from "../ButtonLoader";
+import { formatPhoneNumber } from "@/lib/utils";
 
 const UserProfile = () => {
-  const { data: user } = useQuery({
+  const { data: user, refetch } = useQuery({
     queryKey: ["user-profile"],
     queryFn: getUserProfile,
   });
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [userState, action, isUpdatePending] = useActionState(
+    updateUserProfile,
+    {
+      success: false,
+      message: "",
+    }
+  );
+
+  useEffect(() => {
+    const refetchUser = async () => {
+      setIsEditing(false);
+      await refetch();
+    };
+
+    refetchUser();
+  }, [userState, refetch]);
 
   return (
     user && (
       <div className="grid grid-cols-4 gap-5">
         <UserSidebar linkHighlighted={userSidebarMenu.Profile} />
-        <div className="col-span-3 p-5 rounded-sm ">
-          <div className="grid grid-cols-4 gap-5">
-            <div className="col-span-1 text-right">
-              <p className="mb-5 text-green-700">Name</p>
-              <p className="mb-5 text-green-700">Email</p>
-              <p className="mb-5 text-green-700">Phone Number</p>
-              <p className="mb-5 text-green-700">Gender</p>
-              <p className="mb-5 text-green-700">Date of Birth</p>
-            </div>
-            <div className="col-span-3">
-              <p className="mb-5">{user.name}</p>
-              <p className="mb-5">{user.email}</p>
-              <p className="mb-5 ">
-                ********* {user.phone_number.substring(9)}
-              </p>
-              <p className="mb-5">Male</p>
-              <p className="mb-5">**/**/1996</p>
-            </div>
+        <div className="col-span-3 flex p-5 rounded-sm relative">
+          <div className="w-full">
+            <form action={action}>
+              <Table className="text-base">
+                <TableBody>
+                  <TableRow className="border-0">
+                    <TableCell className="text-green-700">Name</TableCell>
+                    <TableCell>
+                      {isEditing ? (
+                        <Input
+                          id="name"
+                          name="name"
+                          className="bg-white"
+                          defaultValue={user.name}
+                        />
+                      ) : (
+                        <>
+                          {userState.success ? userState.user.name : user.name}
+                        </>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow className="border-0">
+                    <TableCell className="text-green-700">Email</TableCell>
+                    <TableCell>
+                      {" "}
+                      {isEditing ? (
+                        <Input
+                          id="email"
+                          name="email"
+                          className="bg-white"
+                          defaultValue={user.email}
+                        />
+                      ) : (
+                        <>
+                          {" "}
+                          {userState.success
+                            ? userState.user.email
+                            : user.email}
+                        </>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow className="border-0">
+                    <TableCell className="text-green-700">
+                      Phone Number
+                    </TableCell>
+                    <TableCell>
+                      {isEditing ? (
+                        <Input
+                          id="phone_number"
+                          name="phone_number"
+                          className="bg-white"
+                          defaultValue={user.phone_number}
+                        />
+                      ) : (
+                        <>
+                          {formatPhoneNumber(
+                            userState.success
+                              ? userState.user.phone_number
+                              : user.phone_number
+                          )}
+                        </>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow className="border-0">
+                    <TableCell className="text-green-700">Gender</TableCell>
+                    <TableCell>
+                      <RadioGroup
+                        defaultValue={user.gender}
+                        disabled={!isEditing}
+                        name="gender"
+                      >
+                        <div className="flex items-center">
+                          <RadioGroupItem
+                            value={GENDER.Male}
+                            id={GENDER.Male}
+                            className="mr-2 cursor-pointer"
+                          />
+                          <Label
+                            htmlFor={GENDER.Male}
+                            className="text-base mr-3"
+                          >
+                            {GENDER.Male}
+                          </Label>
+                          <RadioGroupItem
+                            value={GENDER.Female}
+                            id={GENDER.Female}
+                            className="mr-2 cursor-pointer"
+                          />
+                          <Label
+                            htmlFor={GENDER.Female}
+                            className="text-base mr-3 cursor-pointer"
+                          >
+                            {GENDER.Female}
+                          </Label>
+                          <RadioGroupItem
+                            value={GENDER.Other}
+                            id={GENDER.Other}
+                            className="mr-2 cursor-pointer"
+                          />
+                          <Label
+                            htmlFor={GENDER.Other}
+                            className="text-base mr-3 cursor-pointer"
+                          >
+                            {GENDER.Other}
+                          </Label>
+                        </div>
+                      </RadioGroup>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow className="border-0">
+                    <TableCell className="text-green-700">
+                      Date of Birth
+                    </TableCell>
+                    <TableCell className="">**/**/1996</TableCell>
+                  </TableRow>
+                  {isEditing && (
+                    <TableRow>
+                      <TableCell></TableCell>
+                      <TableCell className="flex gap-5">
+                        {" "}
+                        <Button
+                          className="border-3 border-green-700 bg-white text-black hover:bg-white cursor-pointer min-w-[100px]"
+                          onClick={() => setIsEditing(false)}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          className="green-button min-w-[100px] cursor-pointer"
+                          type="submit"
+                        >
+                          {isUpdatePending ? <ButtonLoader /> : "Update"}
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </form>
           </div>
+          {!isEditing && (
+            <Button
+              className="green-button cursor-pointer bg-white"
+              onClick={() => setIsEditing(true)}
+            >
+              Update
+            </Button>
+          )}
         </div>
       </div>
     )

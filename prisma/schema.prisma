@@ -36,7 +36,7 @@ model User {
   image         String?
   address       Json?     @db.Json
   role          String    @default("user")
-  gender        Gender    @default(OTHER)
+  gender        String?
   createdAt     DateTime  @default(now()) @db.Timestamp(6)
   updatedAt     DateTime  @updatedAt
   Account       Account[]

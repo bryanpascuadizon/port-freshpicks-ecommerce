@@ -9,6 +9,7 @@ import siteImage from "@/assets/site-icon.png";
 import { Popover, PopoverContent } from "@radix-ui/react-popover";
 import { PopoverTrigger } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
 
 const Header = async () => {
   return (
@@ -43,10 +44,11 @@ const Header = async () => {
                     </Link>
                   </div>
                   <Separator />
-                  <p className="cursor-pointer p-2 flex" onClick={SignOut}>
+                  <Button onClick={SignOut} className="cursor-pointer">
+                    {" "}
                     <Power className="mr-4" />
                     Logout
-                  </p>
+                  </Button>
                 </div>
               </PopoverContent>
             </Popover>

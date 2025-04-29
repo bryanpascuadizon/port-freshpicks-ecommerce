@@ -31,3 +31,7 @@ export const currencyFormatter = new Intl.NumberFormat("en-PH", {
   style: "currency",
   minimumFractionDigits: 2,
 });
+
+export const formatPhoneNumber = (phoneNumber: string) => {
+  return `********* ${phoneNumber.substring(9)}`;
+};

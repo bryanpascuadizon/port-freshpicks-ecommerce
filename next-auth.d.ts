@@ -11,6 +11,7 @@ declare module "next-auth" {
       role?: string;
       id?: string;
       phone_number?: string;
+      gender?: string;
     };
   }
 

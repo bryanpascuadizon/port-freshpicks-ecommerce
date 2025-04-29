@@ -66,6 +66,9 @@ export const config = {
       //If there's a user profile update
       if (trigger === "update") {
         session.user.name = user.name;
+        session.user.email = user.email;
+        session.user.phone_number = user.phone_number;
+        session.user.gender = user.gender;
       }
 
       return session;
@@ -95,6 +98,9 @@ export const config = {
       //If there's a user profile update
       if (session?.user.name && trigger === "update") {
         token.name = session.user.name;
+        token.email = session.user.email;
+        token.phone_number = session.user.phone_number;
+        token.gender = session.user.gender;
       }
 
       return token;

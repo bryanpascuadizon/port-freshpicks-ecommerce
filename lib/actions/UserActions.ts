@@ -2,8 +2,11 @@
 
 import { signIn, signOut } from "@/auth";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
-import { getAccountProfile } from "../handlers/userHandlers";
-import { User } from "@/types";
+import {
+  getAccountProfile,
+  updateAccountProfile,
+} from "../handlers/userHandlers";
+import { FormState, User } from "@/types";
 
 export const SignIn = async (prevState: unknown, formData: FormData) => {
   try {
@@ -45,5 +48,44 @@ export const getUserProfile = async (): Promise<User> => {
     return response;
   } catch (error) {
     throw new Error(`Something went wrong - ${error}`);
+  }
+};
+
+//@typescript-eslint/no-explicit-any
+export const updateUserProfile = async (
+  prevState: FormState,
+  formData: FormData
+) => {
+  try {
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const phoneNumber = formData.get("phone_number");
+    const gender = formData.get("gender");
+
+    const userFieldsForUpdate = {
+      name,
+      email,
+      phoneNumber,
+      gender,
+    };
+
+    const response = await updateAccountProfile(userFieldsForUpdate);
+
+    if (response) {
+      return {
+        success: true,
+        user: response,
+      };
+    }
+
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: `Something went wrong - ${error}`,
+    };
   }
 };

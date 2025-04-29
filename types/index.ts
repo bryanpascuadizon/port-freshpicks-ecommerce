@@ -43,4 +43,10 @@ export type User = {
   image: string;
   address: string[];
   role: string;
+  gender: string;
+};
+
+export type FormState = {
+  success: boolean;
+  message?: string;
 };
