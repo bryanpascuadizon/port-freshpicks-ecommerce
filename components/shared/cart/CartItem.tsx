@@ -47,7 +47,7 @@ const CartItemDetail = ({
 
   return (
     <>
-      <TableRow className="border-0 text-base hidden md:table-row">
+      <TableRow className="tableRow text-base hidden md:table-row">
         <CartSelection cartItem={cartItem} refetch={refetch} />
         <TableCell className="flex justify-center">
           <Image

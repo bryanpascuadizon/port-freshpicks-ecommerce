@@ -6,7 +6,7 @@ import siteImage from "@/assets/site-icon.png";
 
 const Footer = () => {
   return (
-    <footer className="w-full border-t-1 border-t-slate-100">
+    <footer className="w-full border-t-1 border-t-slate-200">
       <div className="wrapper flex-between">
         <div className="flex-start">
           <Link href="/" className="flex-start">

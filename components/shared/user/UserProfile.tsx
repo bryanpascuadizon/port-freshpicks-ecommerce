@@ -39,15 +39,28 @@ const UserProfile = () => {
 
   return (
     user && (
-      <div className="grid grid-cols-4 gap-5">
+      <div className="grid grid-cols-4 gap-5 h-full">
         <UserSidebar linkHighlighted={userSidebarMenu.Profile} />
-        <div className="col-span-3 flex p-5 rounded-sm relative">
+        <div className="col-span-3 p-5 rounded-sm">
+          <div className="flex items-center mb-5">
+            <p className="text-lg font-bold">Profile</p>
+
+            {!isEditing && (
+              <Button
+                className="green-button cursor-pointer bg-white ml-auto"
+                onClick={() => setIsEditing(true)}
+              >
+                Update
+              </Button>
+            )}
+          </div>
+
           <div className="w-full">
             <form action={action}>
               <Table className="text-base">
-                <TableBody>
-                  <TableRow className="border-0">
-                    <TableCell className="text-green-700">Name</TableCell>
+                <TableBody className="">
+                  <TableRow className="tableRow">
+                    <TableCell className="text-green-700 ">Name</TableCell>
                     <TableCell>
                       {isEditing ? (
                         <Input
@@ -63,7 +76,7 @@ const UserProfile = () => {
                       )}
                     </TableCell>
                   </TableRow>
-                  <TableRow className="border-0">
+                  <TableRow className="tableRow">
                     <TableCell className="text-green-700">Email</TableCell>
                     <TableCell>
                       {" "}
@@ -84,7 +97,7 @@ const UserProfile = () => {
                       )}
                     </TableCell>
                   </TableRow>
-                  <TableRow className="border-0">
+                  <TableRow className="tableRow">
                     <TableCell className="text-green-700">
                       Phone Number
                     </TableCell>
@@ -107,7 +120,7 @@ const UserProfile = () => {
                       )}
                     </TableCell>
                   </TableRow>
-                  <TableRow className="border-0">
+                  <TableRow className="tableRow">
                     <TableCell className="text-green-700">Gender</TableCell>
                     <TableCell>
                       <RadioGroup
@@ -153,19 +166,19 @@ const UserProfile = () => {
                       </RadioGroup>
                     </TableCell>
                   </TableRow>
-                  <TableRow className="border-0">
+                  <TableRow className="tableRow">
                     <TableCell className="text-green-700">
                       Date of Birth
                     </TableCell>
                     <TableCell className="">**/**/1996</TableCell>
                   </TableRow>
                   {isEditing && (
-                    <TableRow>
+                    <TableRow className="tableRow">
                       <TableCell></TableCell>
                       <TableCell className="flex gap-5">
                         {" "}
                         <Button
-                          className="border-3 border-green-700 bg-white text-black hover:bg-white cursor-pointer min-w-[100px]"
+                          className="green-button-alternate min-w-[100px]"
                           onClick={() => setIsEditing(false)}
                         >
                           Cancel
@@ -183,14 +196,6 @@ const UserProfile = () => {
               </Table>
             </form>
           </div>
-          {!isEditing && (
-            <Button
-              className="green-button cursor-pointer bg-white"
-              onClick={() => setIsEditing(true)}
-            >
-              Update
-            </Button>
-          )}
         </div>
       </div>
     )

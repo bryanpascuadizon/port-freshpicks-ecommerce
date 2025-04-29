@@ -15,7 +15,7 @@ const UserSidebar = ({ linkHighlighted }: { linkHighlighted: string }) => {
     );
   };
   return (
-    <div className="col-span-1 p-5 rounded-sm bg-slate-100">
+    <div className="col-span-1 p-5 border-r-1 border-r-slate-200">
       <div className="mb-2">My Account</div>
       <UserLink href="/user/account/profile" label={userSidebarMenu.Profile} />
       <UserLink

@@ -1,13 +1,14 @@
-import UserSidebar from "@/components/shared/user/UserSidebar";
-import { userSidebarMenu } from "@/lib/constants";
+import { auth } from "@/auth";
+import UserAddresses from "@/components/shared/user/UserAddresses";
+import { redirect } from "next/navigation";
 
-const Addresses = () => {
-  return (
-    <div className="grid grid-cols-4 gap-5">
-      <UserSidebar linkHighlighted={userSidebarMenu.Addresses} />
-      <div className="col-span-3 p-5 rounded-sm bg-slate-100"> Addresses</div>
-    </div>
-  );
+const Addresses = async () => {
+  const session = await auth();
+
+  if (!session) {
+    redirect("/sign-in");
+  }
+  return <UserAddresses />;
 };
 
 export default Addresses;

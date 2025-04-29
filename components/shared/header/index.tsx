@@ -11,13 +11,16 @@ import siteImage from "@/assets/site-icon.png";
 import { Popover, PopoverContent } from "@radix-ui/react-popover";
 import { PopoverTrigger } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
-import { Button } from "@/components/ui/button";
 
 const Header = () => {
   const [popoverOpen, setPopOverOpen] = useState(false);
 
+  const handleLogOut = () => {
+    setPopOverOpen(false);
+    SignOut();
+  };
   return (
-    <header className="w-full border-b-1 border-b-slate-100">
+    <header className="w-full border-b-1 border-b-slate-200">
       <div className="wrapper flex-between">
         <nav className="flex-start">
           <Link href="/" className="flex-start">
@@ -55,9 +58,9 @@ const Header = () => {
                       My Orders
                     </Link>
                   </div>
-                  <Separator />
+                  <Separator className="bg-slate-200" />
                   <p
-                    onClick={SignOut}
+                    onClick={handleLogOut}
                     className="p-3 flex cursor-pointer text-sm"
                   >
                     {" "}

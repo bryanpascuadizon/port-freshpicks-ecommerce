@@ -36,7 +36,11 @@
   }
 
   .green-button {
-    @apply hover:bg-green-700 bg-green-700;
+    @apply hover:bg-green-700 bg-green-700 cursor-pointer;
+  }
+
+  .green-button-alternate {
+    @apply border-3 bg-white border-green-700 hover:bg-white text-black cursor-pointer;
   }
 
   .button {
@@ -45,6 +49,10 @@
 
   .loader {
     @apply w-[130px];
+  }
+
+  .tableRow {
+    @apply border-0 hover:bg-transparent;
   }
 }
 

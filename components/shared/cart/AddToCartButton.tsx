@@ -49,7 +49,7 @@ const AddToCartButton = ({
   return (
     <Button
       disabled={isPending}
-      className="button border-3 border-green-700 bg-white text-black hover:bg-white p-5 cursor-pointer"
+      className="button green-button-alternate p-5"
       onClick={handleAddToCart}
     >
       {isPending ? <ButtonLoader /> : "Add to Cart"}

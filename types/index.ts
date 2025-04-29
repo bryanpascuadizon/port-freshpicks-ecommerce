@@ -41,9 +41,17 @@ export type User = {
   phone_number: string;
   emailVerified: string;
   image: string;
-  address: string[];
+  address: UserAddress[];
   role: string;
   gender: string;
+};
+
+export type UserAddress = {
+  name: string;
+  phoneNumber: string;
+  postalCode: number;
+  address: string;
+  isDefault: string | null;
 };
 
 export type FormState = {

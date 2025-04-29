@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import CheckoutAddress from "./CheckoutAddress";
 import CheckoutCartList from "./CheckoutCartList";
 import CheckoutPriceBreakdown from "./CheckoutPriceBreakdown";
+import { getUserAddressList } from "@/lib/actions/UserActions";
 
 const CheckoutList = () => {
   const { data: cart } = useQuery({
@@ -12,11 +13,18 @@ const CheckoutList = () => {
     queryFn: getCartListForCheckout,
   });
 
+  const { data: userAddressList } = useQuery({
+    queryKey: ["user-address-checkout"],
+    queryFn: getUserAddressList,
+  });
+
   return (
-    cart && (
+    cart &&
+    userAddressList &&
+    userAddressList.addressList && (
       <div className="my-10">
         <div className="text-xl font-bold mb-5">Checkout</div>
-        <CheckoutAddress />
+        <CheckoutAddress addressList={userAddressList.addressList} />
 
         <div className="grid md:grid-cols-5 gap-4">
           <CheckoutCartList cart={cart} />
