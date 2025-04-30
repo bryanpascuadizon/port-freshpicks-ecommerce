@@ -25,7 +25,6 @@ const UserAddresses = () => {
         <div className="col-span-3 p-5 rounded-sm ">
           <div className="flex items-center mb-5">
             <p className="text-lg font-bold">Addresses</p>
-
             <Dialog open={openDialog} onOpenChange={setOpenDialog}>
               <DialogTrigger
                 className="bg-green-700 text-white p-2 pr-4 pl-4 text-sm rounded-sm ml-auto cursor-pointer"
@@ -41,7 +40,10 @@ const UserAddresses = () => {
             </Dialog>
           </div>
           <div className="w-full">
-            <UserAddressesList addressList={userAddressesData.addressList!} />
+            <UserAddressesList
+              addressList={userAddressesData.addressList!}
+              refetchUserAddress={refetchUserAddress}
+            />
           </div>
         </div>
       </div>

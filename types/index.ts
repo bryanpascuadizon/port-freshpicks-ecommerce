@@ -47,6 +47,7 @@ export type User = {
 };
 
 export type UserAddress = {
+  id: string;
   name: string;
   phoneNumber: string;
   postalCode: number;

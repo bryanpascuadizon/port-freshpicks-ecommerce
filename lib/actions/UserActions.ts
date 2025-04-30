@@ -8,6 +8,7 @@ import {
   updateAccountProfile,
 } from "../handlers/userHandlers";
 import { FormState, User, UserAddress } from "@/types";
+import { v4 as uuidv4 } from "uuid";
 
 export const SignIn = async (prevState: unknown, formData: FormData) => {
   try {
@@ -51,7 +52,6 @@ export const getUserProfile = async (): Promise<User> => {
   }
 };
 
-//@typescript-eslint/no-explicit-any
 export const updateUserProfile = async (
   prevState: FormState,
   formData: FormData
@@ -97,6 +97,7 @@ export const getUserAddressList = async () => {
     if (userAddress) {
       const addressList: UserAddress[] = userAddress.address.map(
         (address: UserAddress) => ({
+          id: address.id,
           name: address.name,
           phoneNumber: address.phoneNumber,
           postalCode: address.postalCode,
@@ -135,6 +136,7 @@ export const submitAddress = async (
     const isDefault = formData.get("isDefault");
 
     const addressData = {
+      id: uuidv4(),
       name,
       phoneNumber,
       postalCode,
@@ -164,6 +166,143 @@ export const submitAddress = async (
         return {
           success: true,
           addressList: response,
+        };
+      }
+    }
+
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: `Something went wrong - ${error}`,
+    };
+  }
+};
+
+export const updateAddress = async (
+  prevState: FormState,
+  formData: FormData
+) => {
+  try {
+    const id = formData.get("id");
+    const name = formData.get("name");
+    const phoneNumber = formData.get("phoneNumber");
+    const postalCode = formData.get("postalCode");
+    const address = formData.get("address");
+    let isDefault = formData.get("isDefault");
+
+    const user = await getAccountProfile();
+
+    if (user) {
+      if (isDefault === "on") {
+        user.address.find(
+          (address: UserAddress) => address.isDefault === "on"
+        )!.isDefault = null;
+      } else {
+        //Check if address is already default
+        const addressIsDefault = user.address.find(
+          (item: UserAddress) => item.id === id
+        );
+
+        //Set isDefault to "on"
+        if (addressIsDefault.isDefault === "on") {
+          isDefault = "on";
+        }
+      }
+
+      const newUserAddress = user.address.map((item: UserAddress) =>
+        item.id === id
+          ? {
+              ...item,
+              name,
+              phoneNumber,
+              postalCode,
+              address,
+              isDefault,
+            }
+          : item
+      );
+
+      user.address = [...newUserAddress];
+    }
+
+    const response = await updateAccountAddress(user);
+
+    if (response) {
+      return {
+        success: true,
+        addressList: response,
+      };
+    }
+
+    return {
+      success: false,
+      message: `Something went wrong`,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: `Something went wrong - ${error}`,
+    };
+  }
+};
+
+export const deleteAddress = async (addressId: string) => {
+  try {
+    const user = await getAccountProfile();
+
+    if (user) {
+      const newAddressList = user.address.filter(
+        (address: UserAddress) => address.id !== addressId
+      );
+
+      user.address = newAddressList;
+    }
+
+    const response = await updateAccountAddress(user);
+
+    if (response) {
+      return {
+        success: true,
+        message: "Address has been deleted",
+      };
+    }
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: `Something went wrong - ${error}`,
+    };
+  }
+};
+
+export const updateDefaultAddress = async (addressId: string) => {
+  try {
+    const user = await getAccountProfile();
+
+    if (user) {
+      //Set current default address to "not default"
+      user.address.find(
+        (item: UserAddress) => item.isDefault === "on"
+      )!.isDefault = null;
+
+      //Set default address using the addressId
+      user.address.find(
+        (item: UserAddress) => item.id === addressId
+      )!.isDefault = "on";
+
+      const response = await updateAccountAddress(user);
+
+      if (response) {
+        return {
+          success: true,
+          message: "Default address has been updated",
         };
       }
     }
