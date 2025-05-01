@@ -24,7 +24,7 @@ const SignInForm = () => {
       <Button
         disabled={pending}
         variant="default"
-        className="w-full bg-green-700 mb-5 cursor-pointer"
+        className="green-button w-full bg-green-700 mb-5 cursor-pointer"
       >
         {pending ? "Signing In..." : "Sign In"}
       </Button>

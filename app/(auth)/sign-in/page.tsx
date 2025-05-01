@@ -18,7 +18,13 @@ const SignInPage = async (props: {
   return (
     <div className="w-full max-w-md mx-auto mt-[-100px]">
       <div className="p-5">
-        <Image src={siteImage} alt="site-image" width="100" height="100" className="m-auto mb-5"/>
+        <Image
+          src={siteImage}
+          alt="site-image"
+          width="100"
+          height="100"
+          className="m-auto mb-5"
+        />
         <div className="text-center font-bold text-3xl ml-3 text-green-700 mb-5">
           {APP_NAME}
         </div>

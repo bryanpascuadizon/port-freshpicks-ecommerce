@@ -106,6 +106,15 @@ export const getUserAddressList = async () => {
         })
       );
 
+      const defaultAddressIndex = addressList.findIndex(
+        (item: UserAddress) => item.isDefault === "on"
+      );
+
+      if (defaultAddressIndex > -1) {
+        const [defaultAddress] = addressList.splice(defaultAddressIndex, 1);
+        addressList.unshift(defaultAddress);
+      }
+
       return {
         success: true,
         addressList,

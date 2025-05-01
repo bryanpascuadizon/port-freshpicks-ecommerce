@@ -6,6 +6,8 @@ import CheckoutAddress from "./CheckoutAddress";
 import CheckoutCartList from "./CheckoutCartList";
 import CheckoutPriceBreakdown from "./CheckoutPriceBreakdown";
 import { getUserAddressList } from "@/lib/actions/UserActions";
+import { useState } from "react";
+import { UserAddress } from "@/types";
 
 const CheckoutList = () => {
   const { data: cart } = useQuery({
@@ -18,13 +20,19 @@ const CheckoutList = () => {
     queryFn: getUserAddressList,
   });
 
+  const [selectedAddress, setSelectedAddress] = useState<UserAddress>();
+
   return (
     cart &&
     userAddressList &&
     userAddressList.addressList && (
       <div className="my-10">
         <div className="text-xl font-bold mb-5">Checkout</div>
-        <CheckoutAddress addressList={userAddressList.addressList} />
+        <CheckoutAddress
+          addressList={userAddressList.addressList}
+          selectedAddress={selectedAddress!}
+          setSelectedAddress={setSelectedAddress}
+        />
 
         <div className="grid md:grid-cols-5 gap-4">
           <CheckoutCartList cart={cart} />
