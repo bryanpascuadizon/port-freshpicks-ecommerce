@@ -3,8 +3,8 @@ import { Metadata } from "next";
 import React from "react";
 
 export const metadata: Metadata = {
-  title: `${APP_NAME} - Sign-In`
-}
+  title: `${APP_NAME} | Sign-In`,
+};
 
 export default function AuthLayout({
   children,

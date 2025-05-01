@@ -1,5 +1,10 @@
 import UserSidebar from "@/components/shared/user/UserSidebar";
-import { userSidebarMenu } from "@/lib/constants";
+import { APP_NAME, userSidebarMenu } from "@/lib/constants";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: `${APP_NAME} | Orders`,
+};
 
 const Orders = () => {
   return (
