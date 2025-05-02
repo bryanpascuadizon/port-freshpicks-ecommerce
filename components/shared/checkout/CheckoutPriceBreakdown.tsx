@@ -26,6 +26,8 @@ const CheckoutPriceBreakdown = ({
       const response = await createSessionForCheckout(cart, selectedAddress);
 
       if (response) {
+        console.log(response.data.id);
+        console.log(response.data.attributes.success_url);
         redirect(response.data.attributes.checkout_url);
       }
     });

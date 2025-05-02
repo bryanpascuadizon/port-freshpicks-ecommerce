@@ -5,7 +5,7 @@ export const POST = async (request: NextRequest) => {
   try {
     const {
       cart,
-      address,
+      //address,
       user,
     }: { cart: Cart; address: UserAddress; user: User } = await request.json();
 
@@ -48,12 +48,10 @@ export const POST = async (request: NextRequest) => {
                 name: user.name,
                 email: user.email,
                 phone: user.phone_number,
-                address: address,
               },
               send_email_receipt: true,
-              show_description: true,
+              show_description: false,
               show_line_items: true,
-              description: address.address,
               success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/orders`,
               cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/checkout`,
               line_items: [...lineItems],
