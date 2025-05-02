@@ -10,11 +10,8 @@ export const POST = async (request: NextRequest) => {
     const eventType = event?.data?.attributes?.type;
     const eventData = event?.data?.attributes?.data;
 
-    console.log("[Webhook] Event type:", eventType);
-    console.log("[Webhook] Event data:", eventData);
-
     switch (eventType) {
-      case "checkout_session.payment_paid":
+      case "checkout_session.payment.paid":
         console.log("✅ Payment received for Checkout Session:", eventData?.id);
         // TODO: update order status in DB
         break;
