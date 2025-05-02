@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import ButtonLoader from "../ButtonLoader";
 import { formatPhoneNumber } from "@/lib/utils";
+import { toast } from "sonner";
 
 const UserProfile = () => {
   const { data: user, refetch } = useQuery({
@@ -30,12 +31,16 @@ const UserProfile = () => {
 
   useEffect(() => {
     const refetchUser = async () => {
-      setIsEditing(false);
-      await refetch();
+      if (userState.success) {
+        setIsEditing(false);
+        await refetch();
+
+        toast(<p className="toast-text">Profile has been updated</p>);
+      }
     };
 
     refetchUser();
-  }, [userState, refetch]);
+  }, [userState, refetch, setIsEditing]);
 
   return (
     user && (

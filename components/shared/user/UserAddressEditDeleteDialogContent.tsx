@@ -17,6 +17,7 @@ import { UserAddress } from "@/types";
 import { Edit } from "lucide-react";
 import { useActionState, useEffect, useState } from "react";
 import ButtonLoader from "../ButtonLoader";
+import { toast } from "sonner";
 
 const UserAddressEditDialogContent = ({
   address,
@@ -25,7 +26,7 @@ const UserAddressEditDialogContent = ({
   address: UserAddress;
   refetchUserAddress: () => void;
 }) => {
-  const [openDialog, setOpenDialog] = useState(true);
+  const [openDialog, setOpenDialog] = useState(false);
   const [state, action, isPending] = useActionState(updateAddress, {
     success: false,
     message: "",
@@ -33,8 +34,12 @@ const UserAddressEditDialogContent = ({
 
   useEffect(() => {
     const closeDialog = async () => {
-      setOpenDialog(false);
-      await refetchUserAddress();
+      if (state.success) {
+        setOpenDialog(false);
+        await refetchUserAddress();
+
+        toast(<p className="toast-text">{state.message}</p>);
+      }
     };
 
     closeDialog();

@@ -29,8 +29,10 @@ const UserAddressDialogContent = ({
 
   useEffect(() => {
     const closeDialog = async () => {
-      setOpenDialog(false);
-      await refetchUserAddress();
+      if (state.success) {
+        setOpenDialog(false);
+        await refetchUserAddress();
+      }
     };
 
     closeDialog();

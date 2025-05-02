@@ -1,11 +1,37 @@
-import { Cart } from "@/types";
+import { Cart, UserAddress } from "@/types";
 import { createCheckoutSession } from "../handlers/checkoutHandlers";
+import { getUserAddressList } from "./UserActions";
+import { getAccountProfile } from "../handlers/userHandlers";
 
-export const createSessionForCheckout = async (cart: Cart) => {
+export const createSessionForCheckout = async (
+  cart: Cart,
+  address: UserAddress
+) => {
   try {
-    const response = await createCheckoutSession(cart);
+    let defaultAddress: UserAddress = address;
 
-    return response;
+    if (!defaultAddress) {
+      const userAddress = await getUserAddressList();
+
+      if (userAddress.addressList) {
+        defaultAddress = userAddress.addressList.find(
+          (item: UserAddress) => item.isDefault === "on"
+        )!;
+      }
+    }
+
+    let user = await getAccountProfile();
+
+    if (user) {
+      const response = await createCheckoutSession(cart, defaultAddress, user);
+
+      return response;
+    }
+
+    return {
+      success: false,
+      message: `Something went wrong`,
+    };
   } catch (error) {
     return {
       success: false,

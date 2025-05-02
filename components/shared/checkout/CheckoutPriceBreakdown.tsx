@@ -4,24 +4,26 @@ import { currencyFormatter } from "@/lib/utils";
 import { useTransition } from "react";
 import ButtonLoader from "../ButtonLoader";
 import { redirect } from "next/navigation";
-import { Cart } from "@/types";
+import { Cart, UserAddress } from "@/types";
 
 const CheckoutPriceBreakdown = ({
   subtotalPrice,
   shippingPrice,
   totalPrice,
   cart,
+  selectedAddress,
 }: {
   subtotalPrice: number;
   shippingPrice: number;
   totalPrice: number;
   cart: Cart;
+  selectedAddress: UserAddress;
 }) => {
   const [isPending, startTransition] = useTransition();
 
   const handleCheckout = () => {
     startTransition(async () => {
-      const response = await createSessionForCheckout(cart!);
+      const response = await createSessionForCheckout(cart, selectedAddress);
 
       if (response) {
         redirect(response.data.attributes.checkout_url);

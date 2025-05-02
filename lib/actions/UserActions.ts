@@ -243,7 +243,7 @@ export const updateAddress = async (
     if (response) {
       return {
         success: true,
-        addressList: response,
+        message: "Address has been updated",
       };
     }
 
@@ -311,7 +311,7 @@ export const updateDefaultAddress = async (addressId: string) => {
       if (response) {
         return {
           success: true,
-          message: "Default address has been updated",
+          message: "Default address has been changed",
         };
       }
     }

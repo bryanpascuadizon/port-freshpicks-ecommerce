@@ -41,6 +41,7 @@ const CheckoutList = () => {
             shippingPrice={cart.shippingPrice}
             totalPrice={cart.totalPrice}
             cart={cart}
+            selectedAddress={selectedAddress!}
           />
         </div>
       </div>

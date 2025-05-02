@@ -1,10 +1,14 @@
 import { auth } from "@/auth";
-import { Cart, CartItem } from "@/types";
+import { Cart, CartItem, User, UserAddress } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (request: NextRequest) => {
   try {
-    const { cart }: { cart: Cart } = await request.json();
+    const {
+      cart,
+      address,
+      user,
+    }: { cart: Cart; address: UserAddress; user: User } = await request.json();
 
     const lineItems = cart.cartItems
       .filter((item: CartItem) => item.isSelected)
@@ -27,9 +31,6 @@ export const POST = async (request: NextRequest) => {
       quantity: 1,
     });
 
-    const session = await auth();
-    const user = session?.user;
-
     const response = await fetch(
       `https://api.paymongo.com/v1/checkout_sessions`,
       {
@@ -45,13 +46,15 @@ export const POST = async (request: NextRequest) => {
           data: {
             attributes: {
               billing: {
-                name: user?.name,
-                email: user?.email,
-                phone: user?.phone_number,
+                name: user.name,
+                email: user.email,
+                phone: user.phone_number,
+                address: address,
               },
               send_email_receipt: true,
-              show_description: false,
+              show_description: true,
               show_line_items: true,
+              description: address.address,
               success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/orders`,
               cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/checkout`,
               line_items: [...lineItems],

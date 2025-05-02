@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Loader, Trash2 } from "lucide-react";
-import { useTransition } from "react";
+import { useEffect, useTransition } from "react";
 import { UserAddress } from "@/types";
 import { deleteAddress, updateDefaultAddress } from "@/lib/actions/UserActions";
 import { toast } from "sonner";
