@@ -1,36 +1,32 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
-export const POST = async () => {
+export const POST = async (request: NextRequest) => {
   try {
-    // const chunks: Uint8Array[] = [];
-    // for await (const chunk of request) {
-    //   chunks.push(typeof chunk === "string" ? Buffer.from(chunk) : chunk);
-    // }
-    // const rawBody = Buffer.concat(chunks).toString("utf8");
-    // const event = JSON.parse(rawBody);
+    const rawBody = await request.text();
 
-    // // TODO: Verify signature here if you want extra security
+    console.log("RAWBODY: ", rawBody);
+    const event = JSON.parse(rawBody);
 
-    // // Log or handle different event types
-    // switch (event.data.attributes.type) {
-    //   case "checkout_session.payment_paid":
-    //     const sessionId = event.data.attributes.data.id;
-    //     console.log("Checkout session paid:", sessionId);
-    //     // Update your database: mark payment as completed, fulfill order, etc.
-    //     break;
-    //   case "payment.paid":
-    //     const paymentId = event.data.attributes.data.id;
-    //     console.log("Direct payment paid:", paymentId);
-    //     break;
-    //   default:
-    //     console.log("Unhandled event type:", event.data.attributes.type);
-    // }
+    const eventType = event?.data?.attributes?.type;
+    const eventData = event?.data?.attributes?.data;
+
+    console.log("[Webhook] Event type:", eventType);
+    console.log("[Webhook] Event data:", eventData);
+
+    switch (eventType) {
+      case "checkout_session.payment_paid":
+        console.log("✅ Payment received for Checkout Session:", eventData?.id);
+        // TODO: update order status in DB
+        break;
+
+      case "payment.paid":
+        console.log("✅ Direct payment completed:", eventData?.id);
+        // TODO: mark standalone payment as paid
+        break;
+
+      default:
+        console.log("⚠️ Unhandled event type:", eventType);
+    }
 
     return new NextResponse("Webhook received", { status: 200 });
   } catch (error) {
