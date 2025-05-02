@@ -1,4 +1,3 @@
-import { auth } from "@/auth";
 import { Cart, CartItem, User, UserAddress } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 

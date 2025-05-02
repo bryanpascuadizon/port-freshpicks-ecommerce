@@ -20,7 +20,7 @@ export const createSessionForCheckout = async (
       }
     }
 
-    let user = await getAccountProfile();
+    const user = await getAccountProfile();
 
     if (user) {
       const response = await createCheckoutSession(cart, defaultAddress, user);
@@ -35,7 +35,7 @@ export const createSessionForCheckout = async (
   } catch (error) {
     return {
       success: false,
-      message: `${error}`,
+      message: `Something went wrong - ${error}`,
     };
   }
 };
