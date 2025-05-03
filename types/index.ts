@@ -59,3 +59,30 @@ export type FormState = {
   success: boolean;
   message?: string;
 };
+
+export type Order = {
+  id: string;
+  userId: string;
+  shippingAddress: string[];
+  paymentStatus: string;
+  subtotalPrice: number;
+  shippingPrice: number;
+  totalPrice: number;
+  isPaid: boolean;
+  paidAt: Date;
+  isDelivered: boolean;
+  orderItems: OrderItem[];
+  referenceNumber: string;
+};
+
+export type OrderItem = {
+  productId: string;
+  name: string;
+  slug: string;
+  category: string;
+  images: string[];
+  description: string[];
+  price: number;
+  isSelected: boolean;
+  quantity: number;
+};

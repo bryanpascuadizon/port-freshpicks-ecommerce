@@ -114,16 +114,17 @@ model Order {
   id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   userId          String    @db.Uuid
   shippingAddress Json      @db.Json
-  paymentMethod   String
+  paymentMethod   String?
   paymentStatus   String
   subtotalPrice   Decimal   @db.Decimal(12, 2)
   shippingPrice   Decimal   @db.Decimal(12, 2)
   totalPrice      Decimal   @db.Decimal(12, 2)
-  isPaid          DateTime? @db.Timestamp(6) //Date of successful payment
+  isPaid          Boolean   @default(false) // //Date of successful payment
   paidAt          DateTime? @db.Timestamp(6) //Date of successful payment
   isDelivered     Boolean   @default(false) //Checks of delivered or not
   deliveredAt     DateTime? @db.Timestamp(6) // Date of successful delivery
-  cartItems       Json?     @db.Json
+  orderItems      Json?     @db.Json
+  referenceNumber String?
   createdAt       DateTime  @default(now()) @db.Timestamp(6)
   updatedAt       DateTime  @updatedAt
 

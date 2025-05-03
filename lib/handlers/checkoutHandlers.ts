@@ -1,16 +1,12 @@
-import { Cart, User, UserAddress } from "@/types";
+import { Order } from "@/types";
 
-export const createCheckoutSession = async (
-  cart: Cart,
-  address: UserAddress,
-  user: User
-) => {
+export const createCheckoutSession = async (order: Order) => {
   const response = await fetch(
     `/api/checkout/paymongo/create-checkout-session`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ cart, address, user }),
+      body: JSON.stringify({ order }),
     }
   ).then((res) => res.json());
 
