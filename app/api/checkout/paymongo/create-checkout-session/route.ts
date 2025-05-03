@@ -1,7 +1,6 @@
 import prisma from "@/db/prisma";
 import { Order, OrderItem } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
-import { v4 as uuidv4 } from "uuid";
 
 export const POST = async (request: NextRequest) => {
   try {
@@ -10,8 +9,6 @@ export const POST = async (request: NextRequest) => {
     const user = await prisma.user.findFirst({
       where: { id: order.userId },
     });
-
-    const referenceNumber = uuidv4();
 
     if (user) {
       const lineItems = order.orderItems.map((item: OrderItem) => {
@@ -58,7 +55,7 @@ export const POST = async (request: NextRequest) => {
                 cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/checkout`,
                 line_items: [...lineItems],
                 payment_method_types: ["card", "gcash", "paymaya"],
-                reference_number: referenceNumber,
+                reference_number: order.referenceNumber,
               },
             },
           }),
@@ -66,16 +63,9 @@ export const POST = async (request: NextRequest) => {
       ).then((res) => res.json());
 
       if (responsePayMongo) {
-        const responseOrder = await prisma.order.update({
-          where: { id: order.id },
-          data: { referenceNumber: referenceNumber },
+        return new NextResponse(JSON.stringify(responsePayMongo), {
+          status: 200,
         });
-
-        if (responseOrder) {
-          return new NextResponse(JSON.stringify(responsePayMongo), {
-            status: 200,
-          });
-        }
       }
     }
 
