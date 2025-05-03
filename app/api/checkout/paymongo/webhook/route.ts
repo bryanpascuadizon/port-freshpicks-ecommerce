@@ -22,7 +22,7 @@ export const POST = async (request: NextRequest) => {
             paymentMethod: eventData.attributes.payment_method_used,
             paymentStatus: eventData.attributes.payments[0].attributes.status,
             isPaid: true,
-            paidAt: event.data.attributes.created_at,
+            paidAt: new Date(event.data.attributes.created_at),
           },
         });
 
