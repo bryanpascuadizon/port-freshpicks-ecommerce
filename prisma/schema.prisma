@@ -42,7 +42,7 @@ model User {
   Account       Account[]
   Session       Session[]
   Cart          Cart[]
-  ORder         Order[]
+  Order         Order[]
 }
 
 model Account {
