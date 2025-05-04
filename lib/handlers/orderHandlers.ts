@@ -12,3 +12,11 @@ export const createOrder = async (
 
   return response;
 };
+
+export const getOrderByReferenceNumber = async (referenceNumber: string) => {
+  const response = await fetch(`api/order/${referenceNumber}`).then((req) =>
+    req.json()
+  );
+
+  return response;
+};
