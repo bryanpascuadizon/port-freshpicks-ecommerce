@@ -22,13 +22,13 @@ export const POST = async (request: NextRequest) => {
             paymentMethod: eventData.attributes.payment_method_used,
             paymentStatus: eventData.attributes.payments[0].attributes.status,
             isPaid: true,
-            paidAt: new Date(event.data.attributes.created_at),
+            paidAt: new Date(),
           },
         });
 
         if (order) {
           return new NextResponse(
-            `Order has been updated with reference number: ${eventData.attributes.reference_number}`,
+            `Order has been updated with order reference number: ${eventData.attributes.reference_number}`,
             { status: 200 }
           );
         }

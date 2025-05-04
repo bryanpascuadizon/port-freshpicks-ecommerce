@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import SuccessOrder from "@/components/shared/order/SuccessOrder";
 import Link from "next/link";
 
 import { redirect } from "next/navigation";
@@ -21,6 +22,7 @@ const OrdersPage = async () => {
           here
         </Link>
       </p>
+      <SuccessOrder />
     </div>
   );
 };
