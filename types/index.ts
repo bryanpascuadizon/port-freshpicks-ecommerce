@@ -63,8 +63,9 @@ export type FormState = {
 export type Order = {
   id: string;
   userId: string;
-  shippingAddress: string[];
+  shippingAddress: ShippingAddress;
   paymentStatus: string;
+  paymentMethod: string;
   subtotalPrice: number;
   shippingPrice: number;
   totalPrice: number;
@@ -85,4 +86,13 @@ export type OrderItem = {
   price: number;
   isSelected: boolean;
   quantity: number;
+};
+
+export type ShippingAddress = {
+  id: string;
+  name: string;
+  phoneNumber: string;
+  postalCode: string;
+  address: string;
+  isDefault: string | null;
 };

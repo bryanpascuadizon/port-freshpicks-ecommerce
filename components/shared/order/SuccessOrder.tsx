@@ -37,11 +37,34 @@ const SuccessOrder = () => {
           <p className="text-base mb-5">Payment done successfully!</p>
         </div>
         <div className="p-5 bg-slate-100 m-auto max-w-2xl text-xs mb-5">
-          <p className="text-lg">Order Summary</p>
+          <p className="text-xl mb-5 font-bold">Order Summary</p>
+          <div className="grid grid-cols-2 gap-5 mb-5">
+            <div>
+              <p className="text-sm font-bold">Order ReferenceNumber: </p>
+              <p className="text-x">{orderReferenceNumber}</p>
+            </div>
+            <div>
+              <p className="text-sm font-bold">Payment Method: </p>
+              <p className="text-x">{data.order.paymentMethod}</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 mb-5 gap-5">
+            <div>
+              <p className="text-sm font-bold">Shipping To:</p>
+              <p>{data.order.shippingAddress.address}</p>
+            </div>
+            <div>
+              <p className="text-sm font-bold">Contact Person:</p>
+              <p>{data.order.shippingAddress.name}</p>
+              <p className="text-green-700">
+                {data.order.shippingAddress.phoneNumber}
+              </p>
+            </div>
+          </div>
           <Table className="my-5">
             <TableBody>
               {data.order.orderItems.map((orderItem: OrderItem) => (
-                <TableRow key={orderItem.slug}>
+                <TableRow key={orderItem.slug} className="border-0">
                   <TableCell>
                     <Image
                       src={orderItem.images[0]}
@@ -71,8 +94,24 @@ const SuccessOrder = () => {
                   </TableCell>
                 </TableRow>
               ))}
+              <TableRow>
+                <TableCell></TableCell>
+                <TableCell className="font-bold">Shipping Fee</TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
+                <TableCell></TableCell>
+                <TableCell className="text-right text-green-700 font-bold">
+                  {currencyFormatter.format(data.order.shippingPrice)}
+                </TableCell>
+              </TableRow>
             </TableBody>
           </Table>
+          <div className="text-right">
+            <p className="text-xl font-bold">
+              Total:{" "}
+              <span className="text-green-700">{data.order.totalPrice}</span>
+            </p>
+          </div>
         </div>
         <p className="text-base text-center">
           Continue your shopping{" "}
