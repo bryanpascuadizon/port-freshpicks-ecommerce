@@ -36,11 +36,11 @@ const SuccessOrder = () => {
           <p className="text-4xl mb-5">Thank you for your purchase</p>
           <p className="text-base mb-5">Payment done successfully!</p>
         </div>
-        <div className="p-5 bg-slate-100 m-auto max-w-2xl text-xs mb-5">
+        <div className="p-5 bg-slate-100 m-auto max-w-2xl rounded-sm text-xs mb-5">
           <p className="text-xl mb-5 font-bold">Order Summary</p>
           <div className="grid grid-cols-2 gap-5 mb-5">
             <div>
-              <p className="text-sm font-bold">Order ReferenceNumber: </p>
+              <p className="text-sm font-bold">Order Reference Number: </p>
               <p className="text-x">{orderReferenceNumber}</p>
             </div>
             <div>
@@ -109,7 +109,9 @@ const SuccessOrder = () => {
           <div className="text-right">
             <p className="text-xl font-bold">
               Total:{" "}
-              <span className="text-green-700">{data.order.totalPrice}</span>
+              <span className="text-green-700">
+                {currencyFormatter.format(data.order.totalPrice)}
+              </span>
             </p>
           </div>
         </div>
