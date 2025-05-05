@@ -52,7 +52,7 @@ const UserAddressEditDialogContent = ({
       </DialogTrigger>
       <DialogContent>
         <DialogTitle>Update Address</DialogTitle>
-        <DialogDescription className="text-green-700">
+        <DialogDescription className="text-green">
           Default Address
         </DialogDescription>
         <form action={action}>

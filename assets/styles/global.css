@@ -54,6 +54,10 @@
   .tableRow {
     @apply border-0 hover:bg-transparent;
   }
+
+  .text-green {
+    @apply text-green-700;
+  }
 }
 
 @layer base {

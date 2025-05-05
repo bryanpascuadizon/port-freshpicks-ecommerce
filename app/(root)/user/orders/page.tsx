@@ -1,5 +1,5 @@
-import UserSidebar from "@/components/shared/user/UserSidebar";
-import { APP_NAME, userSidebarMenu } from "@/lib/constants";
+import UserOrder from "@/components/shared/order/UserOrder";
+import { APP_NAME } from "@/lib/constants";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -7,12 +7,7 @@ export const metadata: Metadata = {
 };
 
 const Orders = () => {
-  return (
-    <div className="grid grid-cols-4 gap-5">
-      <UserSidebar linkHighlighted={userSidebarMenu.Orders} />
-      <div className="col-span-3 p-5 rounded-sm bg-slate-100">My Orders</div>
-    </div>
-  );
+  return <UserOrder />;
 };
 
 export default Orders;

@@ -30,7 +30,7 @@ const CheckoutAddress = ({
       <div className="md:grid md:grid-cols-4 bg-slate-100 rounded-sm text-base p-5 mb-5">
         <div className="col-span-1 mb-2">
           <p>{defaultAddress.name}</p>
-          <p className="text-green-700">{defaultAddress.phoneNumber}</p>
+          <p className="text-green">{defaultAddress.phoneNumber}</p>
           {defaultAddress.isDefault === "on" && (
             <Badge className="bg-green-700">Default</Badge>
           )}
@@ -66,7 +66,7 @@ const CheckoutAddress = ({
                       />
                       <div className="p-2 text-xs">
                         <p className="mb-1">{address.name}</p>
-                        <p className="mb-1 text-green-700">
+                        <p className="mb-1 text-green">
                           {address.phoneNumber}
                         </p>
                         <p className="mb-1">{address.address}</p>

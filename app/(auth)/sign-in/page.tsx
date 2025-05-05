@@ -25,7 +25,7 @@ const SignInPage = async (props: {
           height="100"
           className="m-auto mb-5"
         />
-        <div className="text-center font-bold text-3xl ml-3 text-green-700 mb-5">
+        <div className="text-center font-bold text-3xl ml-3 text-green mb-5">
           {APP_NAME}
         </div>
         <p className="text-center mb-5">Login</p>

@@ -65,7 +65,7 @@ const UserProfile = () => {
               <Table className="text-base">
                 <TableBody className="">
                   <TableRow className="tableRow">
-                    <TableCell className="text-green-700 ">Name</TableCell>
+                    <TableCell className="text-green ">Name</TableCell>
                     <TableCell>
                       {isEditing ? (
                         <Input
@@ -82,7 +82,7 @@ const UserProfile = () => {
                     </TableCell>
                   </TableRow>
                   <TableRow className="tableRow">
-                    <TableCell className="text-green-700">Email</TableCell>
+                    <TableCell className="text-green">Email</TableCell>
                     <TableCell>
                       {" "}
                       {isEditing ? (
@@ -103,7 +103,7 @@ const UserProfile = () => {
                     </TableCell>
                   </TableRow>
                   <TableRow className="tableRow">
-                    <TableCell className="text-green-700">
+                    <TableCell className="text-green">
                       Phone Number
                     </TableCell>
                     <TableCell>
@@ -126,7 +126,7 @@ const UserProfile = () => {
                     </TableCell>
                   </TableRow>
                   <TableRow className="tableRow">
-                    <TableCell className="text-green-700">Gender</TableCell>
+                    <TableCell className="text-green">Gender</TableCell>
                     <TableCell>
                       <RadioGroup
                         defaultValue={user.gender}
@@ -172,7 +172,7 @@ const UserProfile = () => {
                     </TableCell>
                   </TableRow>
                   <TableRow className="tableRow">
-                    <TableCell className="text-green-700">
+                    <TableCell className="text-green">
                       Date of Birth
                     </TableCell>
                     <TableCell className="">**/**/1996</TableCell>

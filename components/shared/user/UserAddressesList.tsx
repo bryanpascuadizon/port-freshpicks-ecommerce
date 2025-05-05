@@ -18,7 +18,7 @@ const UserAddressesList = ({
         >
           <div>
             <p className="mb-1">{address.name}</p>
-            <p className="mb-1 text-green-700">{address.phoneNumber}</p>
+            <p className="mb-1 text-green">{address.phoneNumber}</p>
             <p className="mb-1">
               {address.address}, {address.postalCode}
             </p>

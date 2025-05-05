@@ -17,3 +17,5 @@ export const GENDER = {
   Female: "Female",
   Other: "Other",
 };
+
+export const orderStage = ["To Pay", "To Ship", "To Receive", "Completed"];

@@ -29,7 +29,7 @@ const AddToCartButton = ({
           <div className="toast-text grid grid-cols-3 gap-5">
             <div className="col-span-2">
               <p>
-                <span className="text-green-700">{item.name}</span> (x{quantity}
+                <span className="text-green">{item.name}</span> (x{quantity}
                 ) has been added to your cart
               </p>
             </div>

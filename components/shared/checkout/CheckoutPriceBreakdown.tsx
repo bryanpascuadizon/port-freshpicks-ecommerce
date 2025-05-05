@@ -44,7 +44,7 @@ const CheckoutPriceBreakdown = ({
         <div className="grid grid-cols-2 text-sm mb-3">
           <div>
             Delivery Fee{" "}
-            <span className="text-green-700 text-xs">
+            <span className="text-green text-xs">
               (20% of subtotal price)
             </span>
           </div>
@@ -54,7 +54,7 @@ const CheckoutPriceBreakdown = ({
         </div>
         <div className="grid grid-cols-2 text-sm mb-3">
           <div>Total Price</div>
-          <div className="text-right text-2xl text-green-700 font-bold">
+          <div className="text-right text-2xl text-green font-bold">
             {currencyFormatter.format(totalPrice)}
           </div>
         </div>

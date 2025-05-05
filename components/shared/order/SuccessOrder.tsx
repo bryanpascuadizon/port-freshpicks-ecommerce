@@ -31,7 +31,7 @@ const SuccessOrder = () => {
           <CircleCheckBig
             width={100}
             height={100}
-            className="text-green-700 m-auto mb-5"
+            className="text-green m-auto mb-5"
           />
           <p className="text-4xl mb-5">Thank you for your purchase</p>
           <p className="text-base mb-5">Payment done successfully!</p>
@@ -70,7 +70,7 @@ const SuccessOrder = () => {
             <div>
               <p className="text-sm font-bold">Contact Person:</p>
               <p>{data.order.shippingAddress.name}</p>
-              <p className="text-green-700">
+              <p className="text-green">
                 {data.order.shippingAddress.phoneNumber}
               </p>
             </div>
@@ -90,7 +90,7 @@ const SuccessOrder = () => {
                   </TableCell>
                   <TableCell>
                     <p className="font-bold ">{orderItem.name}</p>
-                    <p className="text-green-700">{orderItem.description[0]}</p>
+                    <p className="text-green">{orderItem.description[0]}</p>
                   </TableCell>
                   <TableCell className="text-right">
                     {orderItem.category}
@@ -101,7 +101,7 @@ const SuccessOrder = () => {
                   <TableCell className="text-right">
                     {orderItem.quantity}
                   </TableCell>
-                  <TableCell className="font-bold text-green-700 text-right">
+                  <TableCell className="font-bold text-green text-right">
                     {currencyFormatter.format(
                       orderItem.price * orderItem.quantity
                     )}
@@ -114,7 +114,7 @@ const SuccessOrder = () => {
                 <TableCell></TableCell>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
-                <TableCell className="text-right text-green-700 font-bold">
+                <TableCell className="text-right text-green font-bold">
                   {currencyFormatter.format(data.order.shippingPrice)}
                 </TableCell>
               </TableRow>
@@ -123,7 +123,7 @@ const SuccessOrder = () => {
           <div className="text-right">
             <p className="text-xl font-bold">
               Total:{" "}
-              <span className="text-green-700">
+              <span className="text-green">
                 {currencyFormatter.format(data.order.totalPrice)}
               </span>
             </p>
@@ -131,7 +131,7 @@ const SuccessOrder = () => {
         </div>
         <p className="text-base text-center">
           Continue your shopping{" "}
-          <Link href="/" className="text-green-700 ">
+          <Link href="/" className="text-green ">
             here
           </Link>
         </p>

@@ -26,7 +26,7 @@ const CheckoutCartList = ({ cart }: { cart: Cart }) => {
                   </TableCell>
                   <TableCell>
                     <p className="font-bold ">{cartItem.name}</p>
-                    <p className="text-green-700">{cartItem.description[0]}</p>
+                    <p className="text-green">{cartItem.description[0]}</p>
                   </TableCell>
                   <TableCell className="text-right">
                     {cartItem.category}
@@ -37,7 +37,7 @@ const CheckoutCartList = ({ cart }: { cart: Cart }) => {
                   <TableCell className="text-right">
                     {cartItem.quantity}
                   </TableCell>
-                  <TableCell className="font-bold text-green-700 text-right">
+                  <TableCell className="font-bold text-green text-right">
                     {currencyFormatter.format(
                       cartItem.price * cartItem.quantity
                     )}
@@ -61,13 +61,13 @@ const CheckoutCartList = ({ cart }: { cart: Cart }) => {
                     >
                       <p className="font-bold">{cartItem.name}</p>
                       <p className="">{cartItem.category}</p>
-                      <p className="text-green-700 mb-5">
+                      <p className="text-green mb-5">
                         {cartItem.description[0]}
                       </p>
                     </Link>
                     <div className="grid grid-cols-2">
                       <div>{cartItem.quantity}</div>
-                      <div className="flex justify-end font-bold text-green-700">
+                      <div className="flex justify-end font-bold text-green">
                         {currencyFormatter.format(
                           cartItem.price * cartItem.quantity
                         )}

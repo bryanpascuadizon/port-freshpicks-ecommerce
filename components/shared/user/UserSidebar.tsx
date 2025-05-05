@@ -7,7 +7,7 @@ const UserSidebar = ({ linkHighlighted }: { linkHighlighted: string }) => {
       <Link
         href={href}
         className={`ml-5 mb-2 block ${
-          label === linkHighlighted && "text-green-700 font-bold"
+          label === linkHighlighted && "text-green font-bold"
         }`}
       >
         {label}

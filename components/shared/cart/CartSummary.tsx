@@ -97,7 +97,7 @@ const CartSummary = ({
             : "item included"}
           )
         </p>
-        <p className="self-center mr-5 md:text-lg text-2xl text-green-700 font-bold">
+        <p className="self-center mr-5 md:text-lg text-2xl text-green font-bold">
           {currencyFormatter.format(cart.subtotalPrice)}
         </p>
         <Button

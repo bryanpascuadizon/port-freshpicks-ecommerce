@@ -35,7 +35,7 @@ const CartList = () => {
         {cart.cartItems.length === 0 && (
           <p className="w-full text-center my-10">
             No items in cart. Go purchase{" "}
-            <Link href="/" className="text-green-700">
+            <Link href="/" className="text-green">
               here
             </Link>
           </p>

@@ -44,11 +44,11 @@ const MicrogreensDetails = ({ slug }: { slug: string }) => {
         </div>
         <div className="md:col-span-6 p-5 mb-5 relative">
           <p className="text-2xl font-bold mb-5">{microgreen.name}</p>
-          <p className="text-base mb-5 text-green-700">
+          <p className="text-base mb-5 text-green">
             {microgreen?.description[0]}
           </p>
           <p className="text-base mb-5">{microgreen.description[1]}</p>
-          <p className="text-3xl font-bold mb-5 text-green-700">
+          <p className="text-3xl font-bold mb-5 text-green">
             {currencyFormatter.format(microgreen.price)}
           </p>
           <div className="flex gap-4 w-full mb-5">

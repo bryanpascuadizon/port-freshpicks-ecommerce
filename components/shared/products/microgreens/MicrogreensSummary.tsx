@@ -27,7 +27,7 @@ const MicrogreensSummary = ({
       <Separator className="my-5" />
       <div className="flex justify-between w-full mb-5">
         <p className="font-bold">Total</p>
-        <p className="text-green-700">
+        <p className="text-green">
           ₱ {formatNumberToCurrency(price * quantity)}
         </p>
       </div>

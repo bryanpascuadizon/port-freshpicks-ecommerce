@@ -36,7 +36,7 @@ const CartItemDetail = ({
               from your cart:
             </p>
             <p>
-              <span className="text-green-700">{cartItem.name}</span> x
+              <span className="text-green">{cartItem.name}</span> x
               {cartItem.quantity}
             </p>
           </div>
@@ -64,7 +64,7 @@ const CartItemDetail = ({
             className="w-full"
           >
             <p className="font-bold">{cartItem.name}</p>
-            <p className="text-green-700">{cartItem.description[0]}</p>
+            <p className="text-green">{cartItem.description[0]}</p>
           </Link>
         </TableCell>
         <TableCell className="">{cartItem.category}</TableCell>
@@ -75,7 +75,7 @@ const CartItemDetail = ({
             refetch={refetch}
           />
         </TableCell>
-        <TableCell className="text-center text-green-700 font-bold">
+        <TableCell className="text-center text-green font-bold">
           {currencyFormatter.format(cartItem.price * cartItem.quantity)}
         </TableCell>
         <TableCell className="text-center">
@@ -108,7 +108,7 @@ const CartItemDetail = ({
           >
             <p className="font-bold">{cartItem.name}</p>
             <p className="">{cartItem.category}</p>
-            <p className="text-green-700 mb-5">{cartItem.description[0]}</p>
+            <p className="text-green mb-5">{cartItem.description[0]}</p>
           </Link>
           <div className="grid grid-cols-3 gap-5">
             <CartQuantity
@@ -116,7 +116,7 @@ const CartItemDetail = ({
               productId={cartItem.productId}
               refetch={refetch}
             />
-            <p className="text-green-700 font-bold text-center">
+            <p className="text-green font-bold text-center">
               {currencyFormatter.format(cartItem.price * cartItem.quantity)}
             </p>
             <p className="flex justify-center">

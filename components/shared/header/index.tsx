@@ -25,7 +25,7 @@ const Header = () => {
         <nav className="flex-start">
           <Link href="/" className="flex-start">
             <Image src={siteImage} alt="site-icon" width="50" height="50" />
-            <span className="font-bold text-3xl ml-3 text-green-700 self-center">
+            <span className="font-bold text-3xl ml-3 text-green self-center">
               {APP_NAME}
             </span>
           </Link>

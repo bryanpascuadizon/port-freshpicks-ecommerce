@@ -21,7 +21,7 @@ const MicrogreensCard = ({ microgreen }: { microgreen: Microgreen }) => {
         </CardHeader>
         <CardContent>
           <p className="text-center font-bold text-xl">{microgreen.name}</p>
-          <p className="text-md text-center my-3 text-green-700">
+          <p className="text-md text-center my-3 text-green">
             {microgreen.description[0]}
           </p>
           <p className="text-center text-md font-bold">
