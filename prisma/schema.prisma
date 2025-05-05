@@ -123,6 +123,7 @@ model Order {
   paidAt          DateTime? @db.Timestamp(6) //Date of successful payment
   isDelivered     Boolean   @default(false) //Checks of delivered or not
   deliveredAt     DateTime? @db.Timestamp(6) // Date of successful delivery
+  orderStage      String
   orderItems      Json?     @db.Json
   referenceNumber String    @unique(map: "order_reference_idx") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   createdAt       DateTime  @default(now()) @db.Timestamp(6)

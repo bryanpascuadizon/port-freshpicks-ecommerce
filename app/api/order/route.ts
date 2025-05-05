@@ -1,4 +1,5 @@
 import prisma from "@/db/prisma";
+import { orderStage } from "@/lib/constants";
 import { calculatePrice } from "@/lib/utils";
 import { Cart } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
@@ -29,8 +30,8 @@ export const POST = async (request: NextRequest) => {
           subtotalPrice: orderForShipping.subtotalPrice,
           shippingPrice: orderForShipping.shippingPrice,
           totalPrice: orderForShipping.totalPrice,
-          isDelivered: false,
           orderItems: cart.cartItems,
+          orderStage: orderStage[0],
         },
       });
 

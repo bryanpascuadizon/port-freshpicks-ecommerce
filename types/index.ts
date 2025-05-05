@@ -74,6 +74,7 @@ export type Order = {
   isDelivered: boolean;
   orderItems: OrderItem[];
   referenceNumber: string;
+  orderStage: string;
 };
 
 export type OrderItem = {
