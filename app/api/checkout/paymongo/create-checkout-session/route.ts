@@ -54,7 +54,7 @@ export const POST = async (request: NextRequest) => {
                 success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/orders?order_reference_number=${order.referenceNumber}`,
                 cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/checkout`,
                 line_items: [...lineItems],
-                payment_method_types: ["card", "gcash", "paymaya"],
+                payment_method_types: ["card", "gcash", "paymaya", "qrph"],
                 reference_number: order.referenceNumber,
               },
             },

@@ -2,7 +2,7 @@
 
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { getSuccessFulOrder } from "@/lib/actions/OrderActions";
-import { currencyFormatter } from "@/lib/utils";
+import { currencyFormatter, retrievePaymentMethodIcon } from "@/lib/utils";
 import { OrderItem } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { CircleCheckBig } from "lucide-react";
@@ -45,7 +45,21 @@ const SuccessOrder = () => {
             </div>
             <div>
               <p className="text-sm font-bold">Payment Method: </p>
-              <p className="text-x">{data.order.paymentMethod}</p>
+              <div className="flex gap-2">
+                <Image
+                  src={retrievePaymentMethodIcon(data.order.paymentMethod).icon}
+                  alt={
+                    retrievePaymentMethodIcon(data.order.paymentMethod).title
+                  }
+                  width={30}
+                  height={30}
+                  className="rounded-full"
+                />
+
+                <p className="self-center">
+                  {retrievePaymentMethodIcon(data.order.paymentMethod).title}
+                </p>
+              </div>
             </div>
           </div>
           <div className="grid grid-cols-2 mb-5 gap-5">

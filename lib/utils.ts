@@ -35,3 +35,37 @@ export const currencyFormatter = new Intl.NumberFormat("en-PH", {
 export const formatPhoneNumber = (phoneNumber: string) => {
   return `********* ${phoneNumber.substring(9)}`;
 };
+
+export const retrievePaymentMethodIcon = (paymentMethod: string) => {
+  switch (paymentMethod) {
+    case "card":
+      return {
+        title: "Credit Card",
+        icon: "/images/payment_methods/card.png",
+      };
+
+    case "gcash":
+      return {
+        title: "GCash",
+        icon: "/images/payment_methods/gcash.png",
+      };
+
+    case "paymaya":
+      return {
+        title: "PayMaya",
+        icon: "/images/payment_methods/maya.png",
+      };
+
+    case "qrph":
+      return {
+        title: "QRPh",
+        icon: "/images/payment_methods/qrph.png",
+      };
+
+    default:
+      return {
+        title: "",
+        icon: "",
+      };
+  }
+};
