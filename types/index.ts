@@ -50,7 +50,7 @@ export type UserAddress = {
   id: string;
   name: string;
   phoneNumber: string;
-  postalCode: number;
+  postalCode: string;
   address: string;
   isDefault: string | null;
 };

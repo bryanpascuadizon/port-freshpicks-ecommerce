@@ -1,15 +1,7 @@
 import { TabsContent } from "@/components/ui/tabs";
 import { currencyFormatter } from "@/lib/utils";
 import { Order, OrderItem } from "@/types";
-import { Button } from "@/components/ui/button";
-import { useTransition } from "react";
-import {
-  cancelPendingOrder,
-  payPendingOrder,
-} from "@/lib/actions/OrderActions";
-import { toast } from "sonner";
-import { Loader } from "lucide-react";
-import { redirect } from "next/navigation";
+import OrderToPay from "./OrderToPay";
 
 const OrderTabContent = ({
   stage,
@@ -20,31 +12,6 @@ const OrderTabContent = ({
   orders: Order[];
   refetchOrders: () => void;
 }) => {
-  const [isCancelPending, startCancelTransition] = useTransition();
-  const [isPaymentPending, startPaymentTransition] = useTransition();
-
-  const handleCancelOrder = (order: string) => {
-    startCancelTransition(async () => {
-      const response = await cancelPendingOrder(order);
-
-      if (response.success) {
-        await refetchOrders();
-        toast(
-          <p className="toast-text text-destructive">{response.message}</p>
-        );
-      }
-    });
-  };
-
-  const handlePaymentOrder = (order: Order) => {
-    startPaymentTransition(async () => {
-      const response = await payPendingOrder(order);
-
-      if (response.success) {
-        redirect(response.paymongoResponse.data.attributes.checkout_url);
-      }
-    });
-  };
   return (
     <TabsContent value={stage}>
       {orders &&
@@ -75,7 +42,7 @@ const OrderTabContent = ({
               </div>
             ))}
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-              <div className="text-xs">
+              <div className="text-sm self-center">
                 <span>{order.shippingAddress.name} - </span>
                 <span className="text-green">
                   {order.shippingAddress.phoneNumber}
@@ -83,41 +50,7 @@ const OrderTabContent = ({
                 <p className="mt-1">{order.shippingAddress.address}</p>
               </div>
               {stage === "topay" && (
-                <div className="">
-                  <p className="text-right text-sm mb-5">
-                    Shipping Address:{" "}
-                    <span className="font-bold text-green">
-                      {currencyFormatter.format(order.shippingPrice)}
-                    </span>
-                  </p>
-
-                  <div className="flex justify-end gap-2">
-                    <Button
-                      className="green-button-alternate min-w-[120px] self-center"
-                      onClick={() => handleCancelOrder(order.referenceNumber)}
-                    >
-                      {isCancelPending ? (
-                        <Loader className="animate-spin" />
-                      ) : (
-                        "Cancel"
-                      )}
-                    </Button>
-                    <Button
-                      className="green-button min-w-[120px] self-center"
-                      onClick={() => handlePaymentOrder(order)}
-                    >
-                      {" "}
-                      {isPaymentPending ? (
-                        <Loader className="animate-spin" />
-                      ) : (
-                        "Pay"
-                      )}
-                    </Button>
-                    <p className="font-bold text-green text-lg self-center">
-                      {currencyFormatter.format(order.totalPrice)}
-                    </p>
-                  </div>
-                </div>
+                <OrderToPay order={order} refetchOrders={refetchOrders} />
               )}
             </div>
           </div>
