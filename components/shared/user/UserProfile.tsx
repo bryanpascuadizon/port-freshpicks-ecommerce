@@ -44,9 +44,9 @@ const UserProfile = () => {
   return (
     user && (
       <div className="h-full">
-        <div className="col-span-3 p-5 rounded-sm">
+        <div className="rounded-sm">
           <div className="flex items-center mb-5">
-            <p className="text-lg font-bold">Profile</p>
+            <p className="text-2xl font-bold">Profile</p>
 
             {!isEditing && (
               <Button
@@ -174,7 +174,7 @@ const UserProfile = () => {
                   {isEditing && (
                     <TableRow className="tableRow">
                       <TableCell></TableCell>
-                      <TableCell className="flex gap-5">
+                      <TableCell className="flex gap-2">
                         {" "}
                         <Button
                           className="green-button-alternate min-w-[100px]"

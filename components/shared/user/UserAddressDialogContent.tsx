@@ -83,7 +83,7 @@ const UserAddressDialogContent = ({
               />
             </div>
           )}
-          <DialogFooter className="flex gap-5">
+          <DialogFooter className="flex gap-2">
             <div className="w-1/2">
               <DialogClose asChild>
                 <Button

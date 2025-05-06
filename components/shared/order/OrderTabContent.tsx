@@ -14,12 +14,13 @@ const OrderTabContent = ({
     <TabsContent value={stage}>
       {orders &&
         orders.map((order: Order) => (
-          <div key={order.id} className="p-5 bg-slate-100 rounded-sm mb-5">
-            {order.orderItems.map((orderItem: OrderItem, index) => (
+          <div
+            key={order.id}
+            className="p-5 bg-slate-100 rounded-sm grid gap-5"
+          >
+            {order.orderItems.map((orderItem: OrderItem) => (
               <div
-                className={`p-5 grid grid-cols-2 bg-white rounded-sm ${
-                  index < order.orderItems.length - 1 && "mb-5"
-                }`}
+                className="p-5 grid grid-cols-2 bg-white rounded-sm"
                 key={orderItem.productId}
               >
                 <div>
@@ -38,7 +39,7 @@ const OrderTabContent = ({
                 </div>
               </div>
             ))}
-            <div className="mt-5 grid grid-cols-2">
+            <div className="grid grid-cols-2">
               <div className="text-xs">
                 <span>{order.shippingAddress.name} - </span>
                 <span className="text-green">

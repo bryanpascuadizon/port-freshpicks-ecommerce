@@ -13,7 +13,7 @@ const UserAddressesList = ({
     <>
       {addressList.map((address: UserAddress, index) => (
         <div
-          className="bg-slate-100 p-3 rounded-sm mb-5 text-sm flex gap-3"
+          className={`bg-white p-5 rounded-sm text-sm flex gap-3`}
           key={index}
         >
           <div>

@@ -19,9 +19,9 @@ const UserAddresses = () => {
     userAddressesData &&
     userAddressesData.addressList && (
       <div className="h-full">
-        <div className="col-span-3 p-5 rounded-sm ">
+        <div className="rounded-sm ">
           <div className="flex items-center mb-5">
-            <p className="text-lg font-bold">Addresses</p>
+            <p className="text-2xl font-bold">Addresses</p>
             <Dialog open={openDialog} onOpenChange={setOpenDialog}>
               <DialogTrigger
                 className="bg-green-700 text-white p-2 pr-4 pl-4 text-sm rounded-sm ml-auto cursor-pointer"
@@ -36,7 +36,7 @@ const UserAddresses = () => {
               />
             </Dialog>
           </div>
-          <div className="w-full">
+          <div className="w-full bg-slate-100 rounded-sm p-5 grid gap-5">
             <UserAddressesList
               addressList={userAddressesData.addressList!}
               refetchUserAddress={refetchUserAddress}

@@ -22,37 +22,36 @@ const UserOrder = () => {
 
   return (
     <div className="h-full">
-      <div className="col-span-3 p-5">
-        <Tabs defaultValue={orderStage[0].stage} className="w-full">
-          <TabsList className="flex justify-between w-full mb-5">
-            {orderStage.map((order: { title: string; stage: string }) => (
-              <TabsTrigger
-                key={order.stage}
-                value={order.stage}
-                className={`cursor-pointer p-[-10px] ${
-                  order.stage === tab &&
-                  "bg-green-700  border-green-700 rounded-md"
-                }`}
-                onClick={() => {
-                  setTab(order.stage);
-                }}
-              >
-                <div
-                  className={`
+      <p className="text-2xl font-bold mb-5">My Orders</p>
+      <Tabs defaultValue={orderStage[0].stage} className="w-full">
+        <TabsList className="flex justify-between w-full mb-5">
+          {orderStage.map((order: { title: string; stage: string }) => (
+            <TabsTrigger
+              key={order.stage}
+              value={order.stage}
+              className={`cursor-pointer p-[-10px] ${
+                order.stage === tab &&
+                "bg-green-700  border-green-700 rounded-md"
+              }`}
+              onClick={() => {
+                setTab(order.stage);
+              }}
+            >
+              <div
+                className={`
                     ${
                       order.stage === tab &&
                       "bg-green-700 text-white font-bold h-full w-full rounded-sm p-1"
                     }
                   `}
-                >
-                  {order.title}
-                </div>
-              </TabsTrigger>
-            ))}
-          </TabsList>
-          {data && <OrderTabContent stage={tab} orders={data.orders} />}
-        </Tabs>
-      </div>
+              >
+                {order.title}
+              </div>
+            </TabsTrigger>
+          ))}
+        </TabsList>
+        {data && <OrderTabContent stage={tab} orders={data.orders} />}
+      </Tabs>
     </div>
   );
 };

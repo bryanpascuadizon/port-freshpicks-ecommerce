@@ -17,21 +17,19 @@ const CartList = () => {
   return (
     cart &&
     cart.cartItems && (
-      <div className="my-10">
-        <div className="text-xl font-bold mb-5">Shopping Cart</div>
-        <div className="">
-          <Table>
-            <TableBody>
-              {cart.cartItems.map((microgreenItem) => (
-                <CartItem
-                  key={microgreenItem.slug}
-                  cartItem={microgreenItem}
-                  refetch={refetch}
-                />
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+      <>
+        <div className="text-2xl font-bold mb-5">Shopping Cart</div>
+        <Table>
+          <TableBody>
+            {cart.cartItems.map((microgreenItem) => (
+              <CartItem
+                key={microgreenItem.slug}
+                cartItem={microgreenItem}
+                refetch={refetch}
+              />
+            ))}
+          </TableBody>
+        </Table>
         {cart.cartItems.length === 0 && (
           <p className="w-full text-center my-10">
             No items in cart. Go purchase{" "}
@@ -41,7 +39,7 @@ const CartList = () => {
           </p>
         )}
         <CartSummary cart={cart} refetch={refetch} />
-      </div>
+      </>
     )
   );
 };
