@@ -3,9 +3,13 @@ import { currencyFormatter } from "@/lib/utils";
 import { Order, OrderItem } from "@/types";
 import { Button } from "@/components/ui/button";
 import { useTransition } from "react";
-import { cancelOrder } from "@/lib/actions/OrderActions";
+import {
+  cancelPendingOrder,
+  payPendingOrder,
+} from "@/lib/actions/OrderActions";
 import { toast } from "sonner";
 import { Loader } from "lucide-react";
+import { redirect } from "next/navigation";
 
 const OrderTabContent = ({
   stage,
@@ -19,9 +23,9 @@ const OrderTabContent = ({
   const [isCancelPending, startCancelTransition] = useTransition();
   const [isPaymentPending, startPaymentTransition] = useTransition();
 
-  const handleCancelOrder = (referenceNumber: string) => {
+  const handleCancelOrder = (order: string) => {
     startCancelTransition(async () => {
-      const response = await cancelOrder(referenceNumber);
+      const response = await cancelPendingOrder(order);
 
       if (response.success) {
         await refetchOrders();
@@ -32,9 +36,13 @@ const OrderTabContent = ({
     });
   };
 
-  const handlePaymentOrder = (referenceNumber: string) => {
+  const handlePaymentOrder = (order: Order) => {
     startPaymentTransition(async () => {
-      console.log(referenceNumber);
+      const response = await payPendingOrder(order);
+
+      if (response.success) {
+        redirect(response.paymongoResponse.data.attributes.checkout_url);
+      }
     });
   };
   return (
@@ -66,7 +74,7 @@ const OrderTabContent = ({
                 </div>
               </div>
             ))}
-            <div className="grid grid-cols-2">
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
               <div className="text-xs">
                 <span>{order.shippingAddress.name} - </span>
                 <span className="text-green">
@@ -74,7 +82,7 @@ const OrderTabContent = ({
                 </span>
                 <p className="mt-1">{order.shippingAddress.address}</p>
               </div>
-              <div className="flex justify-end gap-2">
+              <div className="flex justify-start md:justify-end gap-2">
                 <Button
                   className="green-button-alternate min-w-[120px]"
                   onClick={() => handleCancelOrder(order.referenceNumber)}
@@ -82,12 +90,12 @@ const OrderTabContent = ({
                   {isCancelPending ? (
                     <Loader className="animate-spin" />
                   ) : (
-                    "Cancel Order"
+                    "Cancel"
                   )}
                 </Button>
                 <Button
-                  className="green-button min-w-[80px]"
-                  onClick={() => handlePaymentOrder(order.referenceNumber)}
+                  className="green-button min-w-[120px]"
+                  onClick={() => handlePaymentOrder(order)}
                 >
                   {" "}
                   {isPaymentPending ? (

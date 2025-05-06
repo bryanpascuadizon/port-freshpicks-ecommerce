@@ -1,4 +1,7 @@
-import { cancelOrderByReferenceNumber } from "../handlers/checkoutHandlers";
+import {
+  cancelOrderByReferenceNumber,
+  createCheckoutSession,
+} from "../handlers/checkoutHandlers";
 import {
   getOrderByReferenceNumber,
   getOrderByStage,
@@ -50,9 +53,9 @@ export const getUserOrders = async (stage: string) => {
   }
 };
 
-export const cancelOrder = async (orderId: string) => {
+export const cancelPendingOrder = async (referenceNumber: string) => {
   try {
-    const response = await cancelOrderByReferenceNumber(orderId);
+    const response = await cancelOrderByReferenceNumber(referenceNumber);
 
     if (response) {
       return {
@@ -60,6 +63,29 @@ export const cancelOrder = async (orderId: string) => {
         message: response,
       };
     }
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: `Something went wrong - ${error}`,
+    };
+  }
+};
+
+export const payPendingOrder = async (order: Order) => {
+  try {
+    const paymongoResponse = await createCheckoutSession(order);
+
+    if (paymongoResponse) {
+      return {
+        success: true,
+        paymongoResponse,
+      };
+    }
+
     return {
       success: false,
       message: "Something went wrong",

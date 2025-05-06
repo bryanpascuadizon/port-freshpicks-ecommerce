@@ -26,7 +26,6 @@ export const createSessionForCheckout = async (
     const order: Order[] = await getOrderByStage(orderStage[0].stage);
 
     if (order && order.length) {
-      console.log(order);
       return {
         success: false,
         message: "You have pending orders that needs payment",
