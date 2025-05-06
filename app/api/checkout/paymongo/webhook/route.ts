@@ -1,4 +1,5 @@
 import prisma from "@/db/prisma";
+import { orderStage } from "@/lib/constants";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (request: NextRequest) => {
@@ -23,6 +24,7 @@ export const POST = async (request: NextRequest) => {
             paymentStatus: eventData.attributes.payments[0].attributes.status,
             isPaid: true,
             paidAt: new Date(),
+            orderStage: orderStage[1].stage,
           },
         });
 
