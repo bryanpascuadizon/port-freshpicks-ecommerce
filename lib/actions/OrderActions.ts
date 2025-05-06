@@ -1,3 +1,4 @@
+import { cancelOrderByReferenceNumber } from "../handlers/checkoutHandlers";
 import {
   getOrderByReferenceNumber,
   getOrderByStage,
@@ -35,6 +36,28 @@ export const getUserOrders = async (stage: string) => {
       return {
         success: true,
         orders,
+      };
+    }
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: `Something went wrong - ${error}`,
+    };
+  }
+};
+
+export const cancelOrder = async (orderId: string) => {
+  try {
+    const response = await cancelOrderByReferenceNumber(orderId);
+
+    if (response) {
+      return {
+        success: true,
+        message: response,
       };
     }
     return {

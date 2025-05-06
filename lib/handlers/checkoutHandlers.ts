@@ -12,3 +12,11 @@ export const createCheckoutSession = async (order: Order) => {
 
   return response;
 };
+
+export const cancelOrderByReferenceNumber = async (referenceNumber: string) => {
+  const response = await fetch(`/api/order/${referenceNumber}`, {
+    method: "DELETE",
+  }).then((res) => res.json());
+
+  return response;
+};

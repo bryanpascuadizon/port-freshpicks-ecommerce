@@ -23,9 +23,10 @@ export const createSessionForCheckout = async (
       }
     }
 
-    const order: Order = await getOrderByStage(orderStage[0].stage);
+    const order: Order[] = await getOrderByStage(orderStage[0].stage);
 
-    if (order) {
+    if (order && order.length) {
+      console.log(order);
       return {
         success: false,
         message: "You have pending orders that needs payment",
@@ -51,7 +52,7 @@ export const createSessionForCheckout = async (
       ).then((req) => req.json());
 
       if (newOrder) {
-        const paymongoResponse = await createCheckoutSession(order);
+        const paymongoResponse = await createCheckoutSession(newOrder);
 
         return {
           success: true,

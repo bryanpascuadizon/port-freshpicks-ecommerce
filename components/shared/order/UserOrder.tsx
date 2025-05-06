@@ -11,7 +11,7 @@ import { getUserOrders } from "@/lib/actions/OrderActions";
 const UserOrder = () => {
   const [tab, setTab] = useState(orderStage[0].stage);
 
-  const { data } = useQuery({
+  const { data, refetch: refetchOrders } = useQuery({
     queryKey: ["order-stage", tab],
     queryFn: async () => {
       const response = await getUserOrders(tab);
@@ -50,7 +50,13 @@ const UserOrder = () => {
             </TabsTrigger>
           ))}
         </TabsList>
-        {data && <OrderTabContent stage={tab} orders={data.orders} />}
+        {data && (
+          <OrderTabContent
+            stage={tab}
+            orders={data.orders}
+            refetchOrders={refetchOrders}
+          />
+        )}
       </Tabs>
     </div>
   );

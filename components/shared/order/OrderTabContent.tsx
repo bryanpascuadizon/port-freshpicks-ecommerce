@@ -2,14 +2,41 @@ import { TabsContent } from "@/components/ui/tabs";
 import { currencyFormatter } from "@/lib/utils";
 import { Order, OrderItem } from "@/types";
 import { Button } from "@/components/ui/button";
+import { useTransition } from "react";
+import { cancelOrder } from "@/lib/actions/OrderActions";
+import { toast } from "sonner";
+import { Loader } from "lucide-react";
 
 const OrderTabContent = ({
   stage,
   orders,
+  refetchOrders,
 }: {
   stage: string;
   orders: Order[];
+  refetchOrders: () => void;
 }) => {
+  const [isCancelPending, startCancelTransition] = useTransition();
+  const [isPaymentPending, startPaymentTransition] = useTransition();
+
+  const handleCancelOrder = (referenceNumber: string) => {
+    startCancelTransition(async () => {
+      const response = await cancelOrder(referenceNumber);
+
+      if (response.success) {
+        await refetchOrders();
+        toast(
+          <p className="toast-text text-destructive">{response.message}</p>
+        );
+      }
+    });
+  };
+
+  const handlePaymentOrder = (referenceNumber: string) => {
+    startPaymentTransition(async () => {
+      console.log(referenceNumber);
+    });
+  };
   return (
     <TabsContent value={stage}>
       {orders &&
@@ -48,10 +75,27 @@ const OrderTabContent = ({
                 <p className="mt-1">{order.shippingAddress.address}</p>
               </div>
               <div className="flex justify-end gap-2">
-                <Button className="green-button-alternate min-w-[80px]">
-                  Cancel
+                <Button
+                  className="green-button-alternate min-w-[120px]"
+                  onClick={() => handleCancelOrder(order.referenceNumber)}
+                >
+                  {isCancelPending ? (
+                    <Loader className="animate-spin" />
+                  ) : (
+                    "Cancel Order"
+                  )}
                 </Button>
-                <Button className="green-button min-w-[80px]">Pay</Button>
+                <Button
+                  className="green-button min-w-[80px]"
+                  onClick={() => handlePaymentOrder(order.referenceNumber)}
+                >
+                  {" "}
+                  {isPaymentPending ? (
+                    <Loader className="animate-spin" />
+                  ) : (
+                    "Pay"
+                  )}
+                </Button>
                 <p className="font-bold text-green text-lg self-center">
                   {currencyFormatter.format(order.subtotalPrice)}
                 </p>
