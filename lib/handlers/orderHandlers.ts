@@ -20,3 +20,11 @@ export const getOrderByReferenceNumber = async (referenceNumber: string) => {
 
   return response;
 };
+
+export const getOrderByStage = async (stage: string) => {
+  const response = await fetch(`/api/order/stage/${stage}`).then((req) =>
+    req.json()
+  );
+
+  return response;
+};

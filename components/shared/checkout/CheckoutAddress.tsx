@@ -40,7 +40,7 @@ const CheckoutAddress = ({
         </div>
         <div className="md:flex md:justify-end col-span-1">
           <Dialog>
-            <DialogTrigger className="self-center green-button p-2 rounded-md text-white">
+            <DialogTrigger className="self-center green-button py-2 px-4 rounded-md text-white text-base">
               Change Address
             </DialogTrigger>
             <DialogContent>

@@ -2,8 +2,9 @@ import { Cart, CartItem, Order, User, UserAddress } from "@/types";
 import { createCheckoutSession } from "../handlers/checkoutHandlers";
 import { getUserAddressList } from "./UserActions";
 import { getAccountProfile } from "../handlers/userHandlers";
-import { createOrder } from "../handlers/orderHandlers";
+import { createOrder, getOrderByStage } from "../handlers/orderHandlers";
 import { getUserCart } from "../handlers/cartHandlers";
+import { orderStage } from "../constants";
 
 export const createSessionForCheckout = async (
   cart: Cart,
@@ -22,6 +23,15 @@ export const createSessionForCheckout = async (
       }
     }
 
+    const order: Order = await getOrderByStage(orderStage[0].stage);
+
+    if (order) {
+      return {
+        success: false,
+        message: "You have pending orders that needs payment",
+      };
+    }
+
     const user: User = await getAccountProfile();
     const allCartItems: Cart = await getUserCart();
 
@@ -34,16 +44,19 @@ export const createSessionForCheckout = async (
 
     if (user) {
       //Initiate POST order
-      const order: Order = await createOrder(
+      const newOrder: Order = await createOrder(
         cart,
         cartItemsNotForShipping,
         defaultAddress
       ).then((req) => req.json());
 
-      if (order) {
-        const response = await createCheckoutSession(order);
+      if (newOrder) {
+        const paymongoResponse = await createCheckoutSession(order);
 
-        return response;
+        return {
+          success: true,
+          paymongoResponse,
+        };
       }
     }
 

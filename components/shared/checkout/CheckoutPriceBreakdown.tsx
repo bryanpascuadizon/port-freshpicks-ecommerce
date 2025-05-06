@@ -5,6 +5,8 @@ import { useTransition } from "react";
 import ButtonLoader from "../ButtonLoader";
 import { redirect } from "next/navigation";
 import { Cart, UserAddress } from "@/types";
+import { toast } from "sonner";
+import Link from "next/link";
 
 const CheckoutPriceBreakdown = ({
   subtotalPrice,
@@ -25,9 +27,24 @@ const CheckoutPriceBreakdown = ({
     startTransition(async () => {
       const response = await createSessionForCheckout(cart, selectedAddress);
 
-      if (response) {
-        redirect(response.data.attributes.checkout_url);
+      if (response.success) {
+        redirect(response.paymongoResponse.data.attributes.checkout_url);
       }
+
+      toast(
+        <div className="toast-text flex gap-5">
+          <div className="text-destructive">
+            <p>{response.message}</p>
+          </div>
+          <div className="text-center self-center">
+            <Button className="green-button">
+              <Link href="/user/orders" className="text-white">
+                View My Orders
+              </Link>
+            </Button>
+          </div>
+        </div>
+      );
     });
   };
 
@@ -44,9 +61,7 @@ const CheckoutPriceBreakdown = ({
         <div className="grid grid-cols-2 text-sm mb-3">
           <div>
             Delivery Fee{" "}
-            <span className="text-green text-xs">
-              (20% of subtotal price)
-            </span>
+            <span className="text-green text-xs">(20% of subtotal price)</span>
           </div>
           <div className="text-right">
             {currencyFormatter.format(shippingPrice)}
@@ -61,7 +76,7 @@ const CheckoutPriceBreakdown = ({
       </div>
       <div>
         <Button
-          className="w-full green-button cursor-pointer mt-5 text-lg"
+          className="w-full green-button cursor-pointer mt-5 text-base"
           onClick={handleCheckout}
         >
           {isPending ? <ButtonLoader /> : "Place Order"}

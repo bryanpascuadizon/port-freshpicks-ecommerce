@@ -31,7 +31,7 @@ export const POST = async (request: NextRequest) => {
           shippingPrice: orderForShipping.shippingPrice,
           totalPrice: orderForShipping.totalPrice,
           orderItems: cart.cartItems,
-          orderStage: orderStage[0],
+          orderStage: orderStage[0].stage,
         },
       });
 

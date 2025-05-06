@@ -2,7 +2,7 @@
 
 import { SignOut } from "@/lib/actions/UserActions";
 import { APP_NAME } from "@/lib/constants";
-import { AlignJustify, ListOrdered, Power, User } from "lucide-react";
+import { AlignJustify, House, ListOrdered, Power, User } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -48,7 +48,14 @@ const Header = () => {
                       <User className="mr-4" width={20} height={20} />
                       Profile
                     </Link>
-
+                    <Link
+                      href="/user/account/addresses"
+                      className="mb-3 flex text-sm"
+                      onClick={() => setPopOverOpen(false)}
+                    >
+                      <House className="mr-4" width={20} height={20} />
+                      My Addresses
+                    </Link>
                     <Link
                       href="/user/orders"
                       className="flex text-sm"

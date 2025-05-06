@@ -2,8 +2,7 @@
 
 import { getUserProfile, updateUserProfile } from "@/lib/actions/UserActions";
 import { useQuery } from "@tanstack/react-query";
-import UserSidebar from "./UserSidebar";
-import { GENDER, userSidebarMenu } from "@/lib/constants";
+import { GENDER } from "@/lib/constants";
 import { useActionState, useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
@@ -44,8 +43,7 @@ const UserProfile = () => {
 
   return (
     user && (
-      <div className="grid grid-cols-4 gap-5 h-full">
-        <UserSidebar linkHighlighted={userSidebarMenu.Profile} />
+      <div className="h-full">
         <div className="col-span-3 p-5 rounded-sm">
           <div className="flex items-center mb-5">
             <p className="text-lg font-bold">Profile</p>
@@ -103,9 +101,7 @@ const UserProfile = () => {
                     </TableCell>
                   </TableRow>
                   <TableRow className="tableRow">
-                    <TableCell className="text-green">
-                      Phone Number
-                    </TableCell>
+                    <TableCell className="text-green">Phone Number</TableCell>
                     <TableCell>
                       {isEditing ? (
                         <Input
@@ -172,9 +168,7 @@ const UserProfile = () => {
                     </TableCell>
                   </TableRow>
                   <TableRow className="tableRow">
-                    <TableCell className="text-green">
-                      Date of Birth
-                    </TableCell>
+                    <TableCell className="text-green">Date of Birth</TableCell>
                     <TableCell className="">**/**/1996</TableCell>
                   </TableRow>
                   {isEditing && (

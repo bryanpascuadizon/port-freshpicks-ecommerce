@@ -18,4 +18,21 @@ export const GENDER = {
   Other: "Other",
 };
 
-export const orderStage = ["To Pay", "To Ship", "To Receive", "Completed"];
+export const orderStage = [
+  {
+    title: "To Pay",
+    stage: "topay",
+  },
+  {
+    title: "To Ship",
+    stage: "toship",
+  },
+  {
+    title: "To Receive",
+    stage: "toreceive",
+  },
+  {
+    title: "Completed",
+    stage: "completed",
+  },
+];

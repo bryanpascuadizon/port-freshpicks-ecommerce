@@ -1,7 +1,5 @@
 "use client";
 
-import UserSidebar from "./UserSidebar";
-import { userSidebarMenu } from "@/lib/constants";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import UserAddressDialogContent from "./UserAddressDialogContent";
 import { useQuery } from "@tanstack/react-query";
@@ -20,8 +18,7 @@ const UserAddresses = () => {
   return (
     userAddressesData &&
     userAddressesData.addressList && (
-      <div className="grid grid-cols-4 gap-5 h-full">
-        <UserSidebar linkHighlighted={userSidebarMenu.Addresses} />
+      <div className="h-full">
         <div className="col-span-3 p-5 rounded-sm ">
           <div className="flex items-center mb-5">
             <p className="text-lg font-bold">Addresses</p>
