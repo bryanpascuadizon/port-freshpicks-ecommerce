@@ -18,14 +18,7 @@ const Footer = () => {
         </nav>
         <nav className="flex justify-end">
           <span className="self-center mr-auto">
-            © 2025{" "}
-            <Link
-              href="https://github.com/bryanpascuadizon"
-              className="text-green"
-            >
-              Bryan Dizon
-            </Link>{" "}
-            | All Rights Reserved
+            © 2025 Bryan Dizon | All Rights Reserved
           </span>
         </nav>
       </div>
