@@ -7,6 +7,7 @@ import { TabsTrigger } from "@/components/ui/tabs";
 import OrderTabContent from "./OrderTabContent";
 import { useQuery } from "@tanstack/react-query";
 import { getUserOrders } from "@/lib/actions/OrderActions";
+import NoOrderContent from "./NoOrderContent";
 
 const UserOrder = () => {
   const [tab, setTab] = useState(orderStage[0].stage);
@@ -50,12 +51,14 @@ const UserOrder = () => {
             </TabsTrigger>
           ))}
         </TabsList>
-        {data && (
+        {data && data.orders.length ? (
           <OrderTabContent
             stage={tab}
             orders={data.orders}
             refetchOrders={refetchOrders}
           />
+        ) : (
+          <NoOrderContent />
         )}
       </Tabs>
     </div>
