@@ -1,4 +1,4 @@
-import { Cart, CartItem, UserAddress } from "@/types";
+import { Cart, CartItem, Order, UserAddress } from "@/types";
 
 export const createOrder = async (
   cart: Cart,
@@ -25,6 +25,15 @@ export const getOrderByStage = async (stage: string) => {
   const response = await fetch(`/api/order/stage/${stage}`).then((req) =>
     req.json()
   );
+
+  return response;
+};
+
+export const updateOrderToProcess = async (order: Order) => {
+  const response = await fetch(`/api/order/`, {
+    method: "PATCH",
+    body: JSON.stringify({ order }),
+  }).then((req) => req.json());
 
   return response;
 };

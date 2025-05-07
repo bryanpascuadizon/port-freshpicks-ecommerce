@@ -2,6 +2,8 @@ import { TabsContent } from "@/components/ui/tabs";
 import { currencyFormatter } from "@/lib/utils";
 import { Order, OrderItem } from "@/types";
 import OrderToPay from "./OrderToPay";
+import OrderToProcess from "./OrderToProcess";
+import { orderStage } from "@/lib/constants";
 
 const OrderTabContent = ({
   stage,
@@ -49,8 +51,17 @@ const OrderTabContent = ({
                 </span>
                 <p className="mt-1">{order.shippingAddress.address}</p>
               </div>
-              {stage === "topay" && (
+              {stage === orderStage[0].stage && (
                 <OrderToPay order={order} refetchOrders={refetchOrders} />
+              )}
+
+              {(stage === orderStage[1].stage ||
+                stage === orderStage[2].stage) && (
+                <OrderToProcess
+                  order={order}
+                  stage={stage}
+                  refetchOrders={refetchOrders}
+                />
               )}
             </div>
           </div>

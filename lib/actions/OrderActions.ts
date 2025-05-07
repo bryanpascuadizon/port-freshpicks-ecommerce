@@ -5,6 +5,7 @@ import {
 import {
   getOrderByReferenceNumber,
   getOrderByStage,
+  updateOrderToProcess,
 } from "../handlers/orderHandlers";
 import { Order } from "@/types";
 
@@ -83,6 +84,29 @@ export const payPendingOrder = async (order: Order) => {
       return {
         success: true,
         paymongoResponse,
+      };
+    }
+
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: `Something went wrong - ${error}`,
+    };
+  }
+};
+
+export const processOrder = async (order: Order) => {
+  try {
+    const response = await updateOrderToProcess(order);
+
+    if (response) {
+      return {
+        success: true,
+        message: response,
       };
     }
 

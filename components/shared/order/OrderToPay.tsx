@@ -3,6 +3,7 @@ import {
   cancelPendingOrder,
   payPendingOrder,
 } from "@/lib/actions/OrderActions";
+import { orderStage } from "@/lib/constants";
 import { currencyFormatter } from "@/lib/utils";
 import { Order } from "@/types";
 import { Loader } from "lucide-react";
@@ -63,7 +64,11 @@ const OrderToPay = ({
           onClick={() => handlePaymentOrder(order)}
         >
           {" "}
-          {isPaymentPending ? <Loader className="animate-spin" /> : "Pay"}
+          {isPaymentPending ? (
+            <Loader className="animate-spin" />
+          ) : (
+            orderStage[0].process
+          )}
         </Button>
         <p className="font-bold text-green text-lg self-center">
           {currencyFormatter.format(order.totalPrice)}

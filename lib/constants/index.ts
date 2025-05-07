@@ -22,17 +22,21 @@ export const orderStage = [
   {
     title: "To Pay",
     stage: "topay",
+    process: "Pay",
   },
   {
     title: "To Ship",
     stage: "toship",
+    process: "Ship",
   },
   {
     title: "To Receive",
     stage: "toreceive",
+    process: "Receive",
   },
   {
     title: "Completed",
     stage: "completed",
+    process: "Completed",
   },
 ];

@@ -45,3 +45,24 @@ export const POST = async (request: NextRequest) => {
     return new NextResponse(`Cannot create order - ${error}`, { status: 500 });
   }
 };
+
+export const PATCH = async (req: NextRequest) => {
+  try {
+    const { order } = await req.json();
+
+    const processOrder = await prisma.order.update({
+      where: { id: order.id },
+      data: {
+        orderStage: orderStage[2].stage,
+      },
+    });
+
+    if (processOrder) {
+      return new NextResponse("Order is ready for shipping", { status: 200 });
+    }
+
+    return new NextResponse(`Cannot process order`, { status: 500 });
+  } catch (error) {
+    return new NextResponse(`Cannot process order - ${error}`, { status: 500 });
+  }
+};
