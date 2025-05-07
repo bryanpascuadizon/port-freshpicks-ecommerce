@@ -1,6 +1,7 @@
 import NextAuth, { NextAuthConfig } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 import prisma from "./db/prisma";
 import { compareSync } from "bcrypt-ts-edge";
 
@@ -15,6 +16,10 @@ export const config = {
   },
   adapter: PrismaAdapter(prisma),
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_APP_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_APP_SECRET_KEY!,
+    }),
     CredentialsProvider({
       credentials: {
         email: { type: "email" },

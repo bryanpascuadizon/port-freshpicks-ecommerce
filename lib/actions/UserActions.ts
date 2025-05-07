@@ -41,6 +41,21 @@ export const SignIn = async (prevState: unknown, formData: FormData) => {
   }
 };
 
+export const googleSignIn = async () => {
+  try {
+    await signIn("google");
+  } catch (error) {
+    if (isRedirectError(error)) {
+      throw error;
+    }
+
+    return {
+      success: false,
+      message: "Invalid Email or Password",
+    };
+  }
+};
+
 export const SignOut = async () => {
   await signOut();
 };
