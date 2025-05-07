@@ -3,10 +3,22 @@ import { hashSync } from "bcrypt-ts-edge";
 const microgreensData = {
   users: [
     {
-      name: "Bryan Dizon",
-      email: "dizondanielle04@gmail.com",
+      name: "Admin A. Admin",
+      email: "admin@yahoo.com",
       password: hashSync("qwerty", 10),
       role: "admin",
+    },
+    {
+      name: "User U. User",
+      email: "user@yahoo.com",
+      password: hashSync("qwerty", 10),
+      role: "user",
+    },
+    {
+      name: "Courier C. Courier",
+      email: "courier@yahoo.com",
+      password: hashSync("qwerty", 10),
+      role: "courier",
     },
   ],
   products: {

@@ -48,7 +48,7 @@ const UserAddressEditDialogContent = ({
   return (
     <Dialog open={openDialog} onOpenChange={setOpenDialog}>
       <DialogTrigger>
-        <Edit width={20} height={20} className="cursor-pointer" />
+        <Edit width={25} height={25} className="cursor-pointer" />
       </DialogTrigger>
       <DialogContent>
         <DialogTitle>Update Address</DialogTitle>

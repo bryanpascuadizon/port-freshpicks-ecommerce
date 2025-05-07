@@ -2,7 +2,7 @@
 
 import { SignOut } from "@/lib/actions/UserActions";
 import { APP_NAME } from "@/lib/constants";
-import { AlignJustify, House, ListOrdered, Power, User } from "lucide-react";
+import { House, ListOrdered, Power, User } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -11,6 +11,7 @@ import siteImage from "@/assets/site-icon.png";
 import { Popover, PopoverContent } from "@radix-ui/react-popover";
 import { PopoverTrigger } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
+import AvatarHeader from "./AvatarHeader";
 
 const Header = () => {
   const [popoverOpen, setPopOverOpen] = useState(false);
@@ -35,7 +36,7 @@ const Header = () => {
             <ShoppingCartHeader />
             <Popover open={popoverOpen} onOpenChange={setPopOverOpen}>
               <PopoverTrigger>
-                <AlignJustify className="cursor-pointer" />
+                <AvatarHeader />
               </PopoverTrigger>
               <PopoverContent className="z-50">
                 <div className="flex flex-col rounded-sm bg-white border-1 border-slate-200 mt-3">

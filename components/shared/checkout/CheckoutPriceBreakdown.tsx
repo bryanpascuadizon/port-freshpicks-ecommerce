@@ -76,7 +76,7 @@ const CheckoutPriceBreakdown = ({
       </div>
       <div>
         <Button
-          className="w-full green-button cursor-pointer mt-5 text-base"
+          className="w-full green-button cursor-pointer mt-5 text-lg"
           onClick={handleCheckout}
         >
           {isPending ? <ButtonLoader /> : "Place Order"}

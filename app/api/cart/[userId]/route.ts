@@ -1,16 +1,21 @@
-import { auth } from "@/auth";
 import prisma from "@/db/prisma";
 import { calculatePrice } from "@/lib/utils";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 /*
   Description: Get User Cart
   Handler directory: CartActions > getUserCart
 */
-export const GET = async () => {
+export const GET = async (
+  request: NextRequest,
+  {
+    params,
+  }: {
+    params: Promise<{ userId: string }>;
+  }
+) => {
   try {
-    const session = await auth();
-    const userId = session?.user?.id;
+    const { userId } = await params;
 
     const userCart = await prisma.cart.findFirst({
       where: { userId: userId },
@@ -34,10 +39,16 @@ export const GET = async () => {
   Description: Add new cart for new user
   Handler directory: CartActions > getUserCart
 */
-export const POST = async () => {
+export const POST = async (
+  request: NextRequest,
+  {
+    params,
+  }: {
+    params: Promise<{ userId: string }>;
+  }
+) => {
   try {
-    const session = await auth();
-    const userId = session?.user?.id;
+    const { userId } = await params;
 
     const newUserCart = await prisma.cart.create({
       data: {

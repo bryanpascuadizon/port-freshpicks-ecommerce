@@ -1,4 +1,3 @@
-import { auth } from "@/auth";
 import prisma from "@/db/prisma";
 import { Cart } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
@@ -7,10 +6,12 @@ import { NextRequest, NextResponse } from "next/server";
   Description: Add cart 
   Handler directory: CartActions > addToCart
 */
-export const POST = async (request: NextRequest) => {
+export const POST = async (
+  request: NextRequest,
+  { params }: { params: Promise<{ userId: string }> }
+) => {
   try {
-    const session = await auth();
-    const userId = session?.user?.id;
+    const { userId } = await params;
 
     const newUserCart = await request.json();
 

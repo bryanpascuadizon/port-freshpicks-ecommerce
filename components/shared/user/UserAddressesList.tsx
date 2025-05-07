@@ -1,6 +1,7 @@
 import { UserAddress } from "@/types";
 import { Badge } from "@/components/ui/badge";
 import UserAddressEditDelete from "./UserAddressEditDelete";
+import { House } from "lucide-react";
 
 const UserAddressesList = ({
   addressList,
@@ -10,7 +11,7 @@ const UserAddressesList = ({
   refetchUserAddress: () => void;
 }) => {
   return addressList && addressList.length ? (
-    <>
+    <div className="w-full bg-slate-100 rounded-sm p-5 grid gap-5">
       {addressList.map((address: UserAddress, index) => (
         <div
           className={`bg-white p-5 rounded-sm text-sm flex gap-3`}
@@ -32,9 +33,12 @@ const UserAddressesList = ({
           />
         </div>
       ))}
-    </>
+    </div>
   ) : (
-    <>Please add your address</>
+    <div className="text-center mt-20">
+      <House className="text-green mb-5 m-auto" width={100} height={100} />
+      <p className="text-base">No addresses</p>
+    </div>
   );
 };
 

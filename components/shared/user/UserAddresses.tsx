@@ -36,12 +36,10 @@ const UserAddresses = () => {
               />
             </Dialog>
           </div>
-          <div className="w-full bg-slate-100 rounded-sm p-5 grid gap-5">
-            <UserAddressesList
-              addressList={userAddressesData.addressList!}
-              refetchUserAddress={refetchUserAddress}
-            />
-          </div>
+          <UserAddressesList
+            addressList={userAddressesData.addressList!}
+            refetchUserAddress={refetchUserAddress}
+          />
         </div>
       </div>
     )

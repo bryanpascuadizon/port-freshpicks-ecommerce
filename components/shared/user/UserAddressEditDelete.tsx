@@ -51,13 +51,13 @@ const UserAddressEditDelete = ({
             refetchUserAddress={refetchUserAddress}
           />
           {isPending ? (
-            <Loader className="animate-spin" width={20} height={20} />
+            <Loader className="animate-spin" width={25} height={25} />
           ) : (
             <>
               {address.isDefault === null && (
                 <Trash2
-                  width={20}
-                  height={20}
+                  width={25}
+                  height={25}
                   className="text-red-700 cursor-pointer"
                   onClick={handleDeleteAddress}
                 />
@@ -74,8 +74,8 @@ const UserAddressEditDelete = ({
               {isDefaultAddressPending ? (
                 <Loader
                   className="animate-spin min-w-[87px]"
-                  width={20}
-                  height={20}
+                  width={25}
+                  height={25}
                 />
               ) : (
                 "Set as default"

@@ -15,10 +15,11 @@ const CheckoutList = () => {
     queryFn: getCartListForCheckout,
   });
 
-  const { data: userAddressList } = useQuery({
-    queryKey: ["user-address-checkout"],
-    queryFn: getUserAddressList,
-  });
+  const { data: userAddressList, refetch: refetechCheckoutUserAddressList } =
+    useQuery({
+      queryKey: ["user-address-checkout"],
+      queryFn: getUserAddressList,
+    });
 
   const [selectedAddress, setSelectedAddress] = useState<UserAddress>();
 
@@ -32,6 +33,7 @@ const CheckoutList = () => {
           addressList={userAddressList.addressList}
           selectedAddress={selectedAddress!}
           setSelectedAddress={setSelectedAddress}
+          refetechCheckoutUserAddressList={refetechCheckoutUserAddressList}
         />
 
         <div className="grid md:grid-cols-5 gap-4">

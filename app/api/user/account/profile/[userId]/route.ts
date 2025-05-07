@@ -1,15 +1,16 @@
-import { auth } from "@/auth";
 import prisma from "@/db/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-export const GET = async () => {
+export const GET = async (
+  request: NextRequest,
+  { params }: { params: Promise<{ userId: string }> }
+) => {
   try {
-    const session = await auth();
-    const userSession = session?.user;
+    const { userId } = await params;
 
     const user = await prisma.user.findFirst({
       where: {
-        id: userSession?.id,
+        id: userId,
       },
     });
 
@@ -25,12 +26,14 @@ export const GET = async () => {
   }
 };
 
-export const PATCH = async (request: NextRequest) => {
+export const PATCH = async (
+  request: NextRequest,
+  { params }: { params: Promise<{ userId: string }> }
+) => {
   try {
-    const session = await auth();
-    const userId = session?.user?.id;
-
     const userForUpdate = await request.json();
+
+    const { userId } = await params;
 
     const user = await prisma.user.findFirst({
       where: {

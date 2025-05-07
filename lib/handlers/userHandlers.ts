@@ -1,9 +1,9 @@
 import { User } from "@/types";
 
-export const getAccountProfile = async () => {
+export const getAccountProfile = async (userId: string) => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/user/account/profile`
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/user/account/profile/${userId}`
     ).then((res) => res.json());
 
     return response;
@@ -12,15 +12,18 @@ export const getAccountProfile = async () => {
   }
 };
 
-export const updateAccountProfile = async (userForUpdate: {
-  name: FormDataEntryValue | null;
-  email: FormDataEntryValue | null;
-  phoneNumber: FormDataEntryValue | null;
-  gender: FormDataEntryValue | null;
-}) => {
+export const updateAccountProfile = async (
+  userForUpdate: {
+    name: FormDataEntryValue | null;
+    email: FormDataEntryValue | null;
+    phoneNumber: FormDataEntryValue | null;
+    gender: FormDataEntryValue | null;
+  },
+  userId: string
+) => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/user/account/profile`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/user/account/profile/${userId}`,
       {
         method: "PATCH",
         body: JSON.stringify(userForUpdate),

@@ -12,14 +12,17 @@ import { useActionState, useEffect } from "react";
 import ButtonLoader from "../ButtonLoader";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DialogClose } from "@radix-ui/react-dialog";
+import { redirect } from "next/navigation";
 
 const UserAddressDialogContent = ({
   setOpenDialog,
   refetchUserAddress,
+  refetechCheckoutUserAddressList,
   addressLength,
 }: {
-  setOpenDialog: (state: boolean) => void;
-  refetchUserAddress: () => void;
+  setOpenDialog?: (state: boolean) => void;
+  refetchUserAddress?: () => void;
+  refetechCheckoutUserAddressList?: () => void;
   addressLength: number;
 }) => {
   const [state, action, isPending] = useActionState(submitAddress, {
@@ -30,19 +33,38 @@ const UserAddressDialogContent = ({
   useEffect(() => {
     const closeDialog = async () => {
       if (state.success) {
-        setOpenDialog(false);
-        await refetchUserAddress();
+        if (setOpenDialog) {
+          setOpenDialog(false);
+        }
+
+        if (refetchUserAddress) {
+          await refetchUserAddress();
+          return;
+        }
+
+        if (refetechCheckoutUserAddressList) {
+          await refetechCheckoutUserAddressList();
+
+          return;
+        }
       }
     };
 
     closeDialog();
-  }, [state, refetchUserAddress, setOpenDialog]);
+  }, [
+    state,
+    refetchUserAddress,
+    setOpenDialog,
+    refetechCheckoutUserAddressList,
+  ]);
 
   return (
     <DialogContent>
       <DialogHeader>
         <DialogTitle>New Address</DialogTitle>
-        <DialogDescription></DialogDescription>
+        <DialogDescription>
+          Add your address to be used as delivery address
+        </DialogDescription>
         <form action={action}>
           <div className="text-sm mb-5">
             <Input id="name" name="name" placeholder="Full Name" required />
@@ -88,7 +110,14 @@ const UserAddressDialogContent = ({
               <DialogClose asChild>
                 <Button
                   className="w-full green-button-alternate"
-                  onClick={() => setOpenDialog(false)}
+                  onClick={() => {
+                    if (setOpenDialog) {
+                      setOpenDialog(false);
+                      return;
+                    }
+
+                    redirect("/cart");
+                  }}
                 >
                   Cancel
                 </Button>

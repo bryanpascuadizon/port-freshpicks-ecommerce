@@ -83,16 +83,16 @@ const CartItemDetail = ({
             <Loader className="self-center animate-spin" />
           ) : (
             <Trash2
-              className="text-red-700 self-center"
+              className="text-red-700 self-center cursor-pointer"
               onClick={handleRemoveItemFromCart}
             />
           )}
         </TableCell>
       </TableRow>
 
-      <TableRow className="border-0 text-base table-row md:hidden">
+      <TableRow className="tableRow text-base table-row md:hidden">
         <CartSelection cartItem={cartItem} refetch={refetch} />
-        <TableCell className="">
+        <TableCell>
           <Image
             src={cartItem.images[0]}
             alt={cartItem.slug}

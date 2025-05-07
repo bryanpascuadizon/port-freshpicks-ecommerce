@@ -33,7 +33,7 @@ export const currencyFormatter = new Intl.NumberFormat("en-PH", {
 });
 
 export const formatPhoneNumber = (phoneNumber: string) => {
-  return `********* ${phoneNumber.substring(9)}`;
+  return phoneNumber && `********* ${phoneNumber.substring(9)}`;
 };
 
 export const retrievePaymentMethodIcon = (paymentMethod: string) => {
@@ -68,4 +68,12 @@ export const retrievePaymentMethodIcon = (paymentMethod: string) => {
         icon: "",
       };
   }
+};
+
+export const getUserAvatar = (name: string) => {
+  const fullName = name.split(" ");
+  const firstName = fullName[0].charAt(0);
+  const lastName = fullName[fullName.length - 1].charAt(0);
+
+  return `${firstName}${lastName}`;
 };

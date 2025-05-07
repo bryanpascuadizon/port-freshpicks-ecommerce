@@ -46,12 +46,20 @@ const OrderToPay = ({
 
   return (
     <div className="">
-      <p className="text-right text-sm mb-5">
-        Shipping Fee:{" "}
+      <div className="text-right text-sm">
+        <span className="font-bold">Subtotal Price: </span>
+        <span className="font-bold text-green">
+          {currencyFormatter.format(order.subtotalPrice)}
+        </span>
+      </div>
+      <div className="text-right text-sm mb-5">
+        <span className="font-bold">Shipping Fee: </span>
         <span className="font-bold text-green">
           {currencyFormatter.format(order.shippingPrice)}
         </span>
-      </p>
+        <p className="text-xs text-green">(20% of subtotal price)</p>
+      </div>
+
       <div className="flex justify-end gap-2">
         <Button
           className="green-button-alternate min-w-[120px] self-center"

@@ -1,12 +1,12 @@
 import { Cart } from "@/types";
 
-export const getUserCart = async (): Promise<Cart> => {
-  const response: Promise<Cart> = await fetch("/api/cart").then((res) =>
-    res.json()
+export const getUserCart = async (userId: string): Promise<Cart> => {
+  const response: Promise<Cart> = await fetch(`/api/cart/${userId}`).then(
+    (res) => res.json()
   );
 
   if (!response) {
-    const newUserCartResponse = await fetch("/api/cart", {
+    const newUserCartResponse = await fetch(`/api/cart/${userId}`, {
       method: "POST",
     }).then((res) => res.json());
 
@@ -18,8 +18,8 @@ export const getUserCart = async (): Promise<Cart> => {
   return response;
 };
 
-export const addUserCart = async (updatedCart: Cart) => {
-  const response = await fetch(`/api/cart/update-cart`, {
+export const addUserCart = async (updatedCart: Cart, userId: string) => {
+  const response = await fetch(`/api/cart/update-cart/${userId}`, {
     method: "POST",
     body: JSON.stringify(updatedCart),
   });
@@ -27,8 +27,8 @@ export const addUserCart = async (updatedCart: Cart) => {
   return response;
 };
 
-export const updateUserCart = async (updatedCart: Cart) => {
-  const response = await fetch(`/api/cart/update-cart`, {
+export const updateUserCart = async (updatedCart: Cart, userId: string) => {
+  const response = await fetch(`/api/cart/update-cart/${userId}`, {
     method: "PATCH",
     body: JSON.stringify(updatedCart),
   });

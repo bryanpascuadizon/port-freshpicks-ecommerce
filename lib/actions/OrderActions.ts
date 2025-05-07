@@ -8,6 +8,7 @@ import {
   updateOrderToProcess,
 } from "../handlers/orderHandlers";
 import { Order } from "@/types";
+import { getUserAuthentication } from "./UserActions";
 
 export const getSuccessFulOrder = async (referenceNumber: string) => {
   try {
@@ -34,14 +35,19 @@ export const getSuccessFulOrder = async (referenceNumber: string) => {
 
 export const getUserOrders = async (stage: string) => {
   try {
-    const orders = await getOrderByStage(stage);
+    const user = await getUserAuthentication();
 
-    if (orders) {
-      return {
-        success: true,
-        orders,
-      };
+    if (user) {
+      const orders = await getOrderByStage(stage, user.id!);
+
+      if (orders) {
+        return {
+          success: true,
+          orders,
+        };
+      }
     }
+
     return {
       success: false,
       message: "Something went wrong",

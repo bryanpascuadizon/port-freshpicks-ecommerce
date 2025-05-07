@@ -14,7 +14,7 @@ const CheckoutCartList = ({ cart }: { cart: Cart }) => {
           {cart &&
             cart.cartItems.map((cartItem, index) => (
               <React.Fragment key={`${cartItem.productId}_${index}`}>
-                <TableRow className="border-0 hidden md:table-row">
+                <TableRow className="tableRow hidden md:table-row">
                   <TableCell>
                     <Image
                       src={cartItem.images[0]}

@@ -44,7 +44,8 @@ const OrderTabContent = ({
               </div>
             ))}
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-              <div className="text-sm self-center">
+              <div className="text-sm">
+                <p className="mb-1 font-bold">Shipping Address:</p>
                 <span>{order.shippingAddress.name} - </span>
                 <span className="text-green">
                   {order.shippingAddress.phoneNumber}

@@ -32,7 +32,7 @@ const CartSummary = ({
         totalAllQuantity === totalSelectedQuantity
       );
 
-      if (response) {
+      if (response.success) {
         await refetch();
       }
     });
