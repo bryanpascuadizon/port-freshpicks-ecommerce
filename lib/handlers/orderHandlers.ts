@@ -29,8 +29,8 @@ export const getOrderByStage = async (stage: string, userId: string) => {
   return response;
 };
 
-export const updateOrderToProcess = async (order: Order) => {
-  const response = await fetch(`/api/order/`, {
+export const updateOrderToProcess = async (order: Order, process: string) => {
+  const response = await fetch(`/api/order/process/${process}`, {
     method: "PATCH",
     body: JSON.stringify({ order }),
   }).then((req) => req.json());

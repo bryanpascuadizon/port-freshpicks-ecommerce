@@ -1,9 +1,9 @@
+"use client";
+
 import { TabsContent } from "@/components/ui/tabs";
 import { currencyFormatter } from "@/lib/utils";
 import { Order, OrderItem } from "@/types";
-import OrderToPay from "./OrderToPay";
 import OrderToProcess from "./OrderToProcess";
-import { orderStage } from "@/lib/constants";
 
 const OrderTabContent = ({
   stage,
@@ -18,13 +18,10 @@ const OrderTabContent = ({
     <TabsContent value={stage}>
       {orders &&
         orders.map((order: Order) => (
-          <div
-            key={order.id}
-            className="p-5 bg-slate-100 rounded-sm grid gap-5"
-          >
+          <div key={order.id} className="p-5 bg-slate-100 rounded-sm grid mb-5">
             {order.orderItems.map((orderItem: OrderItem) => (
               <div
-                className="p-5 grid grid-cols-2 bg-white rounded-sm"
+                className="p-5 grid grid-cols-2 bg-white rounded-sm mb-5"
                 key={orderItem.productId}
               >
                 <div>
@@ -45,26 +42,42 @@ const OrderTabContent = ({
             ))}
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
               <div className="text-sm">
-                <p className="mb-1 font-bold">Shipping Address:</p>
+                <p className="font-bold">Reference Number:</p>
+                <p className="text-green mb-2">{order.referenceNumber}</p>
+                <p className="font-bold">Shipping Address:</p>
                 <span>{order.shippingAddress.name} - </span>
                 <span className="text-green">
                   {order.shippingAddress.phoneNumber}
                 </span>
                 <p className="mt-1">{order.shippingAddress.address}</p>
               </div>
-              {stage === orderStage[0].stage && (
-                <OrderToPay order={order} refetchOrders={refetchOrders} />
-              )}
+              <div>
+                <div className="text-right text-sm">
+                  <span className="font-bold">Subtotal Price: </span>
+                  <span className="font-bold text-green">
+                    {currencyFormatter.format(order.subtotalPrice)}
+                  </span>
+                </div>
+                <div className="text-right text-sm">
+                  <span className="font-bold">Shipping Fee: </span>
+                  <span className="font-bold text-green">
+                    {currencyFormatter.format(order.shippingPrice)}
+                  </span>
+                  <p className="text-xs text-green mb-2">
+                    (20% of subtotal price)
+                  </p>
 
-              {(stage === orderStage[1].stage ||
-                stage === orderStage[2].stage) && (
-                <OrderToProcess
-                  order={order}
-                  stage={stage}
-                  refetchOrders={refetchOrders}
-                />
-              )}
+                  <p className="font-bold text-green text-2xl self-center">
+                    {currencyFormatter.format(order.totalPrice)}
+                  </p>
+                </div>
+              </div>
             </div>
+            <OrderToProcess
+              order={order}
+              refetchOrders={refetchOrders}
+              stage={stage}
+            />
           </div>
         ))}
     </TabsContent>

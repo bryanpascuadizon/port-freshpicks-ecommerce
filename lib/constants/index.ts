@@ -40,3 +40,9 @@ export const orderStage = [
     process: "Completed",
   },
 ];
+
+export const roles = {
+  User: "user",
+  Admin: "admin",
+  Courier: "courier",
+};

@@ -3,6 +3,7 @@ import { orderStage } from "@/lib/constants";
 import { calculatePrice } from "@/lib/utils";
 import { Cart } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
+import { nanoid } from "nanoid";
 
 export const POST = async (request: NextRequest) => {
   try {
@@ -20,6 +21,8 @@ export const POST = async (request: NextRequest) => {
       },
     });
 
+    const orderReferenceNumber = nanoid(12);
+
     if (cartResponse) {
       //Create order
       const order = await prisma.order.create({
@@ -32,6 +35,7 @@ export const POST = async (request: NextRequest) => {
           totalPrice: orderForShipping.totalPrice,
           orderItems: cart.cartItems,
           orderStage: orderStage[0].stage,
+          referenceNumber: orderReferenceNumber,
         },
       });
 
@@ -43,26 +47,5 @@ export const POST = async (request: NextRequest) => {
     return new NextResponse("Cannot create order", { status: 500 });
   } catch (error) {
     return new NextResponse(`Cannot create order - ${error}`, { status: 500 });
-  }
-};
-
-export const PATCH = async (req: NextRequest) => {
-  try {
-    const { order } = await req.json();
-
-    const processOrder = await prisma.order.update({
-      where: { id: order.id },
-      data: {
-        orderStage: orderStage[2].stage,
-      },
-    });
-
-    if (processOrder) {
-      return new NextResponse("Order is ready for shipping", { status: 200 });
-    }
-
-    return new NextResponse(`Cannot process order`, { status: 500 });
-  } catch (error) {
-    return new NextResponse(`Cannot process order - ${error}`, { status: 500 });
   }
 };

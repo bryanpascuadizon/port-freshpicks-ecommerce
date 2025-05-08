@@ -9,6 +9,7 @@ import {
 } from "../handlers/orderHandlers";
 import { Order } from "@/types";
 import { getUserAuthentication } from "./UserActions";
+import { orderStage } from "../constants";
 
 export const getSuccessFulOrder = async (referenceNumber: string) => {
   try {
@@ -107,19 +108,32 @@ export const payPendingOrder = async (order: Order) => {
 
 export const processOrder = async (order: Order) => {
   try {
-    const response = await updateOrderToProcess(order);
+    const process =
+      order.orderStage === orderStage[1].stage
+        ? orderStage[2].stage
+        : orderStage[3].stage;
+
+    const response: Order = await updateOrderToProcess(order, process);
 
     if (response) {
+      switch (response.orderStage) {
+        case orderStage[2].stage:
+          return {
+            success: true,
+            message: "Order is ready for shipping",
+          };
+        case orderStage[3].stage:
+          return {
+            success: true,
+            message: "Order has been delivered",
+          };
+      }
+
       return {
-        success: true,
-        message: response,
+        success: false,
+        message: "Something went wrong",
       };
     }
-
-    return {
-      success: false,
-      message: "Something went wrong",
-    };
   } catch (error) {
     return {
       success: false,
