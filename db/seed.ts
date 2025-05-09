@@ -13,11 +13,6 @@ const main = async () => {
   //delete all data in product table
   await prisma.product.deleteMany();
 
-  //create new data list in users table
-  await prisma.user.createMany({
-    data: microgreensData.users,
-  });
-
   //create new data list in product table
   await prisma.product.createMany({
     data: microgreensData.products.microgreens,
