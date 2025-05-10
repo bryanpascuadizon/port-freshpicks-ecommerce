@@ -42,3 +42,4 @@ next-env.d.ts
 
 # prisma sample seed data
 /db/sample-seed-data.ts
+/db/seed.ts
