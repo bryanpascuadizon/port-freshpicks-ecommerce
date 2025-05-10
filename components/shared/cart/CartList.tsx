@@ -8,14 +8,15 @@ import CartSummary from "./CartSummary";
 import Link from "next/link";
 import { ShoppingCart } from "lucide-react";
 import { getCartForUser } from "@/lib/actions/CartActions";
+import PageLoader from "../PageLoader";
 
 const CartList = () => {
-  const { data, refetch } = useQuery({
+  const { data, isPending, refetch } = useQuery({
     queryKey: ["cart-list"],
     queryFn: getCartForUser,
   });
 
-  return (
+  return !isPending ? (
     <>
       <div className="text-2xl font-bold mb-5">Shopping Cart</div>
       {data && data.cart && data.cart.cartItems.length ? (
@@ -51,6 +52,8 @@ const CartList = () => {
         </>
       )}
     </>
+  ) : (
+    <PageLoader />
   );
 };
 

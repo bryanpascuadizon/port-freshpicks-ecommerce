@@ -8,9 +8,10 @@ import CheckoutPriceBreakdown from "./CheckoutPriceBreakdown";
 import { getUserAddressList } from "@/lib/actions/UserActions";
 import { useState } from "react";
 import { UserAddress } from "@/types";
+import PageLoader from "../PageLoader";
 
 const CheckoutList = () => {
-  const { data: cart } = useQuery({
+  const { data: cart, isPending } = useQuery({
     queryKey: ["checkout-cart-list"],
     queryFn: getCartListForCheckout,
   });
@@ -23,31 +24,32 @@ const CheckoutList = () => {
 
   const [selectedAddress, setSelectedAddress] = useState<UserAddress>();
 
-  return (
+  return !isPending &&
     cart &&
     userAddressList &&
-    userAddressList.addressList && (
-      <div className="my-10">
-        <div className="text-xl font-bold mb-5">Checkout</div>
-        <CheckoutAddress
-          addressList={userAddressList.addressList}
-          selectedAddress={selectedAddress!}
-          setSelectedAddress={setSelectedAddress}
-          refetechCheckoutUserAddressList={refetechCheckoutUserAddressList}
-        />
+    userAddressList.addressList ? (
+    <div className="my-10">
+      <div className="text-xl font-bold mb-5">Checkout</div>
+      <CheckoutAddress
+        addressList={userAddressList.addressList}
+        selectedAddress={selectedAddress!}
+        setSelectedAddress={setSelectedAddress}
+        refetechCheckoutUserAddressList={refetechCheckoutUserAddressList}
+      />
 
-        <div className="grid md:grid-cols-5 gap-4">
-          <CheckoutCartList cart={cart} />
-          <CheckoutPriceBreakdown
-            subtotalPrice={cart.subtotalPrice}
-            shippingPrice={cart.shippingPrice}
-            totalPrice={cart.totalPrice}
-            cart={cart}
-            selectedAddress={selectedAddress!}
-          />
-        </div>
+      <div className="grid md:grid-cols-5 gap-4">
+        <CheckoutCartList cart={cart} />
+        <CheckoutPriceBreakdown
+          subtotalPrice={cart.subtotalPrice}
+          shippingPrice={cart.shippingPrice}
+          totalPrice={cart.totalPrice}
+          cart={cart}
+          selectedAddress={selectedAddress!}
+        />
       </div>
-    )
+    </div>
+  ) : (
+    <PageLoader />
   );
 };
 

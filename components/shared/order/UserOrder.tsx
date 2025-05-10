@@ -8,11 +8,16 @@ import OrderTabContent from "./OrderTabContent";
 import { useQuery } from "@tanstack/react-query";
 import { getUserOrders } from "@/lib/actions/OrderActions";
 import NoOrderContent from "./NoOrderContent";
+import PageLoader from "../PageLoader";
 
 const UserOrder = () => {
   const [tab, setTab] = useState(orderStage[0].stage);
 
-  const { data, refetch: refetchOrders } = useQuery({
+  const {
+    data,
+    isPending,
+    refetch: refetchOrders,
+  } = useQuery({
     queryKey: ["order-stage", tab],
     queryFn: async () => {
       const response = await getUserOrders(tab);
@@ -51,14 +56,20 @@ const UserOrder = () => {
             </TabsTrigger>
           ))}
         </TabsList>
-        {data && data.orders.length ? (
-          <OrderTabContent
-            stage={tab}
-            orders={data.orders}
-            refetchOrders={refetchOrders}
-          />
+        {!isPending ? (
+          <>
+            {data && data.orders.length ? (
+              <OrderTabContent
+                stage={tab}
+                orders={data.orders}
+                refetchOrders={refetchOrders}
+              />
+            ) : (
+              <NoOrderContent />
+            )}
+          </>
         ) : (
-          <NoOrderContent />
+          <PageLoader />
         )}
       </Tabs>
     </div>
